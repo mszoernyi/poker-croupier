@@ -118,11 +118,11 @@ describe Croupier::Tournament::State do
       Croupier::Game::State.new tournament_state
     }
 
-    it "should double the blinds when the dealer button returns to the first player" do
+    it "should double the blinds when the dealer button returns to the first player for the third time" do
       small_blind_at_start = game_state.small_blind
       big_blind_at_start = game_state.big_blind
 
-      2.times do |_|
+      8.times do |_|
         game_state.next_round!
         game_state.small_blind.should == small_blind_at_start
         game_state.big_blind.should == big_blind_at_start
@@ -140,8 +140,7 @@ describe Croupier::Tournament::State do
 
       game_state.next_round!
       game_state.players[0].stack = 0
-      game_state.next_round!
-      game_state.next_round!
+      8.times { |_| game_state.next_round! }
 
       game_state.small_blind.should == small_blind_at_start * 2
       game_state.big_blind.should == big_blind_at_start * 2

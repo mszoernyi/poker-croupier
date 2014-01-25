@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    "user strict";
+
     function refreshCard(holecard, dom_card) {
         $(dom_card).removeClass("spades clubs hearts diamonds");
         if (holecard) {
@@ -41,7 +43,7 @@ $(document).ready(function() {
     }
 
     function render(index) {
-        event = history[index];
+        var event = window.pokerEvents[index];
 
         $("#pot-amount").text(event.pot);
         $('#community-cards div.card').each(function (index, dom_card) {
@@ -63,10 +65,10 @@ $(document).ready(function() {
     render(currentIndex);
 
     (function setUpListeners() {
-        function next() { if(currentIndex < history.length - 1) { render(++currentIndex); } else { stopPlay(); } }
+        function next() { if(currentIndex < window.pokerEvents.length - 1) { render(++currentIndex); } else { stopPlay(); } }
         function back() { if(currentIndex > 0) { render(--currentIndex); } }
         function beginning() { render(currentIndex = 0); }
-        function end() { render(currentIndex = history.length - 1); }
+        function end() { render(currentIndex = window.pokerEvents.length - 1); }
 
         var timerHandle = false;
 

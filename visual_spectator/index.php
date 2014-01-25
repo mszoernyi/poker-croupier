@@ -9,15 +9,21 @@
     <body>
         <div class="container">
             <?php
-                if ($handle = opendir('../log')) {
-                    while (false !== ($entry = readdir($handle))) {
-                        if(preg_match('/(.*)\.json/', $entry, $matches))
-                        {
-                            echo "<h3><a href='game.php?file={$matches[1]}'>{$matches[1]}</a></h3>";
-                        }
-                    }
-                    closedir($handle);
+            $filesNames = array();
+            $directoryIterator = new DirectoryIterator(realpath(__DIR__ . '/../log'));
+
+            foreach ($directoryIterator as $fileInfo) {
+                if ($fileInfo->isDot() || $fileInfo->getExtension() !== 'json') {
+                    continue;
                 }
+                $filesNames[] = $fileInfo->getBasename('.' . $fileInfo->getExtension());
+            }
+
+            rsort($filesNames);
+
+            foreach ($filesNames as $fileName) {
+                echo '<h3><a href="game.php?file=', $fileName, '">', $fileName, '</a></h3>';
+            }
             ?>
         </div>
     </body>

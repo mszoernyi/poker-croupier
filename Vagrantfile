@@ -8,8 +8,24 @@ BOX = RUBY_PLATFORM.index("x86_64").nil? ? "precise32" : "precise64"
 
 PROVISION_SCRIPT = <<END
 
-apt-get update
-apt-get install -y git curl
+install_package()
+{
+    PACKAGE=$1
+
+    if ! dpkg -l "$PACKAGE" | grep ^ii; then
+        apt-get install -y $PACKAGE
+    fi
+}
+
+LAST_UPDATE=$(stat --format %Y /var/cache/apt/pkgcache.bin)
+CURRENT_TIME=$(date +%s)
+
+if [ "$LAST_UPDATE" -lt $(($CURRENT_TIME-24*60*60)) ]; then
+    apt-get update
+fi
+
+install_package git
+install_package curl
 
 if ! [ -f /usr/local/rvm/scripts/rvm ]; then
     curl -L https://get.rvm.io | bash -s stable --ruby=2.1.0

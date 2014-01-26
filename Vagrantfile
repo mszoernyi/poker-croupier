@@ -50,4 +50,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :inline => PROVISION_SCRIPT
 
   config.vm.synced_folder ".", "/home/vagrant/poker-croupier"
+
+  config.vm.network :private_network, ip: "10.1.0.101"
 end

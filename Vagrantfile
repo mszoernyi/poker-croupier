@@ -9,11 +9,12 @@ PROVISION_SCRIPT = <<END
 apt-get update
 apt-get install -y git curl
 
-if ! [ -d /usr/local/rvm ]; then
+if ! [ -f /usr/local/rvm/scripts/rvm ]; then
     curl -L https://get.rvm.io | bash -s stable --ruby=2.1.0
 
     echo "" >> /etc/bashrc
-    echo "source /usr/local/rvm/scripts/rvm" >> /etc/bashrc
+    echo ". /usr/local/rvm/scripts/rvm" >> /etc/bashrc
+    . /usr/local/rvm/scripts/rvm
 fi
 
 if ! [ /usr/local/rvm/gems/ruby-2.1.0/bin/bundle ]; then

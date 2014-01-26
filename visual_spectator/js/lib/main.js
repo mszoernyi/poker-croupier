@@ -1,6 +1,11 @@
 $(document).ready(function() {
     "user strict";
 
+    _.templateSettings = {
+        interpolate: /\{\{(.+?)\}\}/g
+    };
+    var player_template = null;
+
     function refreshCard(holecard, dom_card) {
         $(dom_card).removeClass("spades clubs hearts diamonds");
         if (holecard) {
@@ -11,35 +16,42 @@ $(document).ready(function() {
         }
     }
 
-    function addPlayer(player) {
+    function addPlayer(selector, player) {
 
-        var template = $('#player-template').clone();
-
-        template.attr('id', 'player'+player.id);
-
-        template.find('.name').text(player.name);
-        template.find('.stack').text(player.stack);
-
-        var dom_status = template.find('.status');
-        dom_status.removeClass('label-danger label-success label-default');
-        if(player.status === 'active') {
-            dom_status.addClass('label-success');
-            dom_status.text('Bet: '+player.bet+' €');
-        } else if(player.status === 'folded') {
-            dom_status.addClass('label-danger');
-            dom_status.text('Folded');
-        } else if(player.status === 'out') {
-            dom_status.addClass('label-default');
-            dom_status.text('Out');
-        } else {
-            dom_status.text('');
+        function status() {
+            if (player.status === 'active') {
+                return 'Bet: ' + player.bet + ' €';
+            } else if (player.status === 'folded') {
+                return 'Folded';
+            } else if (player.status === 'out') {
+                return 'Out';
+            } else {
+                return '';
+            }
         }
 
-        template.find('.hole-cards div').each(function(index, dom_card) {
-            refreshCard(player.hole_cards[index], dom_card);
-        });
+        function status_style() {
+            if(player.status === 'active') {
+                return 'label-success';
+            } else if(player.status === 'folded') {
+                return 'label-danger';
+            } else if(player.status === 'out') {
+                return 'label-default';
+            } else {
+                return '';
+            }
+        }
 
-        return template;
+        $(selector).append($(player_template({
+            name: player.name,
+            stack: player.stack,
+            card: [
+                player.hole_cards[0] || { suit: '', rank: '' },
+                player.hole_cards[1] || { suit: '', rank: '' }
+            ],
+            status: status(),
+            status_style: status_style()
+        })).attr('id', 'player'+player.id));
     }
 
     function render(index) {
@@ -51,7 +63,7 @@ $(document).ready(function() {
         });
         $('#playerContainer').empty();
         event.players.forEach(function (player) {
-            $('#playerContainer').append(addPlayer(player));
+            addPlayer('#playerContainer', player);
         });
 
         $('#player'+event['dealer']).addClass('dealer');
@@ -60,61 +72,67 @@ $(document).ready(function() {
         $('#message').text(event.message);
     }
 
-    var currentIndex = 0;
+    $.ajax('template/player.html').done(function(data) {
+        player_template = _.template(data);
 
-    render(currentIndex);
+        var currentIndex = 0;
 
-    (function setUpListeners() {
-        function next() { if(currentIndex < window.pokerEvents.length - 1) { render(++currentIndex); } else { stopPlay(); } }
-        function back() { if(currentIndex > 0) { render(--currentIndex); } }
-        function beginning() { render(currentIndex = 0); }
-        function end() { render(currentIndex = window.pokerEvents.length - 1); }
+        render(currentIndex);
 
-        var timerHandle = false;
+        (function setUpListeners() {
+            function next() { if(currentIndex < window.pokerEvents.length - 1) { render(++currentIndex); } else { stopPlay(); } }
+            function back() { if(currentIndex > 0) { render(--currentIndex); } }
+            function beginning() { render(currentIndex = 0); }
+            function end() { render(currentIndex = window.pokerEvents.length - 1); }
 
-        function startPlay() {
-            timerHandle = setInterval(next, 1200);
-            $('#play-button').text('Stop');
-        }
+            var timerHandle = false;
 
-        function stopPlay() {
-            clearInterval(timerHandle);
-            timerHandle = false;
-            $('#play-button').text('Play');
-        }
-
-        function togglePlay() {
-            if(!timerHandle) {
-                startPlay();
-            } else {
-                stopPlay();
+            function startPlay() {
+                timerHandle = setInterval(next, 1200);
+                $('#play-button').text('Stop');
             }
-        }
 
-        $('#next-button').click(next);
-        $('#back-button').click(back);
-        $('#beginning-button').click(beginning);
-        $('#end-button').click(end);
-        $('#play-button').click(togglePlay);
-
-        $(window).keydown(function(e) {
-            switch(e.keyCode) {
-                case 37:
-                    back();
-                    break;
-                case 39:
-                    next();
-                    break;
-                case 36:
-                    beginning();
-                    break;
-                case 35:
-                    end();
-                    break;
-                case 32:
-                    togglePlay()
-                    break;
+            function stopPlay() {
+                clearInterval(timerHandle);
+                timerHandle = false;
+                $('#play-button').text('Play');
             }
-        });
-    })();
+
+            function togglePlay() {
+                if(!timerHandle) {
+                    startPlay();
+                } else {
+                    stopPlay();
+                }
+            }
+
+            $('#next-button').click(next);
+            $('#back-button').click(back);
+            $('#beginning-button').click(beginning);
+            $('#end-button').click(end);
+            $('#play-button').click(togglePlay);
+
+            $(window).keydown(function(e) {
+                switch(e.keyCode) {
+                    case 37:
+                        back();
+                        break;
+                    case 39:
+                        next();
+                        break;
+                    case 36:
+                        beginning();
+                        break;
+                    case 35:
+                        end();
+                        break;
+                    case 32:
+                        togglePlay()
+                        break;
+                }
+            });
+        })();
+    });
+
+
 });

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8 />
+        <title></title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="css/master.css" />
+    </head>
+    <body>
+        <div class="container">
+        {{# log_files }}
+        <h3><a href="/game?log={{ file }}">{{ file }}</a></h3>
+        {{/log_files}}
+        </div>
+    </body>
+</html>

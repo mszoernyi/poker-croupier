@@ -69,3 +69,10 @@ If you wish to hold a poker tournament than there is another script - `croupier/
 ## For Java developers
 see the [player / java](https://github.com/devill/poker-croupier/tree/master/player/java) directory for further instructions
 
+## Watching the results
+
+During a gameplay the croupier collects all game related data and serialize it into the `log/` directory. You can replay any of them with the visual spectator. Just start it:
+
+    bundle exec ruby visual_spectator/visual_spectator.rb -p 2000
+
+[Bon appetite](http://localhost:2000).

@@ -89,13 +89,13 @@ $(document).ready(function() {
 
             function startPlay() {
                 timerHandle = setInterval(next, 1200);
-                $('#play-button').text('Stop');
+                $('#play-button').removeClass('play-button').addClass('stop-button');
             }
 
             function stopPlay() {
                 clearInterval(timerHandle);
                 timerHandle = false;
-                $('#play-button').text('Play');
+                $('#play-button').removeClass('stop-button').addClass('play-button');
             }
 
             function togglePlay() {

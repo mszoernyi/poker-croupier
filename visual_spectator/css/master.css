@@ -126,13 +126,45 @@ html[xmlns] .clearfix {
     width:100%;
 }
 
+#controls a.nav-button i {
+    display: block;
+    width:20px;
+    height:20px;
+    background-image: url('../img/buttons.png');
+}
+
 #controls a {
     display: inline-block;
-    padding: 5px 10px;
-    height: 30px;
+    padding: 5px 5px;
     cursor: pointer;
     background-color: #5CB85C;
     border-radius: 0.25em;
     color: #FFFFFF;
     text-decoration: none;
+}
+
+
+
+#controls a.beginning-button i {
+    background-position-x: 120px
+}
+
+#controls a.back-button i {
+    background-position-x: 100px
+}
+
+#controls a.play-button i {
+    background-position-x: 80px
+}
+
+#controls a.stop-button i {
+    background-position-x: 20px
+}
+
+#controls a.next-button i {
+    background-position-x: 60px
+}
+
+#controls a.end-button i {
+    background-position-x: 40px
 }

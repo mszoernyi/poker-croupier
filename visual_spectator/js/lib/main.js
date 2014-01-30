@@ -72,7 +72,7 @@ $(document).ready(function() {
         $('#message').text(event.message);
     }
 
-    $.ajax('template/player.html').done(function(data) {
+    $.ajax('template/player.mustache').done(function(data) {
         player_template = _.template(data);
 
         var currentIndex = 0;

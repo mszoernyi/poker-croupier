@@ -266,4 +266,25 @@ describe Croupier::Tournament::State do
       end
     end
   end
+
+  describe "#data" do
+    context "when a new tournament is created" do
+      it "should return the tournament state" do
+        subject.data.should == {players: [], small_blind: 10, orbits: 0, dealers_position: 0}
+      end
+    end
+
+    context "when a player is added" do
+      it "should add the players data to the result" do
+        subject.register_player Croupier::Player.new(nil)
+        subject.data.should == {
+            players: [{stack: 1000, active: true, total_bet: 0, hole_cards: []}], 
+            small_blind: 10, 
+            orbits: 0, 
+            dealers_position: 0
+        }
+      end
+
+    end
+  end
 end

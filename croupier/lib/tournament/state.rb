@@ -7,7 +7,6 @@ class Croupier::Tournament::State
     @spectators = []
     @small_blind = 10
     @orbits = 0
-    @current_player = 0
     @dealers_position = 0
   end
 
@@ -85,6 +84,15 @@ class Croupier::Tournament::State
     end
 
     move_deal_button_to_next_active_player
+  end
+
+  def data
+    {
+      players: @players.map { |player| player.data },
+      small_blind: @small_blind,
+      orbits: @orbits,
+      dealers_position: @dealers_position
+    }
   end
 
   private

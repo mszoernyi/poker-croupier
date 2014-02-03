@@ -78,4 +78,12 @@ describe Croupier::Player do
       player.active?.should be_false
     end
   end
+
+  describe "#data" do
+    context "when a new player is created" do
+      it "should return it's state" do
+        Croupier::Player.new(nil).data.should == {stack: 1000, active: true, total_bet: 0, hole_cards: []}
+      end
+    end
+  end
 end

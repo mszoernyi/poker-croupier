@@ -55,4 +55,13 @@ class Croupier::Player
     @strategy.hole_card card
     @hole_cards << card
   end
+
+  def data
+    {
+        stack: @stack,
+        active: @active,
+        total_bet: @total_bet,
+        hole_cards: @hole_cards,
+    }
+  end
 end

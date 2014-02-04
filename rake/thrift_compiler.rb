@@ -14,12 +14,9 @@ def compile_clients(language, subdir = '/lib/api/')
   compile_module "player/#{language}", language, 'types', subdir
 end
 
-compile_module 'croupier', 'rb', 'croupier'
 compile_module 'croupier', 'rb', 'player_strategy'
 compile_module 'croupier', 'rb', 'spectator'
 compile_module 'croupier', 'rb', 'types'
-compile_module 'ranking', 'rb', 'ranking'
-compile_module 'ranking', 'rb', 'types'
 
 compile_clients 'cpp'
 compile_clients 'csharp'

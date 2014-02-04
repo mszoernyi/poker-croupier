@@ -89,8 +89,9 @@ describe Croupier::Player do
     context "when player has cards" do
       it "should also return the cards" do
         subject = Croupier::Player.new(SpecHelper::DummyClass.new)
-        subject.hole_card(PokerRanking::Card::by_name 'King of Diamonds')
-        subject.data.should == {stack: 1000, active: true, total_bet: 0, hole_cards: [{rank:"King",suit:"Diamonds"}]}
+        hole_card = PokerRanking::Card::by_name('King of Diamonds')
+        subject.hole_card(hole_card)
+        subject.data.should == {stack: 1000, active: true, total_bet: 0, hole_cards: [hole_card.data]}
       end
     end
   end

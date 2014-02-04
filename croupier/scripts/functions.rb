@@ -1,38 +1,15 @@
-$:.push('../lib/api')
 
 Dir.chdir File.dirname(__FILE__)
 
-require 'thrift'
-require 'croupier'
-
-def connect_server
-  transport = Thrift::BufferedTransport.new(Thrift::Socket.new('localhost', 9090))
-  protocol = Thrift::BinaryProtocol.new(transport)
-  client = API::Croupier::Client.new(protocol)
-
-  transport.open
-  [client, transport]
-end
-
-def start_server(log_file)
-  croupier = fork do
-    exec "bundle exec ruby ../croupier_service.rb #{log_file}"
-  end
-  Process.detach(croupier)
-
-  sleep(1)
-end
+require_relative '../croupier'
 
 def sit_and_go(log_file, &block)
-  start_server log_file
+  Croupier::log_file = log_file
+  handler = Croupier::Handler.new
 
-  client, transport = connect_server
+  handler.instance_eval &block
 
-  client.instance_eval &block
-
-  client.start_sit_and_go
-  client.shutdown
-  transport.close
+  handler.start_sit_and_go
 end
 
 def start_players(number_of_players)

@@ -3,7 +3,7 @@ class Croupier::Handler
   def initialize
     @croupier = Croupier::Tournament::Runner.new
     @croupier.register_spectator Croupier::LogHandler::HumanReadable.new
-    @croupier.register_spectator Croupier::LogHandler::Json.new("#{ARGV[0]}.json")
+    @croupier.register_spectator Croupier::LogHandler::Json.new("#{Croupier::log_file}.json")
   end
 
   def register_player(address)

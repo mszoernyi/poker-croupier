@@ -19,9 +19,11 @@ module Croupier
   autoload :Tournament, 'lib/tournament'
 
   class << self
+    attr_accessor :log_file
+
     def logger
       @logger ||= Croupier::LogHandler::MultiLogger.new(
-          Logger.new("#{ARGV[0]}.log"),
+          Logger.new("#{log_file}.log"),
           Logger.new(STDOUT)
       )
     end

@@ -42,4 +42,12 @@ class Croupier::Game::State
   def transfer(player, amount)
     player.stack -= amount
   end
+
+  def data
+    @tournament_state.data.merge({
+      community_cards: @community_cards.map { |card| card.data },
+      current_buy_in: current_buy_in,
+      pot: pot
+    })
+  end
 end

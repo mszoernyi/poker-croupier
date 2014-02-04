@@ -61,4 +61,37 @@ describe Croupier::Game::State do
     end
   end
 
+  describe "#data" do
+    context "when there is a single player" do
+      let(:game_state) { Croupier::Game::State.new(SpecHelper::MakeTournamentState.with players: [Croupier::Player.new(SpecHelper::DummyClass.new)]) }
+
+      it "should return the tournament state with game state added" do
+        game_state.data.should == {
+            players: [{:stack=>1000, :active=>true, :total_bet=>0, :hole_cards=>[]}],
+            small_blind: 10,
+            orbits: 0,
+            dealers_position: 0,
+            community_cards: [],
+            current_buy_in: 0,
+            pot: 0
+        }
+      end
+
+      it "should also include the community cards" do
+        community_card = PokerRanking::Card::by_name('Queen of Spades')
+        game_state.community_cards << community_card
+        game_state.data.should == {
+            players: [{:stack=>1000, :active=>true, :total_bet=>0, :hole_cards=>[]}],
+            small_blind: 10,
+            orbits: 0,
+            dealers_position: 0,
+            community_cards: [community_card.data],
+            current_buy_in: 0,
+            pot: 0
+        }
+
+      end
+    end
+  end
+
 end

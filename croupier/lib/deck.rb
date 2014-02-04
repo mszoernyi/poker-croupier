@@ -8,7 +8,7 @@ class Croupier::Deck
   def next_card!
     id = @permutation.pop
 
-    return Card.new id unless id.nil?
+    return PokerRanking::Card::by_id(id) unless id.nil?
   end
 
   def shuffle

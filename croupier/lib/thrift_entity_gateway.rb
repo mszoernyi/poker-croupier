@@ -29,14 +29,14 @@ module Croupier::ThriftEntityGateway
       end
     end
     
-    def get_Ranking__Hand(source)
+    def get_PokerRanking__Hand(source)
       API::HandDescriptor.new.tap do |descriptor|
         descriptor.name = source.name
         descriptor.ranks = [source.rank, source.value, source.second_value, *source.kickers]
       end
     end
 
-    def get_Card(source)
+    def get_PokerRanking__Card(source)
       API::Card.new.tap do |target|
         target.value = source.value
         target.suit = API::Suit.const_get(source.suit.to_sym)

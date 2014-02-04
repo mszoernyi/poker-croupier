@@ -7,7 +7,7 @@ describe Croupier::Game::Steps::DealCommunityCard do
   end
 
   before(:each) do
-    @cards = ['6 of Diamonds', 'Jack of Hearts'].map { |name| Card.new name }
+    @cards = ['6 of Diamonds', 'Jack of Hearts'].map { |name| PokerRanking::Card::by_name name }
 
     @deck = double("Deck")
     @deck.stub(:next_card!).and_return(*@cards)

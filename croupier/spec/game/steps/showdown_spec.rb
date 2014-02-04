@@ -1,6 +1,7 @@
 require_relative '../../spec_helper'
 require 'card'
-require 'ranking/hand'
+
+require 'poker_ranking'
 
 
 describe Croupier::Game::Steps::Showdown do
@@ -15,7 +16,7 @@ describe Croupier::Game::Steps::Showdown do
       Croupier::Game::State.new(tournament_state).tap do |game_state|
         game_state.community_cards =
             ['3 of Diamonds', 'Jack of Clubs', 'Jack of Spades', 'Queen of Spades', 'King of Spades']
-            .map { |name| Card.new name }
+            .map { |name| PokerRanking::Card::by_name name }
       end
     end
 
@@ -96,7 +97,7 @@ describe Croupier::Game::Steps::Showdown do
       end
 
       def expect_hand_to_be_announced_for(player)
-        hand = Ranking::Hand.new *player.hole_cards, *game_state.community_cards
+        hand = PokerRanking::Hand.new [*player.hole_cards, *game_state.community_cards]
 
         (game_state.players + game_state.spectators).each do |observer|
           observer.should_receive(:showdown).with(player, hand)
@@ -160,7 +161,7 @@ describe Croupier::Game::Steps::Showdown do
       Croupier::Game::State.new(tournament_state).tap do |game_state|
         game_state.community_cards =
             ['3 of Diamonds', 'Jack of Clubs', 'Jack of Spades', 'Queen of Spades', 'King of Spades']
-            .map { |name| Card.new name }
+            .map { |name| PokerRanking::Card::by_name name }
       end
     end
 
@@ -209,8 +210,8 @@ describe Croupier::Game::Steps::Showdown do
   end
 
   def set_hole_cards_for(player_id, first_card, second_card)
-    game_state.players[player_id].hole_card Card.new first_card
-    game_state.players[player_id].hole_card Card.new second_card
+    game_state.players[player_id].hole_card PokerRanking::Card::by_name(first_card)
+    game_state.players[player_id].hole_card PokerRanking::Card::by_name(second_card)
   end
 
 end

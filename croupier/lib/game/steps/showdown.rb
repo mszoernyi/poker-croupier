@@ -1,6 +1,7 @@
 
 require 'card'
-require 'ranking/hand'
+
+require 'poker_ranking'
 
 class Croupier::Game::Steps::Showdown < Croupier::Game::Steps::Base
   def run
@@ -15,11 +16,11 @@ class Croupier::Game::Steps::Showdown < Croupier::Game::Steps::Base
 
   def find_winner
     @winners = []
-    @best_hand = Ranking::Hand.new
+    @best_hand = PokerRanking::Hand.new([])
 
     if game_state.players.count { |player| player.active? and player.total_bet > 0 } == 1
       @winners = game_state.players.select { |player| player.active? and player.total_bet > 0 }
-      @best_hand = Ranking::Hand.new *@winners[0].hole_cards, *game_state.community_cards
+      @best_hand = PokerRanking::Hand.new [*@winners[0].hole_cards, *game_state.community_cards]
     else
       game_state.each_player_from game_state.last_aggressor do |player|
         examine_cards_of player
@@ -31,7 +32,7 @@ class Croupier::Game::Steps::Showdown < Croupier::Game::Steps::Base
     return unless player.active?
     return if player.total_bet <= 0
 
-    hand = Ranking::Hand.new *player.hole_cards, *game_state.community_cards
+    hand = PokerRanking::Hand.new [*player.hole_cards, *game_state.community_cards]
     return if @best_hand.defeats? hand
 
     game_state.each_observer do |observer|

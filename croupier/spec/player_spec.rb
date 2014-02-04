@@ -29,7 +29,7 @@ describe Croupier::Player do
 
   describe "#hole_card" do
     it "should delegate calls to the player strategy" do
-      card = Card.new('6 of Diamonds')
+      card = PokerRanking::Card::by_name('6 of Diamonds')
 
       strategy.should_receive(:hole_card).with(card)
 
@@ -37,8 +37,8 @@ describe Croupier::Player do
     end
 
     it "should store hole cards for later use" do
-      card1 = Card.new('6 of Diamonds')
-      card2 = Card.new('King of Spades')
+      card1 = PokerRanking::Card::by_name('6 of Diamonds')
+      card2 = PokerRanking::Card::by_name('King of Spades')
 
       player.hole_card card1
       player.hole_card card2

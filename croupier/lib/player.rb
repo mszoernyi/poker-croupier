@@ -61,7 +61,7 @@ class Croupier::Player
         stack: @stack,
         active: @active,
         total_bet: @total_bet,
-        hole_cards: @hole_cards,
+        hole_cards: @hole_cards.map { |card| card.data },
     }
   end
 end

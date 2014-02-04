@@ -284,7 +284,6 @@ describe Croupier::Tournament::State do
             dealers_position: 0
         }
       end
-
     end
   end
 end

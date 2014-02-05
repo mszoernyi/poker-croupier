@@ -58,6 +58,7 @@ class Croupier::Player
 
   def data
     {
+        name: name,
         stack: @stack,
         active: @active,
         total_bet: @total_bet,

@@ -276,9 +276,11 @@ describe Croupier::Tournament::State do
 
     context "when a player is added" do
       it "should add the players data to the result" do
-        subject.register_player Croupier::Player.new(nil)
+        strategy = SpecHelper::DummyClass.new
+        strategy.stub(:name).and_return("Joe")
+        subject.register_player Croupier::Player.new(strategy)
         subject.data.should == {
-            players: [{stack: 1000, active: true, total_bet: 0, hole_cards: []}], 
+            players: [{id: 0, name: "Joe", stack: 1000, active: true, total_bet: 0, hole_cards: []}],
             small_blind: 10, 
             orbits: 0, 
             dealers_position: 0

@@ -80,18 +80,24 @@ describe Croupier::Player do
   end
 
   describe "#data" do
+    let(:strategy) {
+      SpecHelper::DummyClass.new.tap { |strategy| strategy.stub(:name).and_return("Joe") }
+    }
+    let(:subject) {
+      Croupier::Player.new(strategy)
+    }
+
     context "when a new player is created" do
       it "should return it's state" do
-        Croupier::Player.new(nil).data.should == {stack: 1000, active: true, total_bet: 0, hole_cards: []}
+        Croupier::Player.new(strategy).data.should == {name: "Joe", stack: 1000, active: true, total_bet: 0, hole_cards: []}
       end
     end
 
     context "when player has cards" do
       it "should also return the cards" do
-        subject = Croupier::Player.new(SpecHelper::DummyClass.new)
         hole_card = PokerRanking::Card::by_name('King of Diamonds')
         subject.hole_card(hole_card)
-        subject.data.should == {stack: 1000, active: true, total_bet: 0, hole_cards: [hole_card.data]}
+        subject.data.should == {name: "Joe", stack: 1000, active: true, total_bet: 0, hole_cards: [hole_card.data]}
       end
     end
   end

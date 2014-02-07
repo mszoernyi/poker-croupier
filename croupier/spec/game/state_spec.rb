@@ -71,10 +71,10 @@ describe Croupier::Game::State do
 
       it "should return the tournament state with game state added" do
         game_state.data.should == {
-            players: [{ id: 0, name: "Joe", stack: 1000, active: true, total_bet: 0, hole_cards: []}],
+            players: [{ id: 0, name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: []}],
             small_blind: 10,
             orbits: 0,
-            dealers_position: 0,
+            dealer: 0,
             community_cards: [],
             current_buy_in: 0,
             pot: 0
@@ -85,10 +85,10 @@ describe Croupier::Game::State do
         community_card = PokerRanking::Card::by_name('Queen of Spades')
         game_state.community_cards << community_card
         game_state.data.should == {
-            players: [{ id: 0, name: "Joe", stack: 1000, active: true, total_bet: 0, hole_cards: []}],
+            players: [{ id: 0, name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: []}],
             small_blind: 10,
             orbits: 0,
-            dealers_position: 0,
+            dealer: 0,
             community_cards: [community_card.data],
             current_buy_in: 0,
             pot: 0

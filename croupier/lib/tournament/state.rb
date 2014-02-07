@@ -91,7 +91,7 @@ class Croupier::Tournament::State
       players: @players.each_with_index.map { |player, index| player.data.merge({ id: index }) },
       small_blind: @small_blind,
       orbits: @orbits,
-      dealers_position: @dealers_position
+      dealer: @dealers_position
     }
   end
 

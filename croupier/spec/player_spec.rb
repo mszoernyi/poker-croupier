@@ -79,6 +79,30 @@ describe Croupier::Player do
     end
   end
 
+  describe "#out?" do
+    context "when the player has stack" do
+      it "should return false" do
+        player.out?.should == false
+      end
+    end
+
+    context "when the player is all in" do
+      it "should return false" do
+        player.stack = 0
+        player.total_bet = 1000
+        player.out?.should == false
+      end
+    end
+
+    context "when has no money left" do
+      it "should return true" do
+        player.stack = 0
+        player.total_bet = 0
+        player.out?.should == true
+      end
+    end
+  end
+
   describe "#data" do
     let(:strategy) {
       SpecHelper::DummyClass.new.tap { |strategy| strategy.stub(:name).and_return("Joe") }
@@ -89,7 +113,7 @@ describe Croupier::Player do
 
     context "when a new player is created" do
       it "should return it's state" do
-        Croupier::Player.new(strategy).data.should == {name: "Joe", stack: 1000, active: true, total_bet: 0, hole_cards: []}
+        Croupier::Player.new(strategy).data.should == {name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: []}
       end
     end
 
@@ -97,7 +121,23 @@ describe Croupier::Player do
       it "should also return the cards" do
         hole_card = PokerRanking::Card::by_name('King of Diamonds')
         subject.hole_card(hole_card)
-        subject.data.should == {name: "Joe", stack: 1000, active: true, total_bet: 0, hole_cards: [hole_card.data]}
+        subject.data.should == {name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: [hole_card.data]}
+      end
+    end
+
+    context "when player folded" do
+      it "should set status to 'folded'" do
+        player = Croupier::Player.new(strategy)
+        player.fold
+        player.data.should == {name: "Joe", stack: 1000, status: "folded", bet: 0, hole_cards: []}
+      end
+    end
+
+    context "when player is out" do
+      it "should set status to 'out'" do
+        player = Croupier::Player.new(strategy)
+        player.stack = 0
+        player.data.should == {name: "Joe", stack: 0, status: "out", bet: 0, hole_cards: []}
       end
     end
   end

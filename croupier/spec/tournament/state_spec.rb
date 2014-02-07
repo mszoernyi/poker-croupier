@@ -270,7 +270,7 @@ describe Croupier::Tournament::State do
   describe "#data" do
     context "when a new tournament is created" do
       it "should return the tournament state" do
-        subject.data.should == {players: [], small_blind: 10, orbits: 0, dealers_position: 0}
+        subject.data.should == {players: [], small_blind: 10, orbits: 0, dealer: 0}
       end
     end
 
@@ -280,10 +280,10 @@ describe Croupier::Tournament::State do
         strategy.stub(:name).and_return("Joe")
         subject.register_player Croupier::Player.new(strategy)
         subject.data.should == {
-            players: [{id: 0, name: "Joe", stack: 1000, active: true, total_bet: 0, hole_cards: []}],
+            players: [{id: 0, name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: []}],
             small_blind: 10, 
             orbits: 0, 
-            dealers_position: 0
+            dealer: 0
         }
       end
     end

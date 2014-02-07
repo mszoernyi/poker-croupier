@@ -57,12 +57,21 @@ class Croupier::Player
   end
 
   def data
+    if out? then
+      status = "out"
+    else
+      status = @active ? "active" : "folded"
+    end
     {
         name: name,
         stack: @stack,
-        active: @active,
-        total_bet: @total_bet,
+        status: status,
+        bet: @total_bet,
         hole_cards: @hole_cards.map { |card| card.data },
     }
+  end
+
+  def out?
+    @stack + @total_bet == 0
   end
 end

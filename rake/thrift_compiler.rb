@@ -16,9 +16,6 @@ end
 compile_module 'croupier', 'rb', 'player_strategy'
 compile_module 'croupier', 'rb', 'types'
 
-compile_clients 'cpp'
-compile_clients 'csharp'
-compile_clients 'erl'
 compile_clients 'java', '/src/main/java/'
 compile_module 'player/php', 'php:server', 'player_strategy'
 compile_module 'player/php', 'php', 'types'

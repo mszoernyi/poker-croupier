@@ -219,14 +219,14 @@ describe Croupier::Game::Steps::Betting::Step do
     end
 
 
-    it "should report an empty pot with nothing to call and the big blind as minimum raise" do
+    xit "should report an empty pot with nothing to call and the big blind as minimum raise" do
       @first_player.should_receive(:bet_request).with(0, {:to_call=>0, :minimum_raise=>20}).and_return(0)
       @player_on_button.should_receive(:bet_request).with(0, {:to_call=>0, :minimum_raise=>20}).and_return(0)
 
       run
     end
 
-    it "should report a non empty pot and suitable limits if a player already bet" do
+    xit "should report a non empty pot and suitable limits if a player already bet" do
       @first_player.should_receive(:bet_request).with(0, {:to_call=>0, :minimum_raise=>20}).and_return(20)
       @player_on_button.should_receive(:bet_request).with(20, {:to_call=>20, :minimum_raise=>20}).and_return(60)
       @first_player.should_receive(:bet_request).with(80, {:to_call=>40, :minimum_raise=>40}).and_return(20)

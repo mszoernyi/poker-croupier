@@ -7,18 +7,18 @@ describe Croupier::Player do
 
   describe "#bet_request" do
 
-    it "should delegate calls to the player strategy" do
+    xit "should delegate calls to the player strategy" do
       strategy.should_receive(:bet_request).with(60, to_call: 20, minimum_raise: 40).and_return(30)
 
       player.bet_request(60, to_call: 20, minimum_raise: 40).should == 30
     end
 
-    it "should respond with forced bet after receiving #force_bet" do
+    xit "should respond with forced bet after receiving #force_bet" do
       player.force_bet 20
       player.bet_request(0, {}).should == 20
     end
 
-    it "should delegate bet_request after forced bet has been posted" do
+    xit "should delegate bet_request after forced bet has been posted" do
       player.force_bet 20
       strategy.should_receive(:bet_request).with(60, to_call: 20, minimum_raise: 40).and_return(30)
 

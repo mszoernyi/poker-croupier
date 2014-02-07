@@ -57,11 +57,6 @@ class Croupier::Player
   end
 
   def data
-    if out? then
-      status = "out"
-    else
-      status = @active ? "active" : "folded"
-    end
     {
         name: name,
         stack: @stack,
@@ -69,6 +64,16 @@ class Croupier::Player
         bet: @total_bet,
         hole_cards: @hole_cards.map { |card| card.data },
     }
+  end
+
+  def status
+    if out? then
+      "out"
+    elsif active?
+      "active"
+    else
+      "folded"
+    end
   end
 
   def out?

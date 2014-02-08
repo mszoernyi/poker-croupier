@@ -8,7 +8,7 @@ class Croupier::Handler
 
   def register_thrift_player(address)
       begin
-        player = Croupier::PlayerBuilder.new.build_player(address)
+        player = Croupier::ThriftPlayerBuilder.new.build_player(address)
         player.open
         @croupier.register_player player
         Croupier.logger.info "Connected #{player.name} at #{address}"

@@ -1,14 +1,14 @@
 require 'player_strategy'
 
-class Croupier::PlayerBuilder
+class Croupier::ThriftPlayerBuilder
 
   def build_player(address)
-    Croupier::Player.new(Croupier::PlayerStrategy.new(*build_strategy(address)))
+    Croupier::Player.new(Croupier::PlayerStrategy.new(*build_client(address)))
   end
 
   private
 
-  def build_strategy(address)
+  def build_client(address)
 
     if /^[\w\d\.]+:\d+$/ =~ address
       host, port = address.split(':')

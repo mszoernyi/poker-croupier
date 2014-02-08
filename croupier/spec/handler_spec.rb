@@ -8,7 +8,7 @@ describe Croupier::Handler do
     let(:logger_mock) { double('Logger') }
 
     before(:each) do
-      Croupier::PlayerBuilder.stub(:new).and_return(player_builder)
+      Croupier::ThriftPlayerBuilder.stub(:new).and_return(player_builder)
       Croupier::Tournament::Runner.stub(:new).and_return(croupier)
       Croupier.stub(:logger).and_return(logger_mock)
       croupier.stub(:register_spectator)

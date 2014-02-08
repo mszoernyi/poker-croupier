@@ -10,22 +10,22 @@ describe Croupier::Player do
   describe "#bet_request" do
 
     it "should delegate calls to the player strategy" do
-      strategy.should_receive(:bet_request).with(game_state, 60, to_call: 20, minimum_raise: 40).and_return(30)
+      strategy.should_receive(:bet_request).with(game_state).and_return(30)
 
-      player.bet_request(game_state, 60, to_call: 20, minimum_raise: 40).should == 30
+      player.bet_request(game_state).should == 30
     end
 
     it "should respond with forced bet after receiving #force_bet" do
       player.force_bet 20
-      player.bet_request(game_state, 0, {}).should == 20
+      player.bet_request(game_state).should == 20
     end
 
     it "should delegate bet_request after forced bet has been posted" do
       player.force_bet 20
-      strategy.should_receive(:bet_request).with(game_state, 60, to_call: 20, minimum_raise: 40).and_return(30)
+      strategy.should_receive(:bet_request).with(game_state).and_return(30)
 
-      player.bet_request(game_state, 0, {}).should == 20
-      player.bet_request(game_state, 60, to_call: 20, minimum_raise: 40).should == 30
+      player.bet_request(game_state).should == 20
+      player.bet_request(game_state).should == 30
     end
   end
 

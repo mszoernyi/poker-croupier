@@ -223,8 +223,8 @@ describe Croupier::Game::Steps::Betting::Step do
       betting_state = Croupier::Game::Steps::Betting::State.new @game_state
       Croupier::Game::Steps::Betting::State.should_receive(:new).and_return(betting_state)
 
-      @first_player.should_receive(:bet_request).with(betting_state, 0, {:to_call=>0, :minimum_raise=>20}).and_return(0)
-      @player_on_button.should_receive(:bet_request).with(betting_state, 0, {:to_call=>0, :minimum_raise=>20}).and_return(0)
+      @first_player.should_receive(:bet_request).with(betting_state).and_return(0)
+      @player_on_button.should_receive(:bet_request).with(betting_state).and_return(0)
 
       run
     end
@@ -233,9 +233,9 @@ describe Croupier::Game::Steps::Betting::Step do
       betting_state = Croupier::Game::Steps::Betting::State.new @game_state
       Croupier::Game::Steps::Betting::State.should_receive(:new).and_return(betting_state)
 
-      @first_player.should_receive(:bet_request).with(betting_state, 0, {:to_call=>0, :minimum_raise=>20}).and_return(20)
-      @player_on_button.should_receive(:bet_request).with(betting_state, 20, {:to_call=>20, :minimum_raise=>20}).and_return(60)
-      @first_player.should_receive(:bet_request).with(betting_state, 80, {:to_call=>40, :minimum_raise=>40}).and_return(20)
+      @first_player.should_receive(:bet_request).with(betting_state).and_return(20)
+      @player_on_button.should_receive(:bet_request).with(betting_state).and_return(60)
+      @first_player.should_receive(:bet_request).with(betting_state).and_return(20)
 
       run
     end

@@ -11,7 +11,7 @@ class Croupier::RestPlayer
   def hole_card(card)
   end
 
-  def bet_request(game_state, pot, hash)
+  def bet_request(game_state)
     0
   end
 

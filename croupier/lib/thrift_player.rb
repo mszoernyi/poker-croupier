@@ -14,7 +14,7 @@ class Croupier::ThriftPlayer
     strategy.hole_card(gateway[card])
   end
 
-  def bet_request(game_state, pot, hash)
+  def bet_request(game_state)
     strategy.bet_request game_state.data[:pot], gateway.bet_limits(bet_limits(game_state))
   end
 

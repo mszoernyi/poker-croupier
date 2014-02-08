@@ -1,8 +1,8 @@
 class Croupier::Game::Steps::Betting::State
   attr_reader :game_state
   attr_accessor :minimum_raise
-  attr_accessor :in_action
-  attr_accessor :number_of_bets_so_far
+  attr_reader :in_action
+  attr_reader :number_of_bets_so_far
 
   def initialize(game_state)
     @game_state = game_state

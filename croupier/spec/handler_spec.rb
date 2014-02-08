@@ -1,7 +1,7 @@
 require_relative 'spec_helper.rb'
 
 describe Croupier::Handler do
-  describe "#register_player" do
+  describe "#register_thrift_player" do
     let(:player_builder) { double('PlayerBuilder') }
     let(:player) { double('Player') }
     let(:croupier) { double('Croupier') }

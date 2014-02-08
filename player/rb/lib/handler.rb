@@ -1,5 +1,5 @@
 
-class ThriftPlayer::Handler
+class PlayerStrategy::Handler
   def name
     ARGV[1] || "Rudy Ruby"
   end

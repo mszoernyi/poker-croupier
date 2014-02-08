@@ -19,7 +19,7 @@ class Croupier::ThriftPlayerBuilder
 
     transport = Thrift::BufferedTransport.new(socket)
     protocol = Thrift::BinaryProtocol.new(transport)
-    strategy = API::ThriftPlayer::Client.new(protocol)
+    strategy = API::PlayerStrategy::Client.new(protocol)
     [strategy, transport]
   end
 end

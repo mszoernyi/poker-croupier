@@ -11,7 +11,7 @@ class Croupier::Game::Steps::Betting::Step < Croupier::Game::Steps::Base
     end
 
     until betting_is_over?
-      @betting_players[@betting_state.in_action].take_turn @betting_state
+      @betting_players[@betting_state.in_action].take_turn
       @betting_state.next_player
     end
   end

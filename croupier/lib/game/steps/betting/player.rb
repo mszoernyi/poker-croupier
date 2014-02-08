@@ -5,12 +5,12 @@ class Croupier::Game::Steps::Betting::Player
     @player = betting_state.players[index]
   end
 
-  def take_turn(game_state)
+  def take_turn
     if @player.allin? or not @player.active?
       return
     end
 
-    bet = @player.bet_request game_state
+    bet = @player.bet_request @betting_state.data
 
     if allin_bet? bet
       handle_allin
@@ -38,7 +38,6 @@ class Croupier::Game::Steps::Betting::Player
   end
 
   private
-
 
   def allin_bet?(bet)
     bet > 0 && bet >= @player.stack

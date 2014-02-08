@@ -15,7 +15,7 @@ class Croupier::ThriftPlayer
   end
 
   def bet_request(game_state)
-    strategy.bet_request game_state.data[:pot], gateway.bet_limits(bet_limits(game_state))
+    strategy.bet_request game_state[:pot], gateway.bet_limits(bet_limits(game_state))
   end
 
 
@@ -58,13 +58,13 @@ class Croupier::ThriftPlayer
   private
 
   def to_call(game_state)
-    game_state.data[:pot] - game_state.data[:players][game_state.data[:in_action]][:bet]
+    game_state[:pot] - game_state[:players][game_state[:in_action]][:bet]
   end
 
   def bet_limits(game_state)
     {
         to_call: to_call(game_state),
-        minimum_raise: game_state.data[:minimum_raise]
+        minimum_raise: game_state[:minimum_raise]
     }
   end
 end

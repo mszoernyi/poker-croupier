@@ -219,26 +219,6 @@ describe Croupier::Game::Steps::Betting::Step do
     end
 
 
-    it "should report an empty pot with nothing to call and the big blind as minimum raise" do
-      betting_state = Croupier::Game::Steps::Betting::State.new @game_state
-      Croupier::Game::Steps::Betting::State.should_receive(:new).and_return(betting_state)
-
-      @first_player.should_receive(:bet_request).with(betting_state).and_return(0)
-      @player_on_button.should_receive(:bet_request).with(betting_state).and_return(0)
-
-      run
-    end
-
-    it "should report a non empty pot and suitable limits if a player already bet" do
-      betting_state = Croupier::Game::Steps::Betting::State.new @game_state
-      Croupier::Game::Steps::Betting::State.should_receive(:new).and_return(betting_state)
-
-      @first_player.should_receive(:bet_request).with(betting_state).and_return(20)
-      @player_on_button.should_receive(:bet_request).with(betting_state).and_return(60)
-      @first_player.should_receive(:bet_request).with(betting_state).and_return(20)
-
-      run
-    end
 
     it "should start with the first_player even after the button has moved" do
       @game_state.next_round!

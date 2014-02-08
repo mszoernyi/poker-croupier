@@ -10,7 +10,7 @@ sleep(1)
 
 sit_and_go "../../log/integration_test" do
   players.each_index do |index|
-    register_player("localhost:#{9200+index}")
+    register_thrift_player("localhost:#{9200+index}")
   end
 end
 

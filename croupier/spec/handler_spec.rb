@@ -26,7 +26,7 @@ describe Croupier::Handler do
         player.should_receive(:name).and_return('Joe')
         logger_mock.should_receive(:info).with('Connected Joe at some.host:10001')
 
-        Croupier::Handler.new.register_player('some.host:10001')
+        Croupier::Handler.new.register_thrift_player('some.host:10001')
       end
     end
 
@@ -36,10 +36,10 @@ describe Croupier::Handler do
       end
 
       it "should not register the player and log an error message" do
-        croupier.should_not_receive(:register_player).with(player)
+        croupier.should_not_receive(:register_thrift_player).with(player)
         logger_mock.should_receive(:error).with('Connection failed')
 
-        expect{ Croupier::Handler.new.register_player('some.host:10001') }.to raise_error(StandardError, 'Connection failed')
+        expect{ Croupier::Handler.new.register_thrift_player('some.host:10001') }.to raise_error(StandardError, 'Connection failed')
       end
     end
 

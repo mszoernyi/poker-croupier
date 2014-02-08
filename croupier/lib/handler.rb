@@ -6,7 +6,7 @@ class Croupier::Handler
     @croupier.register_spectator Croupier::LogHandler::Json.new("#{Croupier::log_file}.json")
   end
 
-  def register_player(address)
+  def register_thrift_player(address)
       begin
         player = Croupier::PlayerBuilder.new.build_player(address)
         player.open

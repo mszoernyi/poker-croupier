@@ -25,7 +25,10 @@ class Croupier::Game::Steps::Betting::State
   end
 
   def data
-    game_state.data
+    game_state.data.merge({
+      in_action: @in_action,
+      minimum_raise: @minimum_raise
+    })
   end
   
   def next_player

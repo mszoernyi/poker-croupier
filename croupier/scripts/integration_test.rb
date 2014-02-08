@@ -12,6 +12,6 @@ sit_and_go "../../log/integration_test" do
   players.each_index do |index|
     register_thrift_player("localhost:#{9200+index}")
   end
-  register_player
+  register_player "Robert Rest", ""
 end
 

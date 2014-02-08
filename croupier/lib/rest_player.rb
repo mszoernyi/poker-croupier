@@ -2,13 +2,16 @@ require 'player_strategy'
 
 class Croupier::RestPlayer
 
-  def initialize
+  attr_reader :name
+
+  def initialize(name, url)
+    @name = name
   end
 
   def hole_card(card)
   end
 
-  def bet_request(game_state, index, pot, hash)
+  def bet_request(game_state, pot, hash)
     0
   end
 
@@ -19,10 +22,6 @@ class Croupier::RestPlayer
   end
 
   def competitor_status(competitor)
-  end
-
-  def name
-    "REST player"
   end
 
   def bet(competitor, bet)

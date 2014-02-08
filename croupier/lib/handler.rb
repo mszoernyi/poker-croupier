@@ -18,6 +18,12 @@ class Croupier::Handler
       end
   end
 
+  def register_player
+    player = Croupier::Player.new(Croupier::RestPlayer.new)
+    @croupier.register_player player
+    Croupier.logger.info "Connected #{player.name}"
+  end
+
   def start_sit_and_go
     @croupier.start_sit_and_go.get.reverse.each_with_index do |player, index|
       Croupier.logger.info "Place #{index+1}: #{player.name}"

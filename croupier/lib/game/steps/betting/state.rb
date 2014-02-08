@@ -18,4 +18,8 @@ class Croupier::Game::Steps::Betting::State
   def ==(other)
     @minimum_raise = other.minimum_raise and @game_state = other.game_state
   end
+
+  def data
+    game_state.data
+  end
 end

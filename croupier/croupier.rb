@@ -11,6 +11,7 @@ module Croupier
   autoload :Handler, 'lib/handler'
   autoload :LogHandler, 'lib/log_handler'
   autoload :Player, 'lib/player'
+  autoload :RestPlayer, 'lib/rest_player'
   autoload :ThriftPlayer, 'lib/thrift_player'
   autoload :ThriftPlayerBuilder, 'lib/thrift_player_builder'
   autoload :ThriftEntityGateway, 'lib/thrift_entity_gateway'

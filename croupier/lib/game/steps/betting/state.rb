@@ -14,4 +14,8 @@ class Croupier::Game::Steps::Betting::State
   def transfer_bet(player, bet, bet_type)
     @game_state.transfer_bet player, bet, bet_type
   end
+
+  def ==(other)
+    @minimum_raise = other.minimum_raise and @game_state = other.game_state
+  end
 end

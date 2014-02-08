@@ -219,17 +219,23 @@ describe Croupier::Game::Steps::Betting::Step do
     end
 
 
-    xit "should report an empty pot with nothing to call and the big blind as minimum raise" do
-      @first_player.should_receive(:bet_request).with(0, {:to_call=>0, :minimum_raise=>20}).and_return(0)
-      @player_on_button.should_receive(:bet_request).with(0, {:to_call=>0, :minimum_raise=>20}).and_return(0)
+    it "should report an empty pot with nothing to call and the big blind as minimum raise" do
+      betting_state = Croupier::Game::Steps::Betting::State.new @game_state
+      Croupier::Game::Steps::Betting::State.should_receive(:new).and_return(betting_state)
+
+      @first_player.should_receive(:bet_request).with(betting_state, 1, 0, {:to_call=>0, :minimum_raise=>20}).and_return(0)
+      @player_on_button.should_receive(:bet_request).with(betting_state, 0, 0, {:to_call=>0, :minimum_raise=>20}).and_return(0)
 
       run
     end
 
-    xit "should report a non empty pot and suitable limits if a player already bet" do
-      @first_player.should_receive(:bet_request).with(0, {:to_call=>0, :minimum_raise=>20}).and_return(20)
-      @player_on_button.should_receive(:bet_request).with(20, {:to_call=>20, :minimum_raise=>20}).and_return(60)
-      @first_player.should_receive(:bet_request).with(80, {:to_call=>40, :minimum_raise=>40}).and_return(20)
+    it "should report a non empty pot and suitable limits if a player already bet" do
+      betting_state = Croupier::Game::Steps::Betting::State.new @game_state
+      Croupier::Game::Steps::Betting::State.should_receive(:new).and_return(betting_state)
+
+      @first_player.should_receive(:bet_request).with(betting_state, 1,0, {:to_call=>0, :minimum_raise=>20}).and_return(20)
+      @player_on_button.should_receive(:bet_request).with(betting_state, 0, 20, {:to_call=>20, :minimum_raise=>20}).and_return(60)
+      @first_player.should_receive(:bet_request).with(betting_state, 1, 80, {:to_call=>40, :minimum_raise=>40}).and_return(20)
 
       run
     end

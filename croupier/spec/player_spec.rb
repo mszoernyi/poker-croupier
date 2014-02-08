@@ -5,25 +5,27 @@ describe Croupier::Player do
   let(:strategy) { SpecHelper::FakeStrategy.new }
   let(:player) { Croupier::Player.new(strategy) }
 
+  let(:game_state) { Croupier::Game::State.new(SpecHelper::MakeTournamentState::with({})) }
+
   describe "#bet_request" do
 
-    xit "should delegate calls to the player strategy" do
-      strategy.should_receive(:bet_request).with(60, to_call: 20, minimum_raise: 40).and_return(30)
+    it "should delegate calls to the player strategy" do
+      strategy.should_receive(:bet_request).with(game_state, 0, 60, to_call: 20, minimum_raise: 40).and_return(30)
 
-      player.bet_request(60, to_call: 20, minimum_raise: 40).should == 30
+      player.bet_request(game_state, 0, 60, to_call: 20, minimum_raise: 40).should == 30
     end
 
-    xit "should respond with forced bet after receiving #force_bet" do
+    it "should respond with forced bet after receiving #force_bet" do
       player.force_bet 20
-      player.bet_request(0, {}).should == 20
+      player.bet_request(game_state, 0, 0, {}).should == 20
     end
 
-    xit "should delegate bet_request after forced bet has been posted" do
+    it "should delegate bet_request after forced bet has been posted" do
       player.force_bet 20
-      strategy.should_receive(:bet_request).with(60, to_call: 20, minimum_raise: 40).and_return(30)
+      strategy.should_receive(:bet_request).with(game_state, 0, 60, to_call: 20, minimum_raise: 40).and_return(30)
 
-      player.bet_request(0, {}).should == 20
-      player.bet_request(60, to_call: 20, minimum_raise: 40).should == 30
+      player.bet_request(game_state, 0, 0, {}).should == 20
+      player.bet_request(game_state, 0, 60, to_call: 20, minimum_raise: 40).should == 30
     end
   end
 

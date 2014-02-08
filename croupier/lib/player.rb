@@ -45,8 +45,8 @@ class Croupier::Player
     @forced_bet = bet
   end
 
-  def bet_request(game_state, in_action, pot, limits)
-    bet = @forced_bet || @strategy.bet_request(game_state, in_action, pot, limits)
+  def bet_request(game_state, pot, limits)
+    bet = @forced_bet || @strategy.bet_request(game_state, pot, limits)
     @forced_bet = nil
     bet
   end

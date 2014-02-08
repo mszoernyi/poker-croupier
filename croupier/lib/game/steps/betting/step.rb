@@ -10,10 +10,9 @@ class Croupier::Game::Steps::Betting::Step < Croupier::Game::Steps::Base
       Croupier::Game::Steps::Betting::Player.new @betting_state, player
     end
 
-    in_action = first_player_index = game_state.players.index(game_state.first_player)
-    until betting_is_over? && in_action >= minimum_number_of_bets + first_player_index
-      @betting_players[in_action % (@betting_players.length)].take_turn @betting_state, in_action % (@betting_players.length)
-      in_action = in_action + 1
+    until betting_is_over?
+      @betting_players[@betting_state.in_action].take_turn @betting_state
+      @betting_state.next_player
     end
   end
 
@@ -38,7 +37,7 @@ class Croupier::Game::Steps::Betting::Step < Croupier::Game::Steps::Base
         return false
       end
     end
-    true
+    @betting_state.number_of_bets_so_far >= minimum_number_of_bets
   end
 
 

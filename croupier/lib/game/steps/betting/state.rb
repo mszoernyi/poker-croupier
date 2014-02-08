@@ -1,10 +1,15 @@
 class Croupier::Game::Steps::Betting::State
   attr_reader :game_state
   attr_accessor :minimum_raise
+  attr_accessor :in_action
+  attr_accessor :number_of_bets_so_far
 
   def initialize(game_state)
     @game_state = game_state
     @minimum_raise = @game_state.big_blind
+
+    @in_action = game_state.players.index(game_state.first_player)
+    @number_of_bets_so_far = 0
   end
 
   def players
@@ -21,5 +26,10 @@ class Croupier::Game::Steps::Betting::State
 
   def data
     game_state.data
+  end
+  
+  def next_player
+    @in_action = (@in_action + 1) % (@game_state.players.length)
+    @number_of_bets_so_far += 1
   end
 end

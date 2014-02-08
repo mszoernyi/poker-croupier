@@ -3,7 +3,7 @@ require 'player_strategy'
 class Croupier::ThriftPlayerBuilder
 
   def build_player(address)
-    Croupier::Player.new(Croupier::PlayerStrategy.new(*build_client(address)))
+    Croupier::Player.new(Croupier::ThriftPlayer.new(*build_client(address)))
   end
 
   private
@@ -19,7 +19,7 @@ class Croupier::ThriftPlayerBuilder
 
     transport = Thrift::BufferedTransport.new(socket)
     protocol = Thrift::BinaryProtocol.new(transport)
-    strategy = API::PlayerStrategy::Client.new(protocol)
+    strategy = API::ThriftPlayer::Client.new(protocol)
     [strategy, transport]
   end
 end

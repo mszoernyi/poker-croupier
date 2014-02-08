@@ -5,7 +5,7 @@ describe Croupier::Game::State do
   describe "#transfer_bet" do
     it "should transfer the amount requested from the player to the pot, and notify observers" do
       api_player = double("player strategy")
-      game_state = Croupier::Game::State.new(SpecHelper::MakeTournamentState.with players: [Croupier::Player.new(Croupier::PlayerStrategy.new(api_player, nil))])
+      game_state = Croupier::Game::State.new(SpecHelper::MakeTournamentState.with players: [Croupier::Player.new(Croupier::ThriftPlayer.new(api_player, nil))])
       api_player.should_receive(:name).and_return("Joe")
 
       bet = API::Bet.new

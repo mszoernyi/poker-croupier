@@ -1,6 +1,6 @@
 require 'player_strategy'
 
-class Croupier::PlayerStrategy
+class Croupier::ThriftPlayer
   attr_reader :gateway
   attr_reader :strategy
 

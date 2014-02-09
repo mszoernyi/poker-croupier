@@ -18,7 +18,13 @@ class Croupier::Handler
       end
   end
 
-  def register_player(name, url)
+  def register_in_process_player(name, strategy)
+    player = Croupier::Player.new(strategy.new name)
+    @croupier.register_player player
+    Croupier.logger.info "Connected #{player.name} with #{strategy} strategy"
+  end
+
+  def register_rest_player(name, url)
     player = Croupier::Player.new(Croupier::RestPlayer.new name, url)
     @croupier.register_player player
     Croupier.logger.info "Connected #{player.name}"

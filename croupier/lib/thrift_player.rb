@@ -58,7 +58,7 @@ class Croupier::ThriftPlayer
   private
 
   def to_call(game_state)
-    game_state[:pot] - game_state[:players][game_state[:in_action]][:bet]
+    game_state[:current_buy_in] - game_state[:players][game_state[:in_action]][:bet]
   end
 
   def bet_limits(game_state)

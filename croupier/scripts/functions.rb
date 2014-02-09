@@ -1,4 +1,6 @@
 
+PLAYER_NAMES = %w(Albert Bob Chuck Daniel Emily Franky George Huge Ivan Joe Kevin Leo Mike Nikki Oliver Peter Q Robert Steve Tom Ulric Victor Walt Xavier Yvette Zara)
+
 Dir.chdir File.dirname(__FILE__)
 
 require_relative '../croupier'
@@ -13,11 +15,9 @@ def sit_and_go(log_file, &block)
 end
 
 def start_players(number_of_players)
-  player_names = %w(Albert Bob Chuck Daniel Emily Franky George Huge Ivan Joe Kevin Leo Mike Nikki Oliver Peter Q Robert Steve Tom Ulric Victor Walt Xavier Yvette Zara)
-
   players = []
 
-  player_names[0..number_of_players-1].each_with_index do |player_name, index|
+  PLAYER_NAMES[0..number_of_players-1].each_with_index do |player_name, index|
     players[index] = fork do
       exec "bundle exec ruby ../../player/rb/player_service.rb #{9200+index} '#{player_name}'"
     end

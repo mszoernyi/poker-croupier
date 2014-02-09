@@ -2,7 +2,6 @@ $:.push(File.join(File.dirname(__FILE__), '../../common/lib'))
 $:.push(File.join(File.dirname(__FILE__)))
 
 require_relative '../croupier'
-require_relative '../../croupier/lib/api/types_types'
 
 module SpecHelper
   autoload :DummyClass, 'spec_helper/dummy_class'

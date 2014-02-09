@@ -3,21 +3,10 @@ require_relative '../spec_helper'
 describe Croupier::Game::State do
 
   describe "#transfer_bet" do
-    it "should transfer the amount requested from the player to the pot, and notify observers" do
+    it "should transfer the amount requested from the player to the pot" do
       api_player = double("player strategy")
-      game_state = Croupier::Game::State.new(SpecHelper::MakeTournamentState.with players: [Croupier::Player.new(Croupier::ThriftPlayer.new(api_player, nil))])
-      api_player.should_receive(:name).and_return("Joe")
-
-      bet = API::Bet.new
-      bet.amount = 40
-      bet.type = API::BetType::Raise
-      bet.new_pot_size = 40
-
-      competitor = API::Competitor.new
-      competitor.name = "Joe"
-      competitor.stack = 960
-
-      api_player.should_receive(:bet).with(competitor, bet)
+      game_state = Croupier::Game::State.new(SpecHelper::MakeTournamentState.with players: [Croupier::Player.new(api_player)])
+      api_player.stub(:name).and_return("Joe")
 
       game_state.transfer_bet game_state.players.first, 40, :raise
 

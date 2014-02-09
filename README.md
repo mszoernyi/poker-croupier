@@ -35,7 +35,7 @@ We would like to avoid a situation where one team has a huge advantage over the 
 
 For a library to qualify for the bellow exceptions, it should be publicly available and opensource. Properitary libraries are baned under all conditions.
 
-- The folding player provided as part of this repository in the `player/<language>` library can be used as a starting point. (That is to avoid people strugling to get Thrift to work.)
+- The folding player provided as part of this repository in the `player/<language>` library can be used as a starting point.
 - In the case of C++ the Boost library is allowed, since otherwise C++ would be handicaped against languages like Java and python that have more potent standard libraries. Similarly in other languages where the standard library is small - like JavaScript - public packages are allowed as long as they are resonably general purpose. 
 - If in doubt, than the team should ask the other teams if they allow them to use a particular library. In the name of fair play, other teams should allow the usage of the library if it does not give the other team an unfair advantage. 
 

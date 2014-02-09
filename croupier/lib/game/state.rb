@@ -24,7 +24,7 @@ class Croupier::Game::State
     @last_aggressor = player if current_buy_in > original_buy_in
 
     transfer player, amount
-    each_observer do |observer|
+    each_spectator do |observer|
       observer.bet player, amount: amount, type: bet_type, pot: pot
     end
   end

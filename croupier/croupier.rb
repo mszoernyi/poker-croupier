@@ -1,7 +1,7 @@
 $:.push(File.join(File.dirname(__FILE__), 'lib/api'))
 $:.push(File.join(File.dirname(__FILE__)))
 
-require 'thrift'
+require 'logger'
 require_relative '../common/lib/delegate_all'
 
 module Croupier
@@ -13,10 +13,6 @@ module Croupier
   autoload :Player, 'lib/player'
   autoload :RandomPlayer, 'lib/random_player'
   autoload :RestPlayer, 'lib/rest_player'
-  autoload :ThriftPlayer, 'lib/thrift_player'
-  autoload :ThriftPlayerBuilder, 'lib/thrift_player_builder'
-  autoload :ThriftEntityGateway, 'lib/thrift_entity_gateway'
-  autoload :ThriftObserver, 'lib/thrift_observer'
   autoload :Tournament, 'lib/tournament'
 
   class << self

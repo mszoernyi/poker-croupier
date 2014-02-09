@@ -6,18 +6,6 @@ class Croupier::Handler
     @croupier.register_spectator Croupier::LogHandler::Json.new("#{Croupier::log_file}.json")
   end
 
-  def register_thrift_player(address)
-      begin
-        player = Croupier::ThriftPlayerBuilder.new.build_player(address)
-        player.open
-        @croupier.register_player player
-        Croupier.logger.info "Connected #{player.name} at #{address}"
-      rescue Exception => e
-        Croupier.logger.error $!.message
-        raise e
-      end
-  end
-
   def register_in_process_player(name, strategy)
     player = Croupier::Player.new(strategy.new name)
     @croupier.register_player player

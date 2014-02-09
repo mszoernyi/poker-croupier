@@ -7,11 +7,6 @@ task :test => [:'test:spec']
 desc "Run RSpec code examples (options: RSPEC_SEED=seed)"
 task :spec => :'test:spec'
 
-desc "Runs the thrift compiler to refresh generated code of service end points"
-task :thrift do
-  ruby "rake/thrift_compiler.rb"
-end
-
 namespace :test do
 
   desc "Run RSpec code examples (options: RSPEC_SEED=seed)"

@@ -21,9 +21,9 @@ class Croupier::RestPlayer
     req.set_form({ action: 'bet_request', game_state: game_state.to_json })
     response = Net::HTTP.new(@host, @port).start {|http| http.request(req) }
 
-    return response.body.to_i if response.code == 200
+    return 0 unless response.code.to_i == 200
 
-    0
+    response.body.to_i
   end
 
   def open

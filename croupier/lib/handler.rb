@@ -27,7 +27,7 @@ class Croupier::Handler
   def register_rest_player(name, url)
     player = Croupier::Player.new(Croupier::RestPlayer.new name, url)
     @croupier.register_player player
-    Croupier.logger.info "Connected #{player.name}"
+    Croupier.logger.info "Connected #{player.name} at #{url}"
   end
 
   def start_sit_and_go

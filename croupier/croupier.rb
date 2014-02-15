@@ -2,7 +2,7 @@ $:.push(File.join(File.dirname(__FILE__), 'lib/api'))
 $:.push(File.join(File.dirname(__FILE__)))
 
 require 'logger'
-require_relative '../common/lib/delegate_all'
+require 'delegate_all'
 
 module Croupier
 

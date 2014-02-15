@@ -41,15 +41,6 @@ class Croupier::LogHandler::Json
     }
   end
 
-  def hole_card(competitor, card)
-    @state[:message] = @message_generator.hole_card(competitor, card)
-    @state[:dealer] = @dealer % @state[:players].length
-    @state[:on_turn] = @player_index[competitor.name]
-    json_player(competitor)[:hole_cards] << format_card(card)
-    save_step
-  end
-
-
   def community_card(card)
     @state[:message] = @message_generator.community_card(card)
     @state[:on_turn] = ''
@@ -89,6 +80,11 @@ class Croupier::LogHandler::Json
     end
   end
 
+  def log_state(game_state, message = '')
+    @state = game_state
+    @state['message'] = message
+    save_step
+  end
 
   private
 

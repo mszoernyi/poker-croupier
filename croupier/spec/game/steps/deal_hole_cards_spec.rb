@@ -9,6 +9,8 @@ describe Croupier::Game::Steps::DealHoleCards do
     deck = double("Deck")
     deck.stub(:next_card!).and_return(*cards)
 
+    game_state.should_receive(:log_state)
+
     Croupier::Deck.stub(:new).and_return(deck)
   end
 

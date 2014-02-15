@@ -3,10 +3,6 @@ class Croupier::LogHandler::Messages
     "#{competitor.name} has #{competitor.stack} chips"
   end
 
-  def hole_card(competitor, card)
-    "#{competitor.name} got hole card #{card} (#{card.value}, #{card.suit})"
-  end
-
   def community_card(card)
     "community card #{card}"
   end

@@ -52,7 +52,6 @@ class Croupier::Player
   end
 
   def hole_card card
-    @strategy.hole_card card
     @hole_cards << card
   end
 

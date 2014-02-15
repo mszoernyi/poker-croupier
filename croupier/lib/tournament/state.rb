@@ -26,6 +26,10 @@ class Croupier::Tournament::State
     @spectators << spectator
   end
 
+  def log_state(message = '')
+    @spectators[0].log_state(data, message)
+  end
+
   def deck
     @deck ||= Croupier::Deck.new
   end

@@ -13,9 +13,6 @@ class Croupier::RestPlayer
     @host, @port, @path = uri.host, uri.port, uri.path
   end
 
-  def hole_card(card)
-  end
-
   def bet_request(game_state)
     begin
       req = Net::HTTP::Post.new(@path)

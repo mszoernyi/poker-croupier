@@ -5,9 +5,6 @@ class Croupier::RandomPlayer
     @name = name
   end
 
-  def hole_card(card)
-  end
-
   def bet_request(game_state)
     to_call = game_state[:current_buy_in] - game_state[:players][game_state[:in_action]][:bet]
     case rand(0..4)

@@ -51,7 +51,7 @@ describe :delegate_all do
     end
   end
 
-  context "respond_to?" do
+  context "#respond_to?" do
     it "should return true for delegated public methods" do
       class StubDelegateClass
         def delegated_method
@@ -60,16 +60,28 @@ describe :delegate_all do
 
       DelegatorClass.new(StubDelegateClass.new).respond_to?(:delegated_method).should be_true
     end
-  end
 
-  it "should not return true for private methods of the delegate class" do
-    class StubDelegateClass
-      private
-      def delegated_method
+    it "should not return true for private methods of the delegate class" do
+      class StubDelegateClass
+        private
+        def delegated_method
+        end
       end
+
+      DelegatorClass.new(StubDelegateClass.new).respond_to?(:delegated_method).should be_false
     end
 
-    DelegatorClass.new(StubDelegateClass.new).respond_to?(:delegated_method).should be_false
+  end
+
+  context "#public_methods" do
+    it "should include the delegated methods as well" do
+      class StubDelegateClass
+        def delegated_method
+        end
+      end
+
+      DelegatorClass.new(StubDelegateClass.new).public_methods.should include(:delegated_method)
+    end
   end
 
 end

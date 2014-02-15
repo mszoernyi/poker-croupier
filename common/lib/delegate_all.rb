@@ -12,4 +12,12 @@ def delegate_all(member)
     super method, include_private
   end
 
+  define_method :public_methods do |all = true|
+    if all
+      super(all).concat (instance_variable_get "@#{member}").public_methods(all)
+    else
+      super(false)
+    end
+  end
+
 end

@@ -6,7 +6,7 @@ GEM
     diff-lcs (1.2.5)
     eventmachine (1.0.3)
     mustache (0.99.5)
-    poker-ranking (1.0.3)
+    poker-ranking (1.0.4)
     rack (1.5.2)
     rack-protection (1.5.2)
       rack

@@ -20,12 +20,6 @@ class Croupier::RandomPlayer
     end
   end
 
-  def open
-  end
-
-  def close
-  end
-
   def competitor_status(competitor)
   end
 

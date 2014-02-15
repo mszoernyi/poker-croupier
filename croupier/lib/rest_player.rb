@@ -33,12 +33,6 @@ class Croupier::RestPlayer
     end
   end
 
-  def open
-  end
-
-  def close
-  end
-
   def competitor_status(competitor)
   end
 

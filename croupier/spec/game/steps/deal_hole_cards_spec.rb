@@ -9,7 +9,7 @@ describe Croupier::Game::Steps::DealHoleCards do
     deck = double("Deck")
     deck.stub(:next_card!).and_return(*cards)
 
-    game_state.should_receive(:log_state)
+    game_state.should_receive(:log_state).exactly(5).times
 
     Croupier::Deck.stub(:new).and_return(deck)
   end

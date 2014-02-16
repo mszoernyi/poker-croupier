@@ -23,23 +23,9 @@ describe Croupier::Game::Steps::DealFlop do
     @game_state = Croupier::Game::State.new tournament_state
   end
 
-  it "should deal three community cards and notify the players" do
-    @game_state.players.each do |player|
-      @cards[0..2].each do |card|
-        player.should_receive(:community_card).with(card)
-      end
-    end
-
+  it "should deal three community cards" do
     run
-  end
 
-  it "should deal three community cards and notify the spectators" do
-    @game_state.spectators.each do |spectator|
-      @cards[0..2].each do |card|
-        spectator.should_receive(:community_card).with(card)
-      end
-    end
-
-    run
+    @game_state.community_cards.should == @cards[0..2]
   end
 end

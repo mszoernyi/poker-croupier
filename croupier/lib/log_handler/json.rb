@@ -41,13 +41,6 @@ class Croupier::LogHandler::Json
     }
   end
 
-  def community_card(card)
-    @state[:message] = @message_generator.community_card(card)
-    @state[:on_turn] = ''
-    @state[:community_cards] << format_card(card)
-    save_step
-  end
-
   def bet(competitor, bet)
     @state[:message] = @message_generator.bet(competitor, bet)
     @state[:on_turn] = @player_index[competitor.name]

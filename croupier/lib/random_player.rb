@@ -20,9 +20,6 @@ class Croupier::RandomPlayer
   def bet(competitor, bet)
   end
 
-  def community_card(card)
-  end
-
   def showdown(competitor, hand)
   end
 

@@ -22,32 +22,24 @@ describe Croupier::Game::Steps::DealCommunityCard do
     @game_state = Croupier::Game::State.new tournament_state
   end
 
-  it "should skip dealing if there is only one active player" do
-    @game_state.players[0].fold
-    @game_state.players[1].should_not_receive(:community_card)
-
-    run
-  end
-
-  it "should deal a community card and notify the players" do
-    @game_state.players.each do |player|
-      player.should_receive(:community_card).with(@cards.first)
-    end
-
-    run
-  end
-
-  it "should deal a community card and notify the spectators" do
-    @game_state.spectators.each do |spectator|
-      spectator.should_receive(:community_card).with(@cards.first)
-    end
-
-    run
-  end
-
   it "should store the card dealt in game_state for later use" do
     run
 
     @game_state.community_cards.should == [@cards.first]
   end
+
+  it "should log the game state" do
+    @game_state.should_receive(:log_state).with("community card #{@cards.first}")
+
+    run
+  end
+
+  it "should skip dealing if there is only one active player" do
+    @game_state.players[0].fold
+
+    run
+
+    @game_state.community_cards.should == []
+  end
+
 end

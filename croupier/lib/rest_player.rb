@@ -42,7 +42,4 @@ class Croupier::RestPlayer
   def winner(competitor, amount)
   end
 
-  def shutdown
-  end
-
 end

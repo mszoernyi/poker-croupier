@@ -74,9 +74,9 @@ class Croupier::LogHandler::Json
     save_step
   end
 
-  def shutdown
+  def flush
     File.open(@file, 'w') do |file|
-      file.puts "[" + @history.join(',') + "]"
+      file.puts "[" + @history.join(",\n") + "]"
     end
   end
 

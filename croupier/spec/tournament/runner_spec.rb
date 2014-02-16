@@ -3,6 +3,7 @@ require_relative '../spec_helper'
 describe Croupier::Tournament::Runner do
   before :each do
     @tournament_state = Croupier::Tournament::State.new
+    @tournament_state.register_spectator SpecHelper::DummyClass.new
     Croupier::Tournament::State.stub(:new).and_return(@tournament_state)
 
     @runner = Croupier::Tournament::Runner.new
@@ -14,15 +15,6 @@ describe Croupier::Tournament::Runner do
       @runner.register_player(player)
 
       @tournament_state.players.should == [player]
-    end
-  end
-
-  describe "#register_spectator" do
-    it "should add the spectator to the game state" do
-      spectator = double("Spectator")
-      @runner.register_spectator(spectator)
-
-      @tournament_state.spectators.should == [spectator]
     end
   end
 

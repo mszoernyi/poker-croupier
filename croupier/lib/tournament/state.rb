@@ -30,6 +30,10 @@ class Croupier::Tournament::State
     @spectators[0].log_state(data, message)
   end
 
+  def flush_log
+    @spectators[0].flush
+  end
+
   def deck
     @deck ||= Croupier::Deck.new
   end

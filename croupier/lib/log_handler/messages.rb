@@ -15,8 +15,4 @@ class Croupier::LogHandler::Messages
   def winner(competitor, amount)
     "#{competitor.name} won #{amount}"
   end
-
-  def shutdown
-
-  end
 end

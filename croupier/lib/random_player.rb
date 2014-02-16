@@ -28,7 +28,4 @@ class Croupier::RandomPlayer
 
   def winner(competitor, amount)
   end
-
-  def shutdown
-  end
 end

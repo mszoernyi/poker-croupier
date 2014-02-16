@@ -22,9 +22,7 @@ class Croupier::Tournament::Runner
     end
     puts '' if STDOUT.tty?
     ranking.add_winner
-    @tournament_state.each_observer do |observer|
-      observer.shutdown
-    end
+    @tournament_state.flush_log
     ranking
   end
 

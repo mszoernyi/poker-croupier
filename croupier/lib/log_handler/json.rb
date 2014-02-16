@@ -64,14 +64,6 @@ class Croupier::LogHandler::Json
     @state[:players][@player_index[competitor.name]]
   end
 
-  def format_card(card)
-    rank = card.value
-    if card.value > 10
-      rank = ["J","Q","K","A"][card.value - 11]
-    end
-    {rank: rank, suit: card.suit.downcase}
-  end
-
   def save_step
     @history << JSON.generate(@state)
   end

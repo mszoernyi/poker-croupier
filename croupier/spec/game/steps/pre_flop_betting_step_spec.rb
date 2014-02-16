@@ -11,24 +11,18 @@ describe Croupier::Game::Steps::Betting::PreFlop do
     ))
   end
 
-  def expect_bet_announced(amount, player, type, pot)
-    spectator.should_receive(:bet).with(player, amount: amount, type: type, pot: pot)
-  end
-
   def run()
     Croupier::Game::Steps::Betting::PreFlop.new(game_state).run
   end
 
-  xit "should report the blinds than ask other players for their bets" do
-    expect_bet_announced 10, game_state.first_player, :raise, 10
-    expect_bet_announced 20, game_state.second_player, :raise, 30
-
+  it "should report the blinds than ask other players for their bets" do
     game_state.first_player.strategy.should_receive(:bet_request).and_return(10)
-    expect_bet_announced 10, game_state.first_player, :call, 40
 
     game_state.second_player.strategy.should_receive(:bet_request).and_return(0)
-    expect_bet_announced 0, game_state.second_player, :check, 40
 
     run
+
+    game_state.players[0].total_bet.should == 20
+    game_state.players[1].total_bet.should == 20
   end
 end

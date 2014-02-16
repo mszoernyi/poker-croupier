@@ -11,15 +11,16 @@ describe Croupier::Game::Steps::Betting::Step do
     @mocked_pot = 0
   end
 
-  def should_bet(player, amount, type)
-    should_try_bet player, amount, amount, type
+  def should_bet(player, amount, type, expected_stack = nil)
+    should_try_bet player, amount, amount, type, expected_stack
   end
 
-  def should_try_bet(player, requested_amount, actual_amount, type)
+  def should_try_bet(player, requested_amount, actual_amount, type, expected_stack = nil)
+    expected_stack = player.stack - actual_amount if expected_stack.nil?
     @mocked_pot += actual_amount
     player.should_receive(:bet_request).and_return(requested_amount)
     index = @game_state.players.index(player)
-    @game_state.should_receive(:log_state).with(on_turn: index, message: "#{player.name} made a bet of #{actual_amount} (#{type}) and is left with #{player.stack - actual_amount} chips. The pot now contains #{@mocked_pot} chips.")
+    @game_state.should_receive(:log_state).with(on_turn: index, message: "#{player.name} made a bet of #{actual_amount} (#{type}) and is left with #{expected_stack} chips. The pot now contains #{@mocked_pot} chips.")
   end
 
   def run()
@@ -80,10 +81,10 @@ describe Croupier::Game::Steps::Betting::Step do
       @first_player.stack.should == 980
     end
 
-    xit "should ask the first player again if the second raises" do
+    it "should ask the first player again if the second raises" do
       should_bet @first_player, 20, :raise
       should_bet @player_on_button, 40, :raise
-      should_bet @first_player, 20, :call
+      should_bet @first_player, 20, :call, 960
       run
       @game_state.pot.should == 80
       @player_on_button.stack.should == 960
@@ -164,18 +165,18 @@ describe Croupier::Game::Steps::Betting::Step do
       @player_on_button.total_bet.should == 60
     end
 
-    xit "should skip inactive players" do
+    it "should skip inactive players" do
       @second_player = Croupier::Player.new SpecHelper::FakeStrategy.new
       @game_state.register_player @second_player
 
       should_bet @first_player, 20, :raise
       should_bet @second_player, 0, :fold
       should_bet @player_on_button, 40, :raise
-      should_bet @first_player, 20, :call
+      should_bet @first_player, 20, :call, 960
       run
     end
 
-    xit "should skip all-in players" do
+    it "should skip all-in players" do
       @second_player = Croupier::Player.new SpecHelper::FakeStrategy.new
       @second_player.stack = 10
       @game_state.register_player @second_player
@@ -183,8 +184,8 @@ describe Croupier::Game::Steps::Betting::Step do
       should_bet @first_player, 20, :raise
       should_bet @second_player, 10, :allin
       should_bet @player_on_button, 40, :raise
-      should_bet @first_player, 40, :raise
-      should_bet @player_on_button, 20, :call
+      should_bet @first_player, 40, :raise, 940
+      should_bet @player_on_button, 20, :call, 940
       run
     end
 

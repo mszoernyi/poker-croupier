@@ -62,9 +62,8 @@ class Croupier::LogHandler::Json
     end
   end
 
-  def log_state(game_state, message = '')
-    @state = game_state
-    @state['message'] = message
+  def log_state(game_state, additional_data = {})
+    @state = game_state.merge additional_data
     save_step
 
     refresh_player_index(game_state)

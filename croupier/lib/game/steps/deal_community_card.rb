@@ -5,7 +5,7 @@ class Croupier::Game::Steps::DealCommunityCard < Croupier::Game::Steps::Base
 
     card = game_state.deck.next_card!
     game_state.community_cards << card
-    game_state.log_state "community card #{card}"
+    game_state.log_state message: "community card #{card}"
   end
 
   private

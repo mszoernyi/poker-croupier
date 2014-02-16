@@ -18,7 +18,7 @@ describe Croupier::Game::Steps::Betting::Step do
   def should_try_bet(player, requested_amount, actual_amount, type)
     @mocked_pot += actual_amount
     player.should_receive(:bet_request).and_return(requested_amount)
-    @game_state.should_receive(:log_state).with("#{player.name} made a bet of #{actual_amount} (#{type}) and is left with #{player.stack - actual_amount} chips. The pot now contains #{@mocked_pot} chips.")
+    @game_state.should_receive(:log_state).with(message: "#{player.name} made a bet of #{actual_amount} (#{type}) and is left with #{player.stack - actual_amount} chips. The pot now contains #{@mocked_pot} chips.")
   end
 
   def run()

@@ -26,8 +26,8 @@ class Croupier::Tournament::State
     @spectators << spectator
   end
 
-  def log_state(message = '')
-    @spectators[0].log_state(data, message)
+  def log_state(additional_data = {})
+    @spectators[0].log_state(data, additional_data)
   end
 
   def flush_log

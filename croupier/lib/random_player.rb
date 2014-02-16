@@ -17,7 +17,7 @@ class Croupier::RandomPlayer
     end
   end
 
-  def showdown(competitor, hand)
+  def show_cards(competitor, hand)
   end
 
   def winner(competitor, amount)

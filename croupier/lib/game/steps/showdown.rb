@@ -36,7 +36,7 @@ class Croupier::Game::Steps::Showdown < Croupier::Game::Steps::Base
     return if @best_hand.defeats? hand
 
     game_state.each_observer do |observer|
-      observer.showdown player, hand
+      observer.show_cards player, hand
     end
 
     @winners = [] if hand.defeats? @best_hand

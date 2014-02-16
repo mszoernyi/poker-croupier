@@ -23,9 +23,9 @@ class Croupier::LogHandler::Json
     @player_index = {}
   end
 
-  def showdown(competitor, hand)
+  def show_cards(competitor, hand)
     @state[:on_turn] = @player_index[competitor.name]
-    @state[:message] = @message_generator.showdown(competitor, hand)
+    @state[:message] = @message_generator.show_cards(competitor, hand)
     save_step
   end
 

@@ -100,7 +100,7 @@ describe Croupier::Game::Steps::Showdown do
         hand = PokerRanking::Hand.new [*player.hole_cards, *game_state.community_cards]
 
         (game_state.players + game_state.spectators).each do |observer|
-          observer.should_receive(:showdown).with(player, hand)
+          observer.should_receive(:show_cards).with(player, hand)
         end
       end
     end

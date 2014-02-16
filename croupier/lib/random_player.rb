@@ -17,9 +17,6 @@ class Croupier::RandomPlayer
     end
   end
 
-  def bet(competitor, bet)
-  end
-
   def showdown(competitor, hand)
   end
 

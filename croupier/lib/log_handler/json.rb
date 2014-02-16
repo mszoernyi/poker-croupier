@@ -41,17 +41,6 @@ class Croupier::LogHandler::Json
     }
   end
 
-  def bet(competitor, bet)
-    @state[:message] = @message_generator.bet(competitor, bet)
-    @state[:on_turn] = @player_index[competitor.name]
-    @state[:pot] = bet[:pot]
-    json_player(competitor)[:stack] = competitor.stack
-    json_player(competitor)[:bet] += bet[:amount]
-    json_player(competitor)[:status] = "folded" if bet[:type] == :fold
-    save_step
-  end
-
-
   def showdown(competitor, hand)
     @state[:on_turn] = @player_index[competitor.name]
     @state[:message] = @message_generator.showdown(competitor, hand)

@@ -24,9 +24,7 @@ class Croupier::Game::State
     @last_aggressor = player if current_buy_in > original_buy_in
 
     transfer player, amount
-    @tournament_state.each_spectator do |observer|
-      observer.bet player, amount: amount, type: bet_type, pot: pot
-    end
+    log_state "#{player.name} made a bet of #{amount} (#{bet_type}) and is left with #{player.stack} chips. The pot now contains #{pot} chips."
   end
 
   def last_aggressor

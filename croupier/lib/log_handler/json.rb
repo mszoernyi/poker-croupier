@@ -23,24 +23,6 @@ class Croupier::LogHandler::Json
     @player_index = {}
   end
 
-  def competitor_status(competitor)
-    unless @game_phase == :start
-      initialize_state
-    end
-
-    @game_phase = :start
-    index = @state[:players].length
-    @player_index[competitor.name] = index
-    @state[:players] << {
-        id: index,
-        name: competitor.name,
-        stack: competitor.stack,
-        bet: 0,
-        status: ((competitor.stack > 0) ? 'active' : 'out'),
-        hole_cards: []
-    }
-  end
-
   def showdown(competitor, hand)
     @state[:on_turn] = @player_index[competitor.name]
     @state[:message] = @message_generator.showdown(competitor, hand)

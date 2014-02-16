@@ -24,7 +24,7 @@ class Croupier::Game::State
     @last_aggressor = player if current_buy_in > original_buy_in
 
     transfer player, amount
-    log_state message: "#{player.name} made a bet of #{amount} (#{bet_type}) and is left with #{player.stack} chips. The pot now contains #{pot} chips."
+    log_state on_turn: players.index(player), message: "#{player.name} made a bet of #{amount} (#{bet_type}) and is left with #{player.stack} chips. The pot now contains #{pot} chips."
   end
 
   def last_aggressor

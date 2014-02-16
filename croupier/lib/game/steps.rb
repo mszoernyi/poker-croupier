@@ -5,7 +5,6 @@ module Croupier::Game::Steps
   autoload :DealCommunityCard, 'lib/game/steps/deal_community_card'
   autoload :DealHoleCards, 'lib/game/steps/deal_hole_cards'
   autoload :DealFlop, 'lib/game/steps/deal_flop'
-  autoload :IntroducePlayers, 'lib/game/steps/introduce_players'
   autoload :Showdown, 'lib/game/steps/showdown'
   autoload :ShuffleCards, 'lib/game/steps/shuffle_cards'
 

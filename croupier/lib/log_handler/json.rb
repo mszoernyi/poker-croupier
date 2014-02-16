@@ -84,9 +84,18 @@ class Croupier::LogHandler::Json
     @state = game_state
     @state['message'] = message
     save_step
+
+    refresh_player_index(game_state)
   end
 
   private
+
+  def refresh_player_index(game_state)
+    @player_index = {}
+    game_state[:players].each_with_index do |player, index|
+      @player_index[player[:name]] = index
+    end
+  end
 
   def json_player(competitor)
     @state[:players][@player_index[competitor.name]]

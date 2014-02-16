@@ -1,7 +1,6 @@
 class Croupier::Game::Runner
   include Croupier::Game::Steps
   GAME_STEPS = [
-      IntroducePlayers,
       ShuffleCards,
       DealHoleCards,
       Betting::PreFlop,

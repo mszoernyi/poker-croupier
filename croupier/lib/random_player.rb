@@ -17,9 +17,6 @@ class Croupier::RandomPlayer
     end
   end
 
-  def competitor_status(competitor)
-  end
-
   def bet(competitor, bet)
   end
 

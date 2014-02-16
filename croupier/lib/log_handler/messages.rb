@@ -1,7 +1,4 @@
 class Croupier::LogHandler::Messages
-  def competitor_status(competitor)
-    "#{competitor.name} has #{competitor.stack} chips"
-  end
 
   def community_card(card)
     "community card #{card}"

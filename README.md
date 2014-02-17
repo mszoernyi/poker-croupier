@@ -6,8 +6,8 @@ poker-croupier
 Robot poker croupier for lean poker tournaments, an event much like a code retreat, but with a slightly different format and purpose.
 
 You can read about the first event here: 
-http://c0de-x.com/how-playing-poker-can-teach-you-lean-and-continuous-delivery/
-https://athos.blogs.balabit.com/2014/02/lean-poker-code-retreat/
+- http://c0de-x.com/how-playing-poker-can-teach-you-lean-and-continuous-delivery/
+- https://athos.blogs.balabit.com/2014/02/lean-poker-code-retreat/
 
 ## The purpose
 

@@ -5,6 +5,10 @@ poker-croupier
 
 Robot poker croupier for lean poker tournaments, an event much like a code retreat, but with a slightly different format and purpose.
 
+You can read about the first event here: 
+http://c0de-x.com/how-playing-poker-can-teach-you-lean-and-continuous-delivery/
+https://athos.blogs.balabit.com/2014/02/lean-poker-code-retreat/
+
 ## The purpose
 
 A lean poker tournament's aim is for participants to practice concepts related to lean start ups and continuous deployment. A poker team is a small group of developers (ideally 4 people forming 2 pairs) whose aim is to incrementally build a highly heuristic algorithm within a one day timeframe that is just smart enough to beat the other robots. Professional poker robots are developed for years, so the purpose is definitely not to come up with something really smart, but to be the smartest among the current competitors. With this in mind teams can come up with simple to implement heuristics, examine their effect on game play during training rounds, and than improve their algorithm in a similar lean fashion.

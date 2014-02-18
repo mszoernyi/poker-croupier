@@ -9,7 +9,7 @@ class Croupier::Tournament::Runner
   end
 
   def register_spectator(spectator)
-    @tournament_state.register_spectator spectator
+    @tournament_state.set_logger spectator
   end
 
   def start_sit_and_go

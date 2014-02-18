@@ -10,7 +10,7 @@ describe Croupier::Game::Steps::Showdown do
     let(:game_state) do
       tournament_state = SpecHelper::MakeTournamentState.with(
           players: [fake_player, fake_player],
-          spectators: [SpecHelper::FakeSpectator.new, SpecHelper::FakeSpectator.new]
+          logger: [SpecHelper::FakeSpectator.new, SpecHelper::FakeSpectator.new]
       )
 
       Croupier::Game::State.new(tournament_state).tap do |game_state|
@@ -89,10 +89,10 @@ describe Croupier::Game::Steps::Showdown do
       it "should not show cards if all but one player folded" do
         game_state.first_player.fold
 
-        spectator_mock = double
-        spectator_mock.stub(:winner)
+        logger_mock = double
+        showdown_step.stub(:announce_winner)
 
-        game_state.register_spectator spectator_mock
+        game_state.set_logger logger_mock
 
         showdown_step.run
       end
@@ -155,7 +155,7 @@ describe Croupier::Game::Steps::Showdown do
     let(:game_state) do
       tournament_state = SpecHelper::MakeTournamentState.with(
           players: [fake_player, fake_player, fake_player],
-          spectators: [SpecHelper::FakeSpectator.new]
+          logger: [SpecHelper::FakeSpectator.new]
       )
 
       Croupier::Game::State.new(tournament_state).tap do |game_state|

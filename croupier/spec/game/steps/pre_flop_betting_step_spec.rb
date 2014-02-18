@@ -7,7 +7,7 @@ describe Croupier::Game::Steps::Betting::PreFlop do
   let(:game_state) do
     Croupier::Game::State.new(SpecHelper::MakeTournamentState.with(
         players: [fake_player("Albert"), fake_player("Bob")],
-        spectators: [spectator]
+        logger: [spectator]
     ))
   end
 

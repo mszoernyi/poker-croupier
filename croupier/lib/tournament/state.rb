@@ -1,10 +1,10 @@
 class Croupier::Tournament::State
   attr_reader :players
-  attr_reader :spectators
+  attr_reader :logger
 
   def initialize
     @players = []
-    @spectators = []
+    @logger = Croupier::LogHandler::NilLogger.new
     @small_blind = 10
     @orbits = 0
     @dealers_position = 0
@@ -22,16 +22,16 @@ class Croupier::Tournament::State
     @players << player
   end
 
-  def register_spectator(spectator)
-    @spectators << spectator
+  def set_logger(logger)
+    @logger = logger
   end
 
   def log_state(additional_data = {})
-    @spectators[0].log_state(data, additional_data)
+    @logger.log_state(data, additional_data)
   end
 
   def flush_log
-    @spectators[0].flush
+    @logger.flush
   end
 
   def deck

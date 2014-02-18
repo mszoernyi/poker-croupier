@@ -49,14 +49,14 @@ describe Croupier::Tournament::State do
     end
   end
 
-  describe "#register_spectator" do
-    it "should add tge spectator to the list of spectators" do
-      spectator = double("Spectator")
+  describe "#set_logger" do
+    it "should replace the default logger" do
+      logger = double("Logger")
 
       game_state = Croupier::Tournament::State.new
-      game_state.register_spectator(spectator)
+      game_state.set_logger(logger)
 
-      game_state.spectators.should == [spectator]
+      game_state.logger.should == logger
     end
   end
 
@@ -158,7 +158,7 @@ describe Croupier::Tournament::State do
     before :each do
       @game_state = SpecHelper::MakeTournamentState.with(
           players: [fake_player, fake_player],
-          spectators: [SpecHelper::FakeSpectator.new, SpecHelper::FakeSpectator.new]
+          logger: [SpecHelper::FakeSpectator.new, SpecHelper::FakeSpectator.new]
       )
     end
 

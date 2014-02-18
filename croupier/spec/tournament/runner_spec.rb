@@ -3,7 +3,7 @@ require_relative '../spec_helper'
 describe Croupier::Tournament::Runner do
   before :each do
     @tournament_state = Croupier::Tournament::State.new
-    @tournament_state.register_spectator SpecHelper::DummyClass.new
+    @tournament_state.set_logger SpecHelper::DummyClass.new
     Croupier::Tournament::State.stub(:new).and_return(@tournament_state)
 
     @runner = Croupier::Tournament::Runner.new

@@ -16,7 +16,7 @@ describe Croupier::Game::Steps::DealCommunityCard do
 
     tournament_state = SpecHelper::MakeTournamentState.with(
         players: [fake_player, fake_player],
-        spectators: [SpecHelper::FakeSpectator.new, SpecHelper::FakeSpectator.new]
+        logger: [SpecHelper::FakeSpectator.new, SpecHelper::FakeSpectator.new]
     )
 
     @game_state = Croupier::Game::State.new tournament_state

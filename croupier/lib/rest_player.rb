@@ -29,11 +29,4 @@ class Croupier::RestPlayer
       return 0
     end
   end
-
-  def show_cards(competitor, hand)
-  end
-
-  def winner(competitor, amount)
-  end
-
 end

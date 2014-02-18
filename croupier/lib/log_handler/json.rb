@@ -5,37 +5,6 @@ class Croupier::LogHandler::Json
   def initialize(file)
     @history = []
     @file = file
-    @dealer = -1
-    @message_generator = Croupier::LogHandler::Messages.new
-  end
-
-  def initialize_state
-    @dealer += 1
-    @game_phase = :start
-    @state = {
-        pot: 0,
-        dealer: '',
-        on_turn: '',
-        message: '',
-        community_cards: [],
-        players: [],
-    }
-    @player_index = {}
-  end
-
-  def show_cards(competitor, hand)
-    @state[:on_turn] = @player_index[competitor.name]
-    @state[:message] = @message_generator.show_cards(competitor, hand)
-    save_step
-  end
-
-  def winner(competitor, amount)
-    @state[:on_turn] = @player_index[competitor.name]
-    @state[:message] = @message_generator.winner(competitor, amount)
-    @game_phase = :end
-    @state[:pot] -= amount
-    json_player(competitor)[:stack] += amount
-    save_step
   end
 
   def flush

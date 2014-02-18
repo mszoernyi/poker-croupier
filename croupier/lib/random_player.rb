@@ -16,10 +16,4 @@ class Croupier::RandomPlayer
         to_call
     end
   end
-
-  def show_cards(competitor, hand)
-  end
-
-  def winner(competitor, amount)
-  end
 end

@@ -38,18 +38,6 @@ class Croupier::Tournament::State
     @deck ||= Croupier::Deck.new
   end
 
-  def each_observer
-    (@players + @spectators).each do |observer|
-      yield observer
-    end
-  end
-
-  def each_spectator
-    @spectators.each do |observer|
-      yield observer
-    end
-  end
-
   def each_player
     @players.each do |observer|
       yield observer

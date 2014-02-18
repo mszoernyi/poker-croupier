@@ -39,14 +39,14 @@ class Croupier::Tournament::State
   end
 
   def each_player
-    @players.each do |observer|
-      yield observer
+    @players.each do |player|
+      yield player
     end
   end
 
   def each_player_from(from_player)
-    @players.rotate(@players.index(from_player)).each do |observer|
-      yield observer
+    @players.rotate(@players.index(from_player)).each do |player|
+      yield player
     end
   end
 

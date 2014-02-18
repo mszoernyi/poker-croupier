@@ -70,15 +70,11 @@ class Croupier::Game::Steps::Showdown < Croupier::Game::Steps::Base
 
 
   def show_hand(player, hand)
-    game_state.each_observer do |observer|
-      observer.show_cards player, hand
-    end
+    game_state.log_state message: "#{player.name} showed #{hand.cards.map{|card| card}.join(',')} making a #{hand.name}"
   end
 
   def announce_winner(winner, amount)
-    game_state.each_observer do |observer|
-      observer.winner winner, amount
-    end
+    game_state.log_state message: "#{winner.name} won #{amount}"
   end
 
 end

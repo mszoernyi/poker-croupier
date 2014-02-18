@@ -35,9 +35,7 @@ class Croupier::Game::Steps::Showdown < Croupier::Game::Steps::Base
     hand = PokerRanking::Hand.new [*player.hole_cards, *game_state.community_cards]
     return if @best_hand.defeats? hand
 
-    game_state.each_observer do |observer|
-      observer.show_cards player, hand
-    end
+    show_hand(player, hand)
 
     @winners = [] if hand.defeats? @best_hand
 
@@ -51,13 +49,7 @@ class Croupier::Game::Steps::Showdown < Croupier::Game::Steps::Base
     @winners.each_with_index do |winner, index|
       amount = (side_pot / @winners.length).floor - (index < remainder ? 1 : 0)
       game_state.transfer winner, -amount
-      announce winner, amount
-    end
-  end
-
-  def announce(winner, amount)
-    game_state.each_observer do |observer|
-      observer.winner winner, amount
+      announce_winner winner, amount
     end
   end
 
@@ -72,9 +64,21 @@ class Croupier::Game::Steps::Showdown < Croupier::Game::Steps::Base
     pot
   end
 
-
-
   def calculate_side_pot_size
     @winners.map { |player| player.total_bet }.min
   end
+
+
+  def show_hand(player, hand)
+    game_state.each_observer do |observer|
+      observer.show_cards player, hand
+    end
+  end
+
+  def announce_winner(winner, amount)
+    game_state.each_observer do |observer|
+      observer.winner winner, amount
+    end
+  end
+
 end

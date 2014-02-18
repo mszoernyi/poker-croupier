@@ -2,7 +2,7 @@
 class Croupier::Handler
   def initialize
     @croupier = Croupier::Tournament::Runner.new
-    @croupier.register_spectator Croupier::LogHandler::Json.new("#{Croupier::log_file}.json")
+    @croupier.set_logger Croupier::LogHandler::Json.new("#{Croupier::log_file}.json")
   end
 
   def register_in_process_player(name, strategy)

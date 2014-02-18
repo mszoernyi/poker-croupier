@@ -3,11 +3,9 @@ require_relative '../../spec_helper/'
 
 describe Croupier::Game::Steps::Betting::PreFlop do
 
-  let(:spectator) { SpecHelper::FakeSpectator.new }
   let(:game_state) do
     Croupier::Game::State.new(SpecHelper::MakeTournamentState.with(
         players: [fake_player("Albert"), fake_player("Bob")],
-        logger: [spectator]
     ))
   end
 

@@ -3,10 +3,9 @@ require_relative '../../spec_helper'
 
 describe Croupier::Game::Steps::Betting::Step do
   before :each do
-    @spectator = SpecHelper::FakeSpectator.new
     @player_on_button = Croupier::Player.new SpecHelper::FakeStrategy.new
 
-    @game_state = Croupier::Game::State.new(SpecHelper::MakeTournamentState.with players: [@player_on_button], logger: [@spectator])
+    @game_state = Croupier::Game::State.new(SpecHelper::MakeTournamentState.with players: [@player_on_button])
 
     @mocked_pot = 0
   end

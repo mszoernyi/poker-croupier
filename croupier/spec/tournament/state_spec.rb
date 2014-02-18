@@ -158,7 +158,6 @@ describe Croupier::Tournament::State do
     before :each do
       @game_state = SpecHelper::MakeTournamentState.with(
           players: [fake_player, fake_player],
-          logger: [SpecHelper::FakeSpectator.new, SpecHelper::FakeSpectator.new]
       )
     end
 

@@ -10,7 +10,6 @@ describe Croupier::Game::Steps::Showdown do
     let(:game_state) do
       tournament_state = SpecHelper::MakeTournamentState.with(
           players: [fake_player, fake_player],
-          logger: [SpecHelper::FakeSpectator.new, SpecHelper::FakeSpectator.new]
       )
 
       Croupier::Game::State.new(tournament_state).tap do |game_state|
@@ -155,7 +154,6 @@ describe Croupier::Game::Steps::Showdown do
     let(:game_state) do
       tournament_state = SpecHelper::MakeTournamentState.with(
           players: [fake_player, fake_player, fake_player],
-          logger: [SpecHelper::FakeSpectator.new]
       )
 
       Croupier::Game::State.new(tournament_state).tap do |game_state|

@@ -3,7 +3,7 @@ require_relative '../../spec_helper'
 
 describe Croupier::Game::Steps::Betting::Step do
   before :each do
-    @player_on_button = Croupier::Player.new SpecHelper::FakeStrategy.new
+    @player_on_button = Croupier::Player.new fake_player
 
     @game_state = Croupier::Game::State.new(SpecHelper::MakeTournamentState.with players: [@player_on_button])
 
@@ -29,7 +29,7 @@ describe Croupier::Game::Steps::Betting::Step do
   context "at least two players" do
 
     before :each do
-      @first_player = Croupier::Player.new SpecHelper::FakeStrategy.new
+      @first_player = Croupier::Player.new fake_player
       @game_state.register_player @first_player
     end
 
@@ -165,7 +165,7 @@ describe Croupier::Game::Steps::Betting::Step do
     end
 
     it "should skip inactive players" do
-      @second_player = Croupier::Player.new SpecHelper::FakeStrategy.new
+      @second_player = Croupier::Player.new fake_player
       @game_state.register_player @second_player
 
       should_bet @first_player, 20, :raise
@@ -176,7 +176,7 @@ describe Croupier::Game::Steps::Betting::Step do
     end
 
     it "should skip all-in players" do
-      @second_player = Croupier::Player.new SpecHelper::FakeStrategy.new
+      @second_player = Croupier::Player.new fake_player
       @second_player.stack = 10
       @game_state.register_player @second_player
 

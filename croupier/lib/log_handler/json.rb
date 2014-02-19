@@ -14,26 +14,8 @@ class Croupier::LogHandler::Json
   end
 
   def log_state(game_state, additional_data = {})
-    @state = game_state.merge additional_data
-    save_step
+    state = game_state.merge additional_data
 
-    refresh_player_index(game_state)
-  end
-
-  private
-
-  def refresh_player_index(game_state)
-    @player_index = {}
-    game_state[:players].each_with_index do |player, index|
-      @player_index[player[:name]] = index
-    end
-  end
-
-  def json_player(competitor)
-    @state[:players][@player_index[competitor.name]]
-  end
-
-  def save_step
-    @history << JSON.generate(@state)
+    @history << JSON.generate(state)
   end
 end

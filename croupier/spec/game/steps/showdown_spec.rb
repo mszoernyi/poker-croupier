@@ -89,7 +89,7 @@ describe Croupier::Game::Steps::Showdown do
         game_state.first_player.fold
 
         logger_mock = double
-        showdown_step.stub(:announce_winner)
+        showdown_step.stub(:log_winner)
 
         game_state.set_logger logger_mock
 
@@ -99,7 +99,7 @@ describe Croupier::Game::Steps::Showdown do
       def expect_hand_to_be_announced_for(player)
         hand = PokerRanking::Hand.new [*player.hole_cards, *game_state.community_cards]
 
-        showdown_step.stub(:announce_winner)
+        showdown_step.stub(:log_winner)
         game_state.should_receive(:log_state).with(message: "#{player.name} showed #{hand.cards.map{|card| card}.join(',')} making a #{hand.name}")
       end
     end

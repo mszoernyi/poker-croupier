@@ -49,7 +49,7 @@ class Croupier::Game::Steps::Showdown < Croupier::Game::Steps::Base
     @winners.each_with_index do |winner, index|
       amount = (side_pot / @winners.length).floor - (index < remainder ? 1 : 0)
       game_state.transfer winner, -amount
-      announce_winner winner, amount
+      log_winner winner, amount
     end
   end
 
@@ -73,7 +73,7 @@ class Croupier::Game::Steps::Showdown < Croupier::Game::Steps::Base
     game_state.log_state message: "#{player.name} showed #{hand.cards.map{|card| card}.join(',')} making a #{hand.name}"
   end
 
-  def announce_winner(winner, amount)
+  def log_winner(winner, amount)
     game_state.log_state message: "#{winner.name} won #{amount}"
   end
 

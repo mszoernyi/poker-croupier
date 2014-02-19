@@ -13,9 +13,7 @@ class Croupier::LogHandler::Json
     end
   end
 
-  def log_state(game_state, additional_data = {})
-    state = game_state.merge additional_data
-
-    @history << JSON.generate(state)
+  def log_state(data)
+    @history << JSON.generate(data)
   end
 end

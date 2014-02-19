@@ -50,6 +50,6 @@ class Croupier::Game::State
   end
 
   def log_state(additional_data = {})
-    logger.log_state(data, additional_data)
+    logger.log_state(additional_data.merge game_state: data)
   end
 end

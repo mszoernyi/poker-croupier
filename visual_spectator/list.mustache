@@ -8,9 +8,15 @@
     </head>
     <body>
         <div class="container">
-        {{# log_files }}
-        <h3><a href="/game?log={{ file }}">{{ file }}</a></h3>
-        {{/log_files}}
+            <h2>New log files</h2>
+            {{# log_files }}
+            <h3><a href="/game?log=log/{{ file }}">{{ file }}</a></h3>
+            {{/log_files}}
+            <h2>Previous events</h2>
+            {{# previous_events }}
+                <h3><a href="/game?log=previous_events/{{ file }}">{{ file }}</a></h3>
+            {{/previous_events}}
         </div>
+
     </body>
 </html>

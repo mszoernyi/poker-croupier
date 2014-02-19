@@ -11,8 +11,9 @@ get "/game" do
   Game.new(request[:log]).render
 end
 
-
-$LOG_DIR = File.dirname(__FILE__)+"/../log/"
+BASE_DIR = File.dirname(__FILE__)+"/../"
+LOG_DIR = File.dirname(__FILE__)+"/../log/"
+PREVIOUS_EVENTS_DIR = File.dirname(__FILE__)+"/../previous_events/"
 
 class MustacheBase < Mustache
   self.template_path = File.dirname(__FILE__)
@@ -20,7 +21,11 @@ end
 
 class List < MustacheBase
   def log_files
-    Dir.glob("#{$LOG_DIR}*.json").map { |file| { :file => File.basename(file, ".json") } }
+    Dir.glob("#{LOG_DIR}*.json").sort.map { |file| { :file => File.basename(file, ".json") } }
+  end
+
+  def previous_events
+    Dir.glob("#{PREVIOUS_EVENTS_DIR}*/*.json").sort.map { |file| { :file => File.dirname(file).split('/')[-1] + "/" + File.basename(file, ".json") } }
   end
 end  
 
@@ -30,6 +35,6 @@ class Game < MustacheBase
   end
 
   def game_json
-    File.read("#{$LOG_DIR}#{@log_file}.json")
+    File.read("#{BASE_DIR}#{@log_file}.json")
   end
 end

@@ -5,6 +5,7 @@ class Croupier::Player
   attr_reader :hole_cards
 
   attr_accessor :total_bet
+  attr_accessor :amount_won
   attr_reader :strategy
 
   def initialize(strategy)
@@ -18,6 +19,7 @@ class Croupier::Player
   def initialize_round
     @active = has_stack?
     @total_bet = 0
+    @amount_won = 0
     @hole_cards = []
   end
 
@@ -62,7 +64,9 @@ class Croupier::Player
         status: status,
         bet: @total_bet,
         hole_cards: @hole_cards.map { |card| card.data },
-    }
+    }.tap do |data|
+      data[:amount_won] = amount_won unless amount_won == 0
+    end
   end
 
   def status

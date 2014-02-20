@@ -10,6 +10,13 @@ class Croupier::Game::Steps::Showdown < Croupier::Game::Steps::Base
       break if @winners == []
       award
     end
+    game_state.players.each do |player|
+      data = game_state.data
+      data[:players].each do |opponent|
+        opponent.delete :hole_cards unless game_state.players[opponent[:id]] == player
+      end
+      player.showdown(data)
+    end
   end
 
   private
@@ -48,7 +55,7 @@ class Croupier::Game::Steps::Showdown < Croupier::Game::Steps::Base
     remainder = side_pot % @winners.length
     @winners.each_with_index do |winner, index|
       amount = (side_pot / @winners.length).floor - (index < remainder ? 1 : 0)
-      game_state.transfer winner, -amount
+      game_state.transfer_amount_won winner, amount
       log_winner winner, amount
     end
   end

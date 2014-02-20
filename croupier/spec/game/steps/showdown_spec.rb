@@ -203,6 +203,26 @@ describe Croupier::Game::Steps::Showdown do
         game_state.players[2].stack.should == 75
       end
     end
+
+    context "players are notified about the winners and revealed cards" do
+      it "should send the game state with extra data to all players" do
+        expected_game_state = game_state.data.clone
+        expected_game_state[:players][0][:amount_won] = 100
+        expected_game_state[:players][1][:status] = 'folded'
+        expected_game_state[:players][2][:status] = 'folded'
+
+        expected_game_state[:players][1].delete :hole_cards
+        expected_game_state[:players][2].delete :hole_cards
+
+        game_state.transfer_bet game_state.players[0], 100, :raise
+        game_state.players[1].fold
+        game_state.players[2].fold
+
+        game_state.players[0].should_receive(:showdown).with(expected_game_state)
+
+        showdown_step.run
+      end
+    end
   end
 
   def set_hole_cards_for(player_id, first_card, second_card)

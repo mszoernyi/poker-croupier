@@ -23,7 +23,7 @@ class Croupier::Game::State
     player.total_bet += amount
     @last_aggressor = player if current_buy_in > original_buy_in
 
-    transfer player, amount
+    player.stack -= amount
     log_state on_turn: players.index(player), message: "#{player.name} made a bet of #{amount} (#{bet_type}) and is left with #{player.stack} chips. The pot now contains #{pot} chips."
   end
 
@@ -37,8 +37,9 @@ class Croupier::Game::State
     @last_aggressor = nil
   end
 
-  def transfer(player, amount)
-    player.stack -= amount
+  def transfer_amount_won(player, amount)
+    player.stack += amount
+    player.amount_won += amount
   end
 
   def data

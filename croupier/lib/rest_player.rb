@@ -14,19 +14,39 @@ class Croupier::RestPlayer
   end
 
   def bet_request(game_state)
+    send_request action: 'bet_request', game_state: game_state.to_json  do |error, result|
+      if error
+        return 0
+      end
+
+      result.to_i
+    end
+  end
+
+  def showdown(game_state)
+    send_request action: 'showdown', game_state: game_state.to_json
+  end
+
+  private
+
+  def send_request(message)
     begin
       req = Net::HTTP::Post.new(@path)
-      req.set_form({ action: 'bet_request', game_state: game_state.to_json })
+      req.set_form(message)
       http_connection = Net::HTTP.new(@host, @port)
       http_connection.open_timeout = 0.5
       http_connection.read_timeout = 0.5
       response = http_connection.start {|http| http.request(req) }
 
-      return 0 unless response.code.to_i == 200
+      unless response.code.to_i == 200
+        Croupier::logger.error "Player #{name} responded with #{response.code}"
+        yield false, nil if block_given?
+      end
 
-      response.body.to_i
+      yield true, response.body if block_given?
     rescue
-      return 0
+      Croupier::logger.error "Player #{name} is unreachable"
+      yield false, nil if block_given?
     end
   end
 end

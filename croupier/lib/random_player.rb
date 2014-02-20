@@ -16,4 +16,8 @@ class Croupier::RandomPlayer
         to_call
     end
   end
+
+  def showdown(game_state)
+
+  end
 end

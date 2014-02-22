@@ -222,6 +222,28 @@ describe Croupier::Game::Steps::Showdown do
 
         showdown_step.run
       end
+
+      it "should include cards revealed" do
+        game_state.transfer_bet game_state.players[0], 100, :raise
+        game_state.transfer_bet game_state.players[1], 100, :raise
+        game_state.transfer_bet game_state.players[2], 100, :raise
+
+
+        set_hole_cards_for(0, '4 of Spades', 'King of Diamonds')
+        set_hole_cards_for(1, '4 of Hearts', 'Jack of Diamonds')
+        set_hole_cards_for(2, '4 of Clubs', 'Jack of Hearts')
+
+        def define_singleton_method_by_proc(obj, name, block)
+          metaclass = class << obj; self; end
+          metaclass.send(:define_method, name, block)
+        end
+        get_state_sent = proc { |game_state|
+          game_state[:players][1][:hole_cards].length.should == 2
+        }
+        define_singleton_method_by_proc(game_state.players[0], :showdown, get_state_sent)
+
+        showdown_step.run
+      end
     end
   end
 

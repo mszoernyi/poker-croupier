@@ -6,6 +6,7 @@ class Croupier::Player
 
   attr_accessor :total_bet
   attr_accessor :amount_won
+  attr_accessor :hand_revealed
   attr_reader :strategy
 
   def initialize(strategy)
@@ -21,6 +22,7 @@ class Croupier::Player
     @total_bet = 0
     @amount_won = 0
     @hole_cards = []
+    @hand_revealed = false
   end
 
   def has_stack?

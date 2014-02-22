@@ -13,7 +13,7 @@ class Croupier::Game::Steps::Showdown < Croupier::Game::Steps::Base
     game_state.players.each do |player|
       data = game_state.data
       data[:players].each do |opponent|
-        opponent.delete :hole_cards unless game_state.players[opponent[:id]] == player
+        opponent.delete :hole_cards unless game_state.players[opponent[:id]] == player or game_state.players[opponent[:id]].hand_revealed
       end
       player.showdown(data)
     end
@@ -78,6 +78,7 @@ class Croupier::Game::Steps::Showdown < Croupier::Game::Steps::Base
 
   def show_hand(player, hand)
     game_state.log_state message: "#{player.name} showed #{hand.cards.map{|card| card}.join(',')} making a #{hand.name}"
+    player.hand_revealed = true
   end
 
   def log_winner(winner, amount)

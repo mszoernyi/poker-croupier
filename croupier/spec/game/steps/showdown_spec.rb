@@ -211,7 +211,7 @@ describe Croupier::Game::Steps::Showdown do
         game_state.players[2].fold
 
         game_state.players[2].should_receive(:showdown) do |game_state|
-          game_state[:players][0][:amount_won] = 100
+          game_state[:players][0][:amount_won].should == 100
           game_state[:players][1].should_not have_key(:hole_cards)
         end
 

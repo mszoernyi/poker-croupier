@@ -18,17 +18,10 @@ class Croupier::Tournament::Runner
       Croupier::Game::Runner.new.run(@tournament_state)
       ranking.eliminate
       @tournament_state.next_round!
-      print_dot
     end
-    puts '' if STDOUT.tty?
     ranking.add_winner
     @tournament_state.flush_log
     ranking
-  end
-
-  def print_dot
-    print '.' if STDOUT.tty?
-    $stdout.flush
   end
 
 end

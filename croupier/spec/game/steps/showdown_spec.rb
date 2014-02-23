@@ -206,19 +206,14 @@ describe Croupier::Game::Steps::Showdown do
 
     context "players are notified about the winners and revealed cards" do
       it "should send the game state with extra data to all players" do
-        expected_game_state = game_state.data.clone
-        expected_game_state[:players][0][:amount_won] = 100
-        expected_game_state[:players][1][:status] = 'folded'
-        expected_game_state[:players][2][:status] = 'folded'
-
-        expected_game_state[:players][1].delete :hole_cards
-        expected_game_state[:players][2].delete :hole_cards
-
         game_state.transfer_bet game_state.players[0], 100, :raise
         game_state.players[1].fold
         game_state.players[2].fold
 
-        game_state.players[0].should_receive(:showdown).with(expected_game_state)
+        game_state.players[2].should_receive(:showdown) do |game_state|
+          game_state[:players][0][:amount_won] = 100
+          game_state[:players][1].should_not have_key(:hole_cards)
+        end
 
         showdown_step.run
       end
@@ -233,14 +228,9 @@ describe Croupier::Game::Steps::Showdown do
         set_hole_cards_for(1, '4 of Hearts', 'Jack of Diamonds')
         set_hole_cards_for(2, '4 of Clubs', 'Jack of Hearts')
 
-        def define_singleton_method_by_proc(obj, name, block)
-          metaclass = class << obj; self; end
-          metaclass.send(:define_method, name, block)
-        end
-        get_state_sent = proc { |game_state|
+        game_state.players[0].should_receive(:showdown) do |game_state|
           game_state[:players][1][:hole_cards].length.should == 2
-        }
-        define_singleton_method_by_proc(game_state.players[0], :showdown, get_state_sent)
+        end
 
         showdown_step.run
       end

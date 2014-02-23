@@ -14,6 +14,7 @@ class Croupier::LogHandler::Json
   end
 
   def log_state(data)
+    Croupier::logger.info data[:message] unless data[:message].nil?
     @history << JSON.generate(data)
   end
 end

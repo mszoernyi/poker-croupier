@@ -11,7 +11,7 @@ class Croupier::Game::State
   end
 
   def current_buy_in
-    players.inject(0) { |max_buy_in, player| max_buy_in = [max_buy_in, player.total_bet].max }
+    players.map{ |player| player.total_bet}.max
   end
 
   def pot

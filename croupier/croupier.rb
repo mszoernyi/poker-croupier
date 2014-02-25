@@ -9,7 +9,7 @@ module Croupier
   autoload :Deck, 'lib/deck'
   autoload :Game, 'lib/game'
   autoload :LogHandler, 'lib/log_handler'
-  autoload :MultiTournament, 'lib/multi_tournament'
+  autoload :Tournament, 'lib/tournament'
   autoload :Player, 'lib/player'
   autoload :RandomPlayer, 'lib/random_player'
   autoload :RestPlayer, 'lib/rest_player'

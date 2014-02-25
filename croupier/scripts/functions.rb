@@ -11,7 +11,9 @@ def sit_and_go(log_file, &block)
 
   handler.instance_eval &block
 
-  handler.start_sit_and_go
+  handler.start_sit_and_go.each_with_index do |player, index|
+    Croupier.logger.info "Place #{index+1}: #{player.name}"
+  end
 end
 
 def start_players(number_of_players)

@@ -7,7 +7,7 @@ require_relative '../croupier'
 
 def sit_and_go(log_file, &block)
   Croupier::log_file = log_file
-  handler = Croupier::Tournament::Controller.new
+  handler = Croupier::SitAndGo::Controller.new
 
   handler.instance_eval &block
 

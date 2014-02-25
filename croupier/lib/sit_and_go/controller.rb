@@ -1,7 +1,7 @@
 
-class Croupier::Tournament::Controller
+class Croupier::SitAndGo::Controller
   def initialize
-    @croupier = Croupier::Tournament::Runner.new
+    @croupier = Croupier::SitAndGo::Runner.new
     @croupier.set_logger Croupier::LogHandler::Json.new("#{Croupier::log_file}.json")
   end
 

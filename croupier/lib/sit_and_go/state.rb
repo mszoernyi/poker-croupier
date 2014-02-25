@@ -1,4 +1,4 @@
-class Croupier::Tournament::State
+class Croupier::SitAndGo::State
   attr_reader :players
   attr_reader :logger
 

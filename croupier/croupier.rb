@@ -13,7 +13,7 @@ module Croupier
   autoload :Player, 'lib/player'
   autoload :RandomPlayer, 'lib/random_player'
   autoload :RestPlayer, 'lib/rest_player'
-  autoload :Tournament, 'lib/tournament'
+  autoload :SitAndGo, 'lib/sit_and_go'
 
   class << self
     attr_accessor :log_file

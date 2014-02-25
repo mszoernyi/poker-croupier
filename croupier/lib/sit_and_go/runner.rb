@@ -1,7 +1,7 @@
-class Croupier::Tournament::Runner
+class Croupier::SitAndGo::Runner
 
   def initialize
-    @tournament_state = Croupier::Tournament::State.new
+    @tournament_state = Croupier::SitAndGo::State.new
   end
 
   def register_player(player)
@@ -13,7 +13,7 @@ class Croupier::Tournament::Runner
   end
 
   def start_sit_and_go
-    ranking = Croupier::Tournament::Ranking.new(@tournament_state)
+    ranking = Croupier::SitAndGo::Ranking.new(@tournament_state)
     while @tournament_state.number_of_active_players_in_tournament >= 2 do
       Croupier::Game::Runner.new.run(@tournament_state)
       ranking.eliminate

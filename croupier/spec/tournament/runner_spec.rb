@@ -1,12 +1,12 @@
 require_relative '../spec_helper'
 
-describe Croupier::Tournament::Runner do
+describe Croupier::SitAndGo::Runner do
   before :each do
-    @tournament_state = Croupier::Tournament::State.new
+    @tournament_state = Croupier::SitAndGo::State.new
     @tournament_state.set_logger SpecHelper::DummyClass.new
-    Croupier::Tournament::State.stub(:new).and_return(@tournament_state)
+    Croupier::SitAndGo::State.stub(:new).and_return(@tournament_state)
 
-    @runner = Croupier::Tournament::Runner.new
+    @runner = Croupier::SitAndGo::Runner.new
   end
 
   describe "#register_player" do
@@ -20,7 +20,7 @@ describe Croupier::Tournament::Runner do
 
   describe "#start_sit_and_go" do
     it "should run until there are more than two players in game" do
-      Croupier::Tournament::Ranking.stub(:new).and_return(SpecHelper::DummyClass.new)
+      Croupier::SitAndGo::Ranking.stub(:new).and_return(SpecHelper::DummyClass.new)
 
       @tournament_state.stub(:number_of_active_players_in_tournament).and_return(2, 1)
       game_state = Croupier::Game::State.new(@tournament_state)
@@ -44,7 +44,7 @@ describe Croupier::Tournament::Runner do
       @tournament_state.stub(:next_round!)
 
       ranking = double("Ranking mock")
-      Croupier::Tournament::Ranking.stub(:new).and_return(ranking)
+      Croupier::SitAndGo::Ranking.stub(:new).and_return(ranking)
       ranking.should_receive(:eliminate).twice
       ranking.should_receive(:add_winner).once
 

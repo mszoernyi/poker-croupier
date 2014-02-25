@@ -1,4 +1,4 @@
-class Croupier::Tournament::Ranking
+class Croupier::SitAndGo::Ranking
   def initialize(state)
     @state = state
     @ranking = []

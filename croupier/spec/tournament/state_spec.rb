@@ -1,12 +1,12 @@
 require_relative '../spec_helper'
 
-describe Croupier::Tournament::State do
+describe Croupier::SitAndGo::State do
   describe "#register_player" do
     it "should add the player to the list of players" do
       first_player = double("First player")
       second_player = double("Second player")
 
-      game_state = Croupier::Tournament::State.new
+      game_state = Croupier::SitAndGo::State.new
       game_state.register_player(first_player)
       game_state.register_player(second_player)
 
@@ -53,7 +53,7 @@ describe Croupier::Tournament::State do
     it "should replace the default logger" do
       logger = double("Logger")
 
-      game_state = Croupier::Tournament::State.new
+      game_state = Croupier::SitAndGo::State.new
       game_state.set_logger(logger)
 
       game_state.logger.should == logger
@@ -112,7 +112,7 @@ describe Croupier::Tournament::State do
 
   describe "Calculate index of special players" do
     before :each do
-      @game_state = Croupier::Tournament::State.new
+      @game_state = Croupier::SitAndGo::State.new
 
       5.times do |c|
         @game_state.register_player fake_player

@@ -1,8 +1,8 @@
 require_relative '../spec_helper'
 
-describe Croupier::Tournament::Ranking do
+describe Croupier::SitAndGo::Ranking do
   let(:state) { SpecHelper::MakeTournamentState.with(players: [fake_player('a'), fake_player('b'), fake_player('c')]) }
-  let(:ranking) { Croupier::Tournament::Ranking.new(state) }
+  let(:ranking) { Croupier::SitAndGo::Ranking.new(state) }
 
   it "should return empty array" do
     ranking.get.should == []

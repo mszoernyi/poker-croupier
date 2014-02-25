@@ -1,5 +1,5 @@
 
-class Croupier::Handler
+class Croupier::Tournament::Handler
   def initialize
     @croupier = Croupier::Tournament::Runner.new
     @croupier.set_logger Croupier::LogHandler::Json.new("#{Croupier::log_file}.json")

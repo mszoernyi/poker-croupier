@@ -1,0 +1,3 @@
+module Croupier::MultiTournament
+
+end

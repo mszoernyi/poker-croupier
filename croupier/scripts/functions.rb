@@ -7,13 +7,21 @@ require_relative '../croupier'
 
 def sit_and_go(log_file, &block)
   Croupier::log_file = log_file
-  handler = Croupier::SitAndGo::Controller.new
+  controller = Croupier::SitAndGo::Controller.new
 
-  handler.instance_eval &block
+  controller.instance_eval &block
 
-  handler.start_sit_and_go.each_with_index do |player, index|
+  controller.start_sit_and_go.each_with_index do |player, index|
     Croupier.logger.info "Place #{index+1}: #{player.name}"
   end
+end
+
+def tournament(&block)
+  controller = Croupier::Tournament::Controller.new
+
+  controller.instance_eval &block
+
+  controller.start_tournament
 end
 
 def start_players(number_of_players)

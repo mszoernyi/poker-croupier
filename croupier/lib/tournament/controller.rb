@@ -14,25 +14,20 @@ class Croupier::Tournament::Controller
   end
 
   def start_tournament
-    player_services = []
 
     sit_and_go_controller = Croupier::SitAndGo::Controller.new
     @players.each do |player|
       config = YAML.load_file("#{player[:directory]}/config.yml")
-      player_services << fork do
-        exec("bash #{player[:directory]}/start.sh")
-        player_services << $?.pid
-      end
-
+      Process.spawn("bash #{player[:directory]}/start.sh")
       sit_and_go_controller.register_rest_player player[:name], config["url"]
     end
+
+    sleep(2)
     sit_and_go_controller.start_sit_and_go
 
-    p player_services
-
-    player_services.each do |player_service|
-      Process.kill 9, player_service
-      Process.wait player_service
+    @players.each do |player|
+      Process.spawn("bash #{player[:directory]}/stop.sh")
     end
+
   end
 end

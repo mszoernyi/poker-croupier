@@ -54,13 +54,14 @@ Currently supported languages:
 
 ### How to create a folding player
 
-The players are simple REST services. You should have 2 files:
+The players are simple REST services. You should have the following files:
 - A file usually called player\_service, that will take care of routing the requests to an object called player. The current game state sent as a post variable named game\_state in json format. The game\_state needs to be decoded into a dynamic structure. The action post variable specifies which function of the player is to be called. (Currently the only action is bet_request.)
 - The other file is usually called player, and contains a Player class (or equivalent structure in languages where there are no classes) with a single bet_request function, that returns 0.
 
-Further more you should have 2 files that the deployment script will use:
-- boot.sh - This is called once when the croupier clones the repository for the first time. It should start your service.
-- reboot.sh - This is called when a new version is deployed from master. If your service needs to be stoped and restarted to start using the new version, you should take care of that here.
+Further more you should have the following files that the deployment script will use:
+- start.sh - It should start your service. 
+- stop.sh - It should stop the service. 
+- config.yml - It should contain the url on which your service can be accessed when it's running.
 
 # How to get started as a contributor
 

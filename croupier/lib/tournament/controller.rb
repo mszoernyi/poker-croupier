@@ -19,7 +19,7 @@ class Croupier::Tournament::Controller
 
     start_players(sit_and_go_controller)
 
-    sleep(2)
+    sleep(10)
     sit_and_go_controller.start_sit_and_go
 
     stop_players

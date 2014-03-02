@@ -13,6 +13,7 @@ class Croupier::SitAndGo::Runner
   end
 
   def start_sit_and_go
+    @tournament_state.select_dealer_randomly
     ranking = Croupier::SitAndGo::Ranking.new(@tournament_state)
     while @tournament_state.number_of_active_players_in_tournament >= 2 do
       Croupier::Game::Runner.new.run(@tournament_state)

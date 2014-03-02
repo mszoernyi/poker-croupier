@@ -8,6 +8,11 @@ class Croupier::SitAndGo::State
     @small_blind = 10
     @orbits = 0
     @dealers_position = 0
+    @rounds = 0
+  end
+
+  def select_dealer_randomly
+    @dealers_position = rand(players.length)
   end
 
   def small_blind
@@ -106,9 +111,8 @@ class Croupier::SitAndGo::State
 
     @dealers_position = nth_player_index 1
 
-    if previous_dealer > @dealers_position
-      @orbits += 1
-    end
+    @rounds += 1
+    @orbits = (@rounds/players.length).floor
   end
 
   def nth_player_index(n)

@@ -14,6 +14,10 @@ class Croupier::Tournament::Controller
   end
 
   def start_tournament
+    @players.each do |player|
+      `cd #{player[:directory]} && git fetch origin && git reset --hard origin/master && git clean -d -f`
+    end
+
 
     sit_and_go_controller = Croupier::SitAndGo::Controller.new
 

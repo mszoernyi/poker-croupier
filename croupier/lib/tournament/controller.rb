@@ -29,6 +29,16 @@ class Croupier::Tournament::Controller
 
     ranking = sit_and_go_controller.start_sit_and_go
 
+    log_ranking_and_points(ranking)
+
+    stop_players
+    wait_for_all_processes_to_stop
+  end
+
+
+  private
+
+  def log_ranking_and_points(ranking)
     tournament_round = {'ranking' => {}}
 
     if File.exists?(@tournament_logfile)
@@ -52,14 +62,7 @@ class Croupier::Tournament::Controller
     File.open(@tournament_logfile, 'a') do |file|
       file.puts JSON.generate tournament_round
     end
-
-    stop_players
-    wait_for_all_processes_to_stop
   end
-
-
-
-  private
 
   def wait_for_players_to_start(sit_and_go_controller)
     max_iterations_left = 90

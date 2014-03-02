@@ -34,9 +34,11 @@ class Croupier::Tournament::Controller
   private
 
   def wait_for_players_to_start(sit_and_go_controller)
-    until sit_and_go_controller.players_running?
+    iterations_left = 90
+    until sit_and_go_controller.players_running? or iterations_left < 0
       Croupier::logger.info "Waiting for players to start"
       sleep(1)
+      iterations_left -= 1
     end
     Croupier::logger.info "Players are running"
   end

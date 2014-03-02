@@ -20,4 +20,8 @@ class Croupier::RandomPlayer
   def showdown(game_state)
 
   end
+
+  def running?
+    true
+  end
 end

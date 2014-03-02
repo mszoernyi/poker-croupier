@@ -21,4 +21,8 @@ class Croupier::SitAndGo::Controller
     @croupier.start_sit_and_go.get.reverse
   end
 
+  def players_running?
+    @croupier.players_running?
+  end
+
 end

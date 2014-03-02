@@ -91,6 +91,14 @@ class Croupier::SitAndGo::State
     }
   end
 
+  def players_running?
+    @players.each do |player|
+      return false unless player.running?
+    end
+
+    true
+  end
+
   private
 
   def move_deal_button_to_next_active_player

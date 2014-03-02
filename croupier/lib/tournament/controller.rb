@@ -3,9 +3,10 @@ require 'yaml'
 class Croupier::Tournament::Controller
   def initialize
     @players = []
+    @processes = []
   end
 
-  def set_sit_and_go_logfile(log_file)
+  def sit_and_go_logfile(log_file)
     Croupier::log_file = log_file
   end
 
@@ -14,32 +15,55 @@ class Croupier::Tournament::Controller
   end
 
   def start_tournament
-    @players.each do |player|
-      `cd #{player[:directory]} && git fetch origin && git reset --hard origin/master && git clean -d -f`
-    end
-
+    reset_players_to_git_master
 
     sit_and_go_controller = Croupier::SitAndGo::Controller.new
 
     start_players(sit_and_go_controller)
 
-    sleep(10)
+    wait_for_players_to_start(sit_and_go_controller)
+
     sit_and_go_controller.start_sit_and_go
 
     stop_players
+    wait_for_all_processes_to_stop
+  end
 
+
+
+  private
+
+  def wait_for_players_to_start(sit_and_go_controller)
+    until sit_and_go_controller.players_running?
+      Croupier::logger.info "Waiting for players to start"
+      sleep(1)
+    end
+    Croupier::logger.info "Players are running"
+  end
+
+  def reset_players_to_git_master
+    @players.each do |player|
+      Croupier::logger.info "Reseting #{player[:name]} to origin/master"
+      `cd #{player[:directory]} && git fetch origin && git reset --hard origin/master && git clean -d -f`
+    end
+  end
+
+  def wait_for_all_processes_to_stop
+    @processes.each do |pid|
+      Process.wait pid
+    end
   end
 
   def stop_players
     @players.each do |player|
-      Process.spawn("bash #{player[:directory]}/stop.sh")
+      @processes << Process.spawn("bash #{player[:directory]}/stop.sh")
     end
   end
 
   def start_players(sit_and_go_controller)
     @players.each do |player|
       config = YAML.load_file("#{player[:directory]}/config.yml")
-      Process.spawn("bash #{player[:directory]}/start.sh")
+      @processes << Process.spawn("bash #{player[:directory]}/start.sh")
       sit_and_go_controller.register_rest_player player[:name], config["url"]
     end
   end

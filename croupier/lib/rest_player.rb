@@ -27,6 +27,12 @@ class Croupier::RestPlayer
     send_request action: 'showdown', game_state: game_state.to_json
   end
 
+  def running?
+    send_request action: 'check' do |error, _|
+      return !error
+    end
+  end
+
   private
 
   def send_request(message)
@@ -38,18 +44,16 @@ class Croupier::RestPlayer
       http_connection.read_timeout = 0.5
       response = http_connection.start {|http| http.request(req) }
 
-      Croupier::logger.error "Player #{name} responded with #{response.body} (#{response.code})"
-
       unless response.code.to_i == 200
+        Croupier::logger.error "Player #{name} responded with #{response.body} (#{response.code})"
         yield true, nil if block_given?
-        return
+      else
+        Croupier::logger.info "Player #{name} responded with #{response.body} (#{response.code})"
+        yield false, response.body if block_given?
       end
-
-      yield false, response.body if block_given?
     rescue
       Croupier::logger.error "Player #{name} is unreachable"
       yield true, nil if block_given?
-      return
     end
   end
 end

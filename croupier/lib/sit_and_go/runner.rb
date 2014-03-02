@@ -24,4 +24,7 @@ class Croupier::SitAndGo::Runner
     ranking
   end
 
+  def players_running?
+    @tournament_state.players_running?
+  end
 end

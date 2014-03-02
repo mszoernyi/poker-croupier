@@ -42,3 +42,7 @@ end
 def run_timestamp
   Time.now.strftime("%Y_%m_%d_%H_%M_%S")
 end
+
+def run_date
+  Time.now.strftime("%Y_%m_%d")
+end

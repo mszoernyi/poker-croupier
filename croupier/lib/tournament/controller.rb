@@ -10,6 +10,10 @@ class Croupier::Tournament::Controller
     Croupier::log_file = log_file
   end
 
+  def tournament_logfile(log_file)
+    @tournament_logfile = "#{log_file}.json"
+  end
+
   def register_git_player(name, directory)
     @players << { name: name, directory: directory }
   end
@@ -23,7 +27,31 @@ class Croupier::Tournament::Controller
 
     wait_for_players_to_start(sit_and_go_controller)
 
-    sit_and_go_controller.start_sit_and_go
+    ranking = sit_and_go_controller.start_sit_and_go
+
+    tournament_round = {'ranking' => {}}
+
+    if File.exists?(@tournament_logfile)
+      lines = IO.readlines(@tournament_logfile)
+      tournament_round = JSON.parse(lines[-1]) if lines.length > 0
+    end
+
+    tournament_round['game_json'] = Croupier::log_file + '.json'
+    tournament_round['game_log'] = Croupier::log_file + '.log'
+
+    ranking.each_with_index do |player, place|
+      if tournament_round['ranking'].has_key? player.name
+        tournament_round['ranking'][player.name]['place'] = place + 1
+      else
+        tournament_round['ranking'][player.name] = {'points' => 0, 'place' => place + 1}
+      end
+    end
+    tournament_round['ranking'][ranking[0].name]['points'] += 5
+    tournament_round['ranking'][ranking[1].name]['points'] += 3
+
+    File.open(@tournament_logfile, 'a') do |file|
+      file.puts JSON.generate tournament_round
+    end
 
     stop_players
     wait_for_all_processes_to_stop
@@ -34,11 +62,11 @@ class Croupier::Tournament::Controller
   private
 
   def wait_for_players_to_start(sit_and_go_controller)
-    iterations_left = 90
-    until sit_and_go_controller.players_running? or iterations_left < 0
+    max_iterations_left = 90
+    until sit_and_go_controller.players_running? or max_iterations_left < 0
       Croupier::logger.info "Waiting for players to start"
       sleep(1)
-      iterations_left -= 1
+      max_iterations_left -= 1
     end
     Croupier::logger.info "Players are running"
   end

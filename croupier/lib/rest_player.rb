@@ -38,15 +38,18 @@ class Croupier::RestPlayer
       http_connection.read_timeout = 0.5
       response = http_connection.start {|http| http.request(req) }
 
+      Croupier::logger.error "Player #{name} responded with #{response.body} (#{response.code})"
+
       unless response.code.to_i == 200
-        Croupier::logger.error "Player #{name} responded with #{response.code}"
-        yield false, nil if block_given?
+        yield true, nil if block_given?
+        return
       end
 
-      yield true, response.body if block_given?
+      yield false, response.body if block_given?
     rescue
       Croupier::logger.error "Player #{name} is unreachable"
-      yield false, nil if block_given?
+      yield true, nil if block_given?
+      return
     end
   end
 end

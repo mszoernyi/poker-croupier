@@ -51,7 +51,8 @@ class Croupier::RestPlayer
         Croupier::logger.info "Player #{name} responded with #{response.body} (#{response.code})"
         yield false, response.body if block_given?
       end
-    rescue
+    rescue Exception => e
+      Croupier::logger.error e.message
       Croupier::logger.error "Player #{name} is unreachable"
       yield true, nil if block_given?
     end

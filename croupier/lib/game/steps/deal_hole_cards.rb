@@ -12,7 +12,7 @@ class Croupier::Game::Steps::DealHoleCards < Croupier::Game::Steps::Base
       if player.has_stack?
         card = game_state.deck.next_card!
         player.hole_card(card)
-        game_state.log_state message: "#{player.name} recieved hole_card #{card}"
+        game_state.log_state message: "#{player.name} received hole_card #{card}"
       end
     end
   end

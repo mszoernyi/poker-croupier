@@ -49,6 +49,7 @@ We try to provide the folding player (a player that folds or checks under all co
 
 Currently supported languages:
 - [Java](http://github.com/szantopeter/poker-player-java)
+- [JavaScript](http://github.com/devill/poker-player-js)
 - [PHP](http://github.com/devill/poker-player-php)
 - [Ruby](http://github.com/devill/poker-player-ruby)
 

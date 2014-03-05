@@ -9,4 +9,12 @@ sit_and_go "../../log/game_#{run_timestamp}" do
 
   # Java client
   register_rest_player "Jim Java", "http://localhost:8080/"
+
+  # JavaScript client
+  register_rest_player "Jim Java", "http://localhost:1337/"
+
+  # Python client
+  register_rest_player "Peter Python", "http://localhost:9000/"
+
+
 end

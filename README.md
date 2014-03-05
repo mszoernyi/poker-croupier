@@ -51,6 +51,7 @@ Currently supported languages:
 - [Java](http://github.com/szantopeter/poker-player-java)
 - [JavaScript](http://github.com/devill/poker-player-js)
 - [PHP](http://github.com/devill/poker-player-php)
+- [Python](https://github.com/devill/poker-player-python)
 - [Ruby](http://github.com/devill/poker-player-ruby)
 
 ### How to create a folding player

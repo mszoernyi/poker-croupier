@@ -48,11 +48,11 @@ For a library to qualify for the bellow exceptions, it should be publicly availa
 We try to provide the folding player (a player that folds or checks under all conditions) for as many languages as we can. Each of them is in a separate git repository, so that participiants can simply fork them, and start working on their algorithms right away.
 
 Currently supported languages:
-- [Java](http://github.com/szantopeter/poker-player-java)
-- [JavaScript](http://github.com/devill/poker-player-js)
-- [PHP](http://github.com/devill/poker-player-php)
-- [Python](https://github.com/devill/poker-player-python)
-- [Ruby](http://github.com/devill/poker-player-ruby)
+- [Java](http://github.com/lean-poker/poker-player-java)
+- [JavaScript](http://github.com/lean-poker/poker-player-js)
+- [PHP](http://github.com/lean-poker/poker-player-php)
+- [Python](https://github.com/lean-poker/poker-player-python)
+- [Ruby](http://github.com/lean-poker/poker-player-ruby)
 
 ### How to create a folding player
 

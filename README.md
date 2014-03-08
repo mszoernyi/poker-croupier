@@ -1,7 +1,7 @@
 poker-croupier
 ==============
 
-[![Build Status](https://travis-ci.org/devill/poker-croupier.png?branch=master)](https://travis-ci.org/devill/poker-croupier)
+[![Build Status](https://travis-ci.org/lean-poker/poker-croupier.png?branch=master)](https://travis-ci.org/lean-poker/poker-croupier)
 
 Robot poker croupier for lean poker tournaments, an event much like a code retreat, but with a slightly different format and purpose.
 

@@ -27,4 +27,5 @@
     border-width: 15px 15px 0;
     border-style: solid;
     border-color: lightgrey transparent;
+    box-shadow: 3px 3px 3px #888888;
 }

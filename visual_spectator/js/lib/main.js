@@ -44,6 +44,7 @@ $(document).ready(function() {
 
         $(selector).append($(player_template({
             name: player.name,
+            version: player.version,
             stack: player.stack,
             card: [
                 player.hole_cards[0] || { suit: '', rank: '' },

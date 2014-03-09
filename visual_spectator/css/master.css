@@ -168,3 +168,7 @@ html[xmlns] .clearfix {
 #controls a.end-button i {
     background-position-x: 40px
 }
+
+.player-name {
+    margin-bottom: 5px;
+}

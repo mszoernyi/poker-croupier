@@ -21,6 +21,10 @@ class Croupier::RandomPlayer
 
   end
 
+  def version
+    "Default random player"
+  end
+
   def running?
     true
   end

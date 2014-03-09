@@ -206,7 +206,7 @@ describe Croupier::SitAndGo::State do
         strategy.stub(:name).and_return("Joe")
         subject.register_player Croupier::Player.new(strategy)
         subject.data.should == {
-            players: [{id: 0, name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: []}],
+            players: [{id: 0, name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: [], version: nil}],
             small_blind: 10, 
             orbits: 0, 
             dealer: 0

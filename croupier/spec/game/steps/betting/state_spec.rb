@@ -16,7 +16,8 @@ describe Croupier::Game::Steps::Betting::State do
                   status: "active",
                   bet: 0,
                   hole_cards: [],
-                  id: 0
+                  id: 0,
+                  version: nil
               },
               {
                   name: "FakePlayer",
@@ -24,7 +25,8 @@ describe Croupier::Game::Steps::Betting::State do
                   status: "active",
                   bet: 0,
                   hole_cards: [],
-                  id: 1
+                  id: 1,
+                  version: nil
               }
           ],
           small_blind: 10,

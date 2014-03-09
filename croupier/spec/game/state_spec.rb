@@ -4,7 +4,7 @@ describe Croupier::Game::State do
 
   describe "#transfer_bet" do
     it "should transfer the amount requested from the player to the pot" do
-      api_player = double("player strategy")
+      api_player = SpecHelper::DummyClass.new
       game_state = Croupier::Game::State.new(SpecHelper::MakeTournamentState.with players: [Croupier::Player.new(api_player)])
       api_player.stub(:name).and_return("Joe")
 
@@ -60,7 +60,7 @@ describe Croupier::Game::State do
 
       it "should return the tournament state with game state added" do
         game_state.data.should == {
-            players: [{ id: 0, name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: []}],
+            players: [{ id: 0, name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: [], version: nil}],
             small_blind: 10,
             orbits: 0,
             dealer: 0,
@@ -74,7 +74,7 @@ describe Croupier::Game::State do
         community_card = PokerRanking::Card::by_name('Queen of Spades')
         game_state.community_cards << community_card
         game_state.data.should == {
-            players: [{ id: 0, name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: []}],
+            players: [{ id: 0, name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: [], version: nil}],
             small_blind: 10,
             orbits: 0,
             dealer: 0,

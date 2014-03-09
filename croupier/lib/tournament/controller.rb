@@ -50,11 +50,12 @@ class Croupier::Tournament::Controller
     tournament_round['game_log'] = Croupier::log_file + '.log'
 
     ranking.each_with_index do |player, place|
-      if tournament_round['ranking'].has_key? player.name
-        tournament_round['ranking'][player.name]['place'] = place + 1
-      else
-        tournament_round['ranking'][player.name] = {'points' => 0, 'place' => place + 1}
+      unless tournament_round['ranking'].has_key? player.name
+        tournament_round['ranking'][player.name] = {'points' => 0}
       end
+
+      tournament_round['ranking'][player.name]['place'] = place + 1
+      tournament_round['ranking'][player.name]['version'] = player.version
     end
     tournament_round['ranking'][ranking[0].name]['points'] += 5
     tournament_round['ranking'][ranking[1].name]['points'] += 3

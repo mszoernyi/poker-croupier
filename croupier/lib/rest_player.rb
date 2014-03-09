@@ -11,6 +11,7 @@ class Croupier::RestPlayer
     @name = name
     uri = URI(url)
     @host, @port, @path = uri.host, uri.port, uri.path
+    @version = nil
   end
 
   def bet_request(game_state)
@@ -25,6 +26,20 @@ class Croupier::RestPlayer
 
   def showdown(game_state)
     send_request action: 'showdown', game_state: game_state.to_json
+  end
+
+  def version
+    if @version.nil?
+      send_request action: 'version' do |error, result|
+        if error
+          return 'Unknown'
+        end
+
+        @version = result
+      end
+    end
+
+    @version
   end
 
   def running?

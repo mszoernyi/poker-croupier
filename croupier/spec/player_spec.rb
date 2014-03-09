@@ -107,7 +107,7 @@ describe Croupier::Player do
 
     context "when a new player is created" do
       it "should return it's state" do
-        Croupier::Player.new(strategy).data.should == {name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: []}
+        Croupier::Player.new(strategy).data.should == {name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: [], version: nil}
       end
     end
 
@@ -115,7 +115,7 @@ describe Croupier::Player do
       it "should also return the cards" do
         hole_card = PokerRanking::Card::by_name('King of Diamonds')
         subject.hole_card(hole_card)
-        subject.data.should == {name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: [hole_card.data]}
+        subject.data.should == {name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: [hole_card.data], version: nil}
       end
     end
 
@@ -123,7 +123,7 @@ describe Croupier::Player do
       it "should set status to 'folded'" do
         player = Croupier::Player.new(strategy)
         player.fold
-        player.data.should == {name: "Joe", stack: 1000, status: "folded", bet: 0, hole_cards: []}
+        player.data.should == {name: "Joe", stack: 1000, status: "folded", bet: 0, hole_cards: [], version: nil}
       end
     end
 
@@ -131,7 +131,7 @@ describe Croupier::Player do
       it "should set status to 'out'" do
         player = Croupier::Player.new(strategy)
         player.stack = 0
-        player.data.should == {name: "Joe", stack: 0, status: "out", bet: 0, hole_cards: []}
+        player.data.should == {name: "Joe", stack: 0, status: "out", bet: 0, hole_cards: [], version: nil}
       end
     end
   end

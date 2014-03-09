@@ -66,6 +66,7 @@ class Croupier::Player
         status: status,
         bet: @total_bet,
         hole_cards: @hole_cards.map { |card| card.data },
+        version: version
     }.tap do |data|
       data[:amount_won] = amount_won unless amount_won == 0
     end

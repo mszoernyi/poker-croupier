@@ -1,0 +1,30 @@
+/* Bubble with an isoceles triangle
+------------------------------------------ */
+
+.triangle-isosceles {
+    display: none;
+}
+
+.triangle-isosceles {
+    display: block;
+    position: absolute;
+    padding: 15px;
+    margin: -70px 0 30px;
+    color: #000;
+    background: lightgrey;
+    border-radius: 10px;
+    background: linear-gradient(top, lightgrey, darkgray);
+}
+
+/* creates triangle */
+.triangle-isosceles:after {
+    content: "";
+    display: block; /* reduce the damage in FF3.0 */
+    position: absolute;
+    bottom: -15px;
+    left: 50px;
+    width: 0;
+    border-width: 15px 15px 0;
+    border-style: solid;
+    border-color: lightgrey transparent;
+}

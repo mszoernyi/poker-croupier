@@ -1,11 +1,15 @@
 <div class="panel panel-default player-panel">
+    {{#message}}
+        <div class="triangle-isosceles">{{message}}</div>
+    {{/message}}
     <div class="panel-heading">
         <h3 class="panel-title player-name" title="{{version}}">{{name}}</h3>
         <h3 class="panel-title"><span class="label label-default">{{stack}} €</span></h3>
     </div>
     <div class="panel-body hole-cards">
-        <div class="card {{card[0]['suit']}}">{{card[0]['rank']}}</div>
-        <div class="card {{card[1]['suit']}}">{{card[1]['rank']}}</div>
+        {{#card}}
+            <div class="card {{suit}}">{{rank}}</div>
+        {{/card}}
     </div>
     <div class="panel-footer">
         Current status:<br/><span class="label {{status_style}} status">{{status}}</span>

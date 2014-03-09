@@ -1,9 +1,6 @@
 $(document).ready(function() {
     "user strict";
 
-    _.templateSettings = {
-        interpolate: /\{\{(.+?)\}\}/g
-    };
     var player_template = null;
 
     function refreshCard(holecard, dom_card) {
@@ -42,7 +39,7 @@ $(document).ready(function() {
             }
         }
 
-        $(selector).append($(player_template({
+        $(selector).append($(Mustache.render(player_template,{
             name: player.name,
             version: player.version,
             stack: player.stack,
@@ -51,7 +48,8 @@ $(document).ready(function() {
                 player.hole_cards[1] || { suit: '', rank: '' }
             ],
             status: status(),
-            status_style: status_style()
+            status_style: status_style(),
+            message: false
         })).attr('id', 'player'+player.id));
     }
 
@@ -74,8 +72,7 @@ $(document).ready(function() {
     }
 
     $.ajax('template/player.mustache').done(function(data) {
-        player_template = _.template(data);
-
+        player_template = data;
         var currentIndex = 0;
 
         render(currentIndex);

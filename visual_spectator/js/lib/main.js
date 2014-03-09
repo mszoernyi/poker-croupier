@@ -62,9 +62,9 @@ $(document).ready(function() {
         $('#community-cards div.card').each(function (index, dom_card) {
             refreshCard(event.game_state.community_cards[index], dom_card);
         });
-        $('#playerContainer').empty();
+        $('#player-container').empty();
         event.game_state.players.forEach(function (player) {
-            addPlayer('#playerContainer', player);
+            addPlayer('#player-container', player);
         });
 
         $('#player'+event.game_state.dealer).addClass('dealer');

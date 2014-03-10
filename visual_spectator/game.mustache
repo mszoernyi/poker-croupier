@@ -10,7 +10,10 @@
     <script src="js/lib/jquery/jquery-2.0.3.js"></script>
     <script src="js/lib/underscore-1.5.1.js"></script>
     <script src="js/lib/mustache.js"></script>
-    <script>window.pokerEvents = {{{ game_json }}}</script>
+    <script>
+        window.pokerEvents = {{{ game_json }}};
+        window.tweets = {{{ tweets }}};
+    </script>
     <script src="js/lib/main.js"></script>
 </head>
 <body>

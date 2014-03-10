@@ -15,8 +15,10 @@ get "/game" do
 end
 
 get "/tweets" do
-  twitter_config = YAML.load(File.open(File.dirname(__FILE__) + '/twitter_api.yml').read)
+  config_file = File.dirname(__FILE__) + '/twitter_api.yml'
+  return "[]" unless FileTest.exist? config_file
 
+  twitter_config = YAML.load(File.open(config_file).read)
   client = Twitter::REST::Client.new do |config|
     config.consumer_key    = twitter_config['key']
     config.consumer_secret = twitter_config['secret']

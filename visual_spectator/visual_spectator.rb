@@ -1,6 +1,9 @@
 require "sinatra"
 require "mustache"
 
+require "twitter"
+require "yaml"
+
 set :public_folder, File.dirname(__FILE__)
 
 get "/" do
@@ -9,6 +12,23 @@ end
 
 get "/game" do
   Game.new(request[:log]).render
+end
+
+get "/tweets" do
+  twitter_config = YAML.load(File.open(File.dirname(__FILE__) + '/twitter_api.yml').read)
+
+  client = Twitter::REST::Client.new do |config|
+    config.consumer_key    = twitter_config['key']
+    config.consumer_secret = twitter_config['secret']
+  end
+
+  JSON.generate(client.search(twitter_config['search'], rpp: 10, result_type:'recent').take(10).map do |tweet|
+    {
+        profile_image: tweet.user.profile_image_url.to_s,
+        username: tweet.user.username,
+        text: tweet.text
+    }
+  end)
 end
 
 BASE_DIR = File.dirname(__FILE__)+"/../"

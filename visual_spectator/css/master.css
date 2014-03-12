@@ -94,15 +94,17 @@ html[xmlns] .clearfix {
 * html .clearfix {
     height: 1%;
 }
-#pot {
-    font-size: 25px;
-    display:block;
+
+.right-container {
     float:right;
 }
 
+#pot {
+    font-size: 25px;
+    display:block;
+}
+
 #controls {
-    float:right;
-    clear:right;
     margin-top: 10px;
 }
 
@@ -171,4 +173,30 @@ html[xmlns] .clearfix {
 
 .player-name {
     margin-bottom: 5px;
+}
+
+#tweets {
+    margin-left: 255px;
+    margin-right: 180px;
+    margin-bottom: 0px;
+    height: 75px;
+    overflow: hidden;
+    padding: 5px;
+}
+
+.tweeter-profile-image {
+    float:left;
+    margin:5px;
+}
+
+.tweeter-username {
+    color:red;
+}
+
+.tweet-text {
+    margin-left: 60px;
+}
+
+#community-cards .card {
+    margin-top: 7px;
 }

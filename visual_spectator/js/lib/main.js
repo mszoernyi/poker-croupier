@@ -133,4 +133,16 @@ $(document).ready(function() {
     });
 
 
+    (function twitterWall() {
+        $.ajax('template/tweet.mustache').done(function(template){
+            var currentTweet = 0;
+
+            function renderTweet() {
+                $('#tweets').html($(Mustache.render(template,window.tweets[currentTweet++])));
+                currentTweet = currentTweet % window.tweets.length;
+            }
+
+            setInterval(renderTweet, 10000);
+        });
+    })();
 });

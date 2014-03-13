@@ -49,7 +49,6 @@ $(document).ready(function() {
             ],
             status: status(),
             status_style: status_style(),
-            message: false
         })).attr('id', 'player'+player.id));
     }
 

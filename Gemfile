@@ -11,3 +11,5 @@ gem 'mustache'
 gem 'poker-ranking'
 gem 'delegate-all'
 gem 'twitter'
+
+gem "codeclimate-test-reporter", group: :test, require: nil

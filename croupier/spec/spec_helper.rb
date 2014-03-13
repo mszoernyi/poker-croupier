@@ -1,3 +1,6 @@
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
+
 $:.push(File.join(File.dirname(__FILE__), '../../common/lib'))
 $:.push(File.join(File.dirname(__FILE__)))
 

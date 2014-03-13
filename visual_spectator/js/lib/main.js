@@ -135,15 +135,20 @@ $(document).ready(function() {
 
     (function twitterWall() {
         $.ajax('template/tweet.mustache').done(function(template){
+            var hashTagSlide = $('#tweets').html();
             var currentTweet = 0;
 
             function renderTweet() {
-                $('#tweets').html($(Mustache.render(template,window.tweets[currentTweet++])));
-                currentTweet = currentTweet % window.tweets.length;
+                if(currentTweet == window.tweets.length) {
+                    $('#tweets').html(hashTagSlide);
+                } else {
+                    $('#tweets').html($(Mustache.render(template,window.tweets[currentTweet])));
+                }
+                currentTweet = (currentTweet + 1) % (window.tweets.length + 1);
             }
 
             if(window.tweets.length > 0) {
-                setInterval(renderTweet, 10000);
+                setInterval(renderTweet, 7000);
             }
         });
     })();

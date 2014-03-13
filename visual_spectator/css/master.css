@@ -200,3 +200,14 @@ html[xmlns] .clearfix {
 #community-cards .card {
     margin-top: 7px;
 }
+
+.hashtag-big {
+    text-align:center;
+    margin:10px;
+    font-size:30px;
+}
+
+.hashtag-big span{
+    margin:20px;
+    color:#66757f;
+}

@@ -142,7 +142,9 @@ $(document).ready(function() {
                 currentTweet = currentTweet % window.tweets.length;
             }
 
-            setInterval(renderTweet, 10000);
+            if(window.tweets.length > 0) {
+                setInterval(renderTweet, 10000);
+            }
         });
     })();
 });

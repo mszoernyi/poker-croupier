@@ -10,24 +10,32 @@ class Croupier::Game::Steps::Showdown < Croupier::Game::Steps::Base
       break if @winners == []
       award
     end
-    game_state.players.each do |player|
-      data = game_state.data
-      data[:players].each do |opponent|
-        opponent.delete :hole_cards unless game_state.players[opponent[:id]] == player or game_state.players[opponent[:id]].hand_revealed
-      end
-      player.showdown(data)
-    end
+    notify_players
   end
 
   private
+
+  def notify_players
+    game_state.players.each do |player|
+      player.showdown(game_state_for(player))
+    end
+  end
+
+  def game_state_for(player)
+    game_state.data.tap do |data|
+      data[:players].each do |opponent|
+        opponent.delete :hole_cards unless game_state.players[opponent[:id]] == player or game_state.players[opponent[:id]].hand_revealed
+      end
+    end
+  end
 
   def find_winner
     @winners = []
     @best_hand = PokerRanking::Hand.new([])
 
-    if game_state.players.count { |player| player.active? and player.total_bet > 0 } == 1
-      @winners = game_state.players.select { |player| player.active? and player.total_bet > 0 }
-      @best_hand = PokerRanking::Hand.new [*@winners[0].hole_cards, *game_state.community_cards]
+    if players_with_money_still_in_the_pot.count == 1
+      @winners = players_with_money_still_in_the_pot
+      @best_hand = hand_for(@winners[0])
     else
       game_state.each_player_from game_state.last_aggressor do |player|
         examine_cards_of player
@@ -35,11 +43,19 @@ class Croupier::Game::Steps::Showdown < Croupier::Game::Steps::Base
     end
   end
 
+  def hand_for(player)
+    PokerRanking::Hand.new [*player.hole_cards, *game_state.community_cards]
+  end
+
+  def players_with_money_still_in_the_pot
+    game_state.players.select { |player| player.active? and player.total_bet > 0 }
+  end
+
   def examine_cards_of(player)
     return unless player.active?
     return if player.total_bet <= 0
 
-    hand = PokerRanking::Hand.new [*player.hole_cards, *game_state.community_cards]
+    hand = hand_for(player)
     return if @best_hand.defeats? hand
 
     show_hand(player, hand)

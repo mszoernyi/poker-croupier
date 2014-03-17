@@ -93,7 +93,7 @@ class Croupier::Game::Steps::Showdown < Croupier::Game::Steps::Base
 
 
   def show_hand(player, hand)
-    game_state.log_state message: "#{player.name} showed #{hand.cards.map{|card| card}.join(',')} making a #{hand.name}"
+    game_state.log_state message: "#{player.name} showed #{hand.cards_used.map{|card| card}.join(',')} making a #{hand.name}"
     player.hand_revealed = true
   end
 

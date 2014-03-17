@@ -100,7 +100,7 @@ describe Croupier::Game::Steps::Showdown do
         hand = PokerRanking::Hand.new [*player.hole_cards, *game_state.community_cards]
 
         showdown_step.stub(:log_winner)
-        game_state.should_receive(:log_state).with(message: "#{player.name} showed #{hand.cards.map{|card| card}.join(',')} making a #{hand.name}")
+        game_state.should_receive(:log_state).with(message: "#{player.name} showed #{hand.cards_used.map{|card| card}.join(',')} making a #{hand.name}")
       end
     end
 

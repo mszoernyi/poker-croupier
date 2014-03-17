@@ -11,6 +11,9 @@ sit_and_go "../../log/game_#{run_timestamp}" do
   # JavaScript client
   register_rest_player "Javier Scrivo", "http://localhost:1337/"
 
+  # Perl client
+  register_rest_player "Perl Jim", "http://localhost:1234/"
+
   # PHP client
   register_rest_player "PHilip Pots", "http://localhost:8000/player_service.php"
 

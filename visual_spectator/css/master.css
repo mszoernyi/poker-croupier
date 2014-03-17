@@ -18,7 +18,6 @@
 }
 .spades:after {
     content: '♠';
-    display: block;
 }
 
 .clubs {
@@ -26,7 +25,6 @@
 }
 .clubs:after {
     content: '♣';
-    display: block;
 }
 
 .diamonds{
@@ -35,7 +33,6 @@
 
 .diamonds:after{
     content: '♦';
-    display: block;
 }
 .hearts{
     color: red;
@@ -43,7 +40,6 @@
 
 .hearts:after{
     content: '♥';
-    display: block;
 }
 
 .card {
@@ -58,6 +54,17 @@
     padding-top: 10px;
     background-color: white;
     line-height: 20px;
+}
+
+.card:after {
+    display:block;
+}
+
+.inline-card {
+    border-radius: 3px;
+    border: 1px lightgrey solid;
+    background-color: white;
+    padding:3px;
 }
 
 .pokertable {

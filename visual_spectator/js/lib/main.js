@@ -52,6 +52,14 @@ $(document).ready(function() {
         })).attr('id', 'player'+player.id));
     }
 
+    function renderMessage(message) {
+        if(message === undefined){ return ''; }
+
+        return message.replace(/(10|\w|\d)\w* of (Diamonds|Hearts|Spades|Clubs)/g, function(string, rank, suit) {
+            return "<span class='inline-card "+suit.toLowerCase()+"'>"+rank+"</span>"
+        });
+    }
+
     function render(index) {
         var event = window.pokerEvents[index];
 
@@ -67,7 +75,7 @@ $(document).ready(function() {
         $('#player'+event.game_state.dealer).addClass('dealer');
         $('#player'+event.on_turn).addClass('on-turn');
 
-        $('#message').text(event.message);
+        $('#message').html(renderMessage(event.message));
     }
 
     $.ajax('template/player.mustache').done(function(data) {

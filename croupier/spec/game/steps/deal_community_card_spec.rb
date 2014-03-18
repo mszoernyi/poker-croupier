@@ -28,7 +28,7 @@ describe Croupier::Game::Steps::DealCommunityCard do
   end
 
   it "should log the game state" do
-    @game_state.should_receive(:log_state).with(message: "community card #{@cards.first}")
+    @game_state.should_receive(:log_state).with(type: 'card_deal', message: "community card #{@cards.first}")
 
     run
   end

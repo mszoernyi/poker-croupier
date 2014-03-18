@@ -67,7 +67,7 @@ describe Croupier::Game::Steps::Showdown do
 
       def expect_winner_to_be_announced(winner, amount = 0)
         showdown_step.stub(:show_hand)
-        game_state.should_receive(:log_state).with(message: "#{winner.name} won #{amount}")
+        game_state.should_receive(:log_state).with(type: 'winner_announcement', message: "#{winner.name} won #{amount}")
       end
     end
 
@@ -100,7 +100,7 @@ describe Croupier::Game::Steps::Showdown do
         hand = PokerRanking::Hand.new [*player.hole_cards, *game_state.community_cards]
 
         showdown_step.stub(:log_winner)
-        game_state.should_receive(:log_state).with(message: "#{player.name} showed #{hand.cards_used.map{|card| card}.join(',')} making a #{hand.name}")
+        game_state.should_receive(:log_state).with(type: 'showdown', message: "#{player.name} showed #{hand.cards_used.map{|card| card}.join(',')} making a #{hand.name}")
       end
     end
 

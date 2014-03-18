@@ -93,12 +93,12 @@ class Croupier::Game::Steps::Showdown < Croupier::Game::Steps::Base
 
 
   def show_hand(player, hand)
-    game_state.log_state message: "#{player.name} showed #{hand.cards_used.map{|card| card}.join(',')} making a #{hand.name}"
+    game_state.log_state type: 'showdown', message: "#{player.name} showed #{hand.cards_used.map{|card| card}.join(',')} making a #{hand.name}"
     player.hand_revealed = true
   end
 
   def log_winner(winner, amount)
-    game_state.log_state message: "#{winner.name} won #{amount}"
+    game_state.log_state type: 'winner_announcement', message: "#{winner.name} won #{amount}"
   end
 
 end

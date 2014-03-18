@@ -113,13 +113,28 @@ $(document).ready(function() {
 
             var timerHandle = false;
 
+            function playNext()
+            {
+                next();
+                var type = window.pokerEvents[currentIndex].type;
+                type = (type == undefined) ? 'other' : type;
+                var timeouts = {
+                    'card_deal': 500,
+                    'bet': 1500,
+                    'showdown': 3000,
+                    'winner_announcement': 2000,
+                    'other': 500
+                };
+                setTimeout(playNext, timeouts[type]);
+            }
+
             function startPlay() {
-                timerHandle = setInterval(next, 1200);
+                timerHandle = setTimeout(playNext, 500);
                 $('#play-button').removeClass('play-button').addClass('stop-button');
             }
 
             function stopPlay() {
-                clearInterval(timerHandle);
+                clearTimeout(timerHandle);
                 timerHandle = false;
                 $('#play-button').removeClass('stop-button').addClass('play-button');
             }

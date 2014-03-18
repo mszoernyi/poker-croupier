@@ -116,16 +116,20 @@ $(document).ready(function() {
             function playNext()
             {
                 next();
-                var type = window.pokerEvents[currentIndex].type;
-                type = (type == undefined) ? 'other' : type;
-                var timeouts = {
-                    'card_deal': 500,
-                    'bet': 1500,
-                    'showdown': 3000,
-                    'winner_announcement': 2000,
-                    'other': 500
-                };
-                setTimeout(playNext, timeouts[type]);
+
+                if(timerHandle)
+                {
+                    var type = window.pokerEvents[currentIndex].type;
+                    type = (type == undefined) ? 'other' : type;
+                    var timeouts = {
+                        'card_deal': 500,
+                        'bet': 1500,
+                        'showdown': 3000,
+                        'winner_announcement': 2000,
+                        'other': 500
+                    };
+                    setTimeout(playNext, timeouts[type]);
+                }
             }
 
             function startPlay() {

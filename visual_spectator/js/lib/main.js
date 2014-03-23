@@ -182,21 +182,24 @@ $(document).ready(function() {
 
     (function twitterWall() {
         $.ajax('template/tweet.mustache').done(function(template){
-            var hashTagSlide = $('#tweets').html();
             var currentTweet = 0;
+            var currentBanner = 0;
 
             function renderTweet() {
-                if(currentTweet == window.tweets.length) {
-                    $('#tweets').html(hashTagSlide);
-                } else {
-                    $('#tweets').html($(Mustache.render(template,window.tweets[currentTweet])));
-                }
-                currentTweet = (currentTweet + 1) % (window.tweets.length + 1);
+                $('#tweets').html($(Mustache.render(template,window.tweets[currentTweet])));
+                $('#tweets').css('background-image', 'none');
+                currentTweet = (currentTweet + 1) % window.tweets.length;
+                setTimeout(renderBanner, 7000);
             }
 
-            if(window.tweets.length > 0) {
-                setInterval(renderTweet, 7000);
+            function renderBanner() {
+                $('#tweets').html('');
+                $('#tweets').css('background-image', 'url(img/' + window.banners[currentBanner] + ')');
+                currentBanner = (currentBanner + 1) % window.banners.length;
+                setTimeout(renderTweet, 3000);
             }
+
+            renderBanner();
         });
     })();
 });

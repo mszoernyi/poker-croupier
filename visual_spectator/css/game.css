@@ -194,6 +194,8 @@ html[xmlns] .clearfix {
     height: 75px;
     overflow: hidden;
     padding: 5px;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .tweeter-profile-image {

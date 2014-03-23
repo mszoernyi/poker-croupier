@@ -17,6 +17,11 @@
     font-size: 30px;
 }
 
+.leader-boards .board p.version {
+    float:right;
+    font-size: 15px;
+}
+
 .leader-boards .board:first-of-type {
     margin-right:20px;
 }

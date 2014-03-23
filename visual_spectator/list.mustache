@@ -9,7 +9,7 @@
         <div class="container">
             <h2>New log files</h2>
             {{# log_files }}
-            <h3><a href="/tournament?tournament_log={{ file }}">{{ file }}</a></h3>
+            <h3><a href="/tournament?tournament_log={{ file }}">{{ file }}</a> <a href="/tournament?tournament_log={{ file }}#autoplay">Auto play</a></h3>
             {{/log_files}}
             <h2>Previous events</h2>
             {{# previous_events }}

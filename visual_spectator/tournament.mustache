@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8/>
+    <title></title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/game.css"/>
+    <script src="js/lib/jquery/jquery-2.0.3.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.leader-boards').hide();
+            $('.leader-boards').first().show();
+
+            $('.game-container').click(function(event){
+                console.log($(event.target).find('.leader-boards').toggle());
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    {{#games}}
+        <div class="panel panel-body game-container" style="background-color:#cdf5ca">
+            <div style="float:right"><a href='/game?game_log={{{ game_path }}}'>Play</a></div>
+            <b>Winner:</b> {{{game_first}}},
+            <b>Second:</b> {{{game_second}}},
+            <b>Current leader:</b> {{{tournament_leader}}}
+
+            <div class="leader-boards" style="clear:both">
+                <div style="margin-top: 10px; float:left; width: 49%; font-size: 30px">
+                    <div class="panel" style="margin-bottom:2px; padding: 10px; background-color: darkred; color:white">
+                        <b>Game winners</b></div>
+                    {{# game_places }}
+                        <div class="panel" style="margin-bottom:2px; padding: 10px">{{{place}}}. {{{name}}}</div>
+                    {{/ game_places}}
+                </div>
+                <div style="margin-top: 10px; float:right; width: 49%; font-size: 30px">
+                    <div class="panel" style="margin-bottom:2px; padding: 10px; background-color: darkred; color:white">
+                        <b>Tournament leaders</b></div>
+                    {{# tournament_leader_board }}
+                        <div class="panel" style="margin-bottom:2px; padding: 10px">{{{name}}} <b
+                                style="float:right">{{{points}}}</b></div>
+                    {{/ tournament_leader_board }}
+                </div>
+            </div>
+        </div>
+    {{/games}}
+</div>
+</body>
+</html>

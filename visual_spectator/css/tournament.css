@@ -1,0 +1,36 @@
+.game-container {
+    background-color:#cdf5ca;
+}
+
+.controls {
+    float:right;
+}
+
+.leader-boards {
+    clear:both;
+}
+
+.leader-boards .board {
+    margin-top: 10px;
+    float:left;
+    width: 544px;
+    font-size: 30px;
+}
+
+.leader-boards .board:first-of-type {
+    margin-right:20px;
+}
+
+.leader-boards .panel {
+    margin-bottom:2px;
+    padding: 10px;
+}
+
+.leader-boards .panel.board-header {
+    background-color: darkred;
+    color:white;
+}
+
+.leader-points {
+    float:right;
+}

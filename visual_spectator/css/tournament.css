@@ -19,6 +19,7 @@
 
 .leader-boards .board p.version {
     float:right;
+    margin-top: 10px;
     font-size: 15px;
 }
 

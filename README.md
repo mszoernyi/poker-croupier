@@ -49,6 +49,7 @@ We try to provide the folding player (a player that folds or checks under all co
 
 Currently supported languages:
 - [C++](https://github.com/lean-poker/poker-player-cpp)
+- [Haskell](https://github.com/lean-poker/poker-player-haskell)
 - [Java](http://github.com/lean-poker/poker-player-java)
 - [JavaScript](http://github.com/lean-poker/poker-player-js)
 - [Perl](http://github.com/ferki/poker-player-perl)

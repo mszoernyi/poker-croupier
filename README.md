@@ -45,7 +45,7 @@ For a library to qualify for the bellow exceptions, it should be publicly availa
 
 # How to write a player
 
-We try to provide the folding player (a player that folds or checks under all conditions) for as many languages as we can. Each of them is in a separate git repository, so that participiants can simply fork them, and start working on their algorithms right away.
+We try to provide the folding player (a player that folds or checks under all conditions) for as many languages as we can. Each of them is in a separate git repository, so that participiants can simply fork them, and start working on their algorithms right away. Please check out the [Player API documentation](https://github.com/lean-poker/poker-croupier/wiki/Player-API) for the details.
 
 Currently supported languages:
 - [C++](https://github.com/lean-poker/poker-player-cpp)

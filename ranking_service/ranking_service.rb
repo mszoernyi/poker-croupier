@@ -6,5 +6,9 @@ set :port, 2048
 
 post "/" do
   cards = JSON.parse(request[:cards])
-  JSON.generate PokerRanking::Hand.new(cards).data
+  if cards.length >= 5
+    JSON.generate PokerRanking::Hand.new(cards).data
+  else
+    JSON.generate error: "Not enough cards"
+  end
 end

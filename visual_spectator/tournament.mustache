@@ -37,7 +37,8 @@
                     <div class="panel board-header">
                         <b>Game winners</b></div>
                     {{# game_places }}
-                        <div class="panel">{{{place}}}. {{{name}}} <p class="version">{{{version}}}</p></div>
+                        <div class="panel">
+                            {{{place}}}. <a href='/log?player_log={{{log_file}}}'>{{{name}}}</a> <p class="version">{{{version}}}</p></div>
                     {{/ game_places}}
                 </div>
                 <div class="board">

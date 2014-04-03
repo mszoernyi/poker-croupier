@@ -8,6 +8,7 @@ class Croupier::Tournament::Controller
 
   def sit_and_go_logfile(log_file)
     Croupier::log_file = log_file
+    @log_file = log_file
   end
 
   def tournament_logfile(log_file)
@@ -78,8 +79,12 @@ class Croupier::Tournament::Controller
   def start_players(sit_and_go_controller)
     @players.each do |player|
       config = YAML.load_file("#{player[:directory]}/config.yml")
-      @processes << Process.spawn("bash #{player[:directory]}/start.sh")
+      @processes << Process.spawn("bash #{player[:directory]}/start.sh 2>&1 | tee #{@log_file}_player_#{to_file_name(player[:name])}.log")
       sit_and_go_controller.register_rest_player player[:name], config["url"]
     end
+  end
+
+  def to_file_name(name)
+    name.gsub(/[^a-zA-Z0-9]/, '_').downcase
   end
 end

@@ -44,6 +44,10 @@ class Croupier::Tournament::Controller
 
     tournament_round.update_with ranking
 
+    @players.each do |player|
+      tournament_round.data['ranking'][player[:name]]['log_file'] = player_log player
+    end
+
     Croupier::Tournament::Persister.append_to(@tournament_logfile, tournament_round)
   end
 
@@ -79,9 +83,13 @@ class Croupier::Tournament::Controller
   def start_players(sit_and_go_controller)
     @players.each do |player|
       config = YAML.load_file("#{player[:directory]}/config.yml")
-      @processes << Process.spawn("bash #{player[:directory]}/start.sh 2>&1 | tee #{@log_file}_player_#{to_file_name(player[:name])}.log")
+      @processes << Process.spawn("bash #{player[:directory]}/start.sh 2>&1 | tee #{player_log(player)}")
       sit_and_go_controller.register_rest_player player[:name], config["url"]
     end
+  end
+
+  def player_log(player)
+    "#{@log_file}_player_#{to_file_name(player[:name])}.log"
   end
 
   def to_file_name(name)

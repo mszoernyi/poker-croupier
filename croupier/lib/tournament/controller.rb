@@ -20,7 +20,7 @@ class Croupier::Tournament::Controller
   end
 
   def start_tournament
-    reset_players_to_git_master
+    #reset_players_to_git_master
 
     sit_and_go_controller = Croupier::SitAndGo::Controller.new
 

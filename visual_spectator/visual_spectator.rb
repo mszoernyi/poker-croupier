@@ -18,6 +18,11 @@ get "/tournament" do
   Tournament.new(request[:tournament_log]).render
 end
 
+get "/log" do
+  content_type :text
+  File.read("#{BASE_DIR}#{request[:player_log]}.log")
+end
+
 BASE_DIR = File.dirname(__FILE__)+"/../"
 LOG_DIR = File.dirname(__FILE__)+"/../log/"
 PREVIOUS_EVENTS_DIR = File.dirname(__FILE__)+"/../previous_events/"
@@ -48,6 +53,9 @@ class Tournament < MustacheBase
   def games
     @data.map do |game|
       game_winners = game_winners(game)
+      game_winners.each do |player|
+        player['log_file'] = strip_extension(player['log_file'])
+      end
       {
           game_path: strip_extension(game['game_json']),
           game_first: game_winners.sort_by { |player| player['place'] }[0]['name'],

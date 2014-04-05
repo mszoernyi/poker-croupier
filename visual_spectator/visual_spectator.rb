@@ -4,6 +4,7 @@ require "mustache"
 require "twitter"
 require "yaml"
 
+set :bind, '0.0.0.0'
 set :public_folder, File.dirname(__FILE__)
 
 get "/" do

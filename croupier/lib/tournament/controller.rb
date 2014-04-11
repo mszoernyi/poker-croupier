@@ -50,6 +50,8 @@ class Croupier::Tournament::Controller
       tournament_round.data['ranking'][player[:name]]['commit'] = player[:commit]
     end
 
+    tournament_round.data['time'] = Time.new.strftime "%H:%M"
+
     Croupier::Tournament::Persister.append_to(@tournament_logfile, tournament_round)
   end
 

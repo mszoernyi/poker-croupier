@@ -24,8 +24,9 @@
 
 .leader-boards .board p.version {
     float:right;
-    margin-top: 10px;
-    font-size: 15px;
+    margin-top: 0;
+    font-size: 10px;
+    text-align: right;
 }
 
 .leader-boards .board:first-of-type {

@@ -59,6 +59,7 @@ class Tournament < MustacheBase
       end
       {
           game_path: strip_extension(game['game_json']),
+          time: game['time'],
           game_first: game_winners.sort_by { |player| player['place'] }[0]['name'],
           game_second: game_winners.sort_by { |player| player['place'] }[1]['name'],
           game_places: game_winners.sort_by { |player| player['place'] },
@@ -91,17 +92,22 @@ class Game < MustacheBase
     return "[]" unless FileTest.exist? config_file
 
     twitter_config = YAML.load(File.open(config_file).read)
-    client = Twitter::REST::Client.new do |config|
-      config.consumer_key = twitter_config['key']
-      config.consumer_secret = twitter_config['secret']
-    end
 
-    JSON.generate(client.search(twitter_config['search'], rpp: 10, result_type: 'recent').take(10).map do |tweet|
-      {
-          profile_image: tweet.user.profile_image_url.to_s,
-          username: tweet.user.username,
-          text: tweet.text
-      }
-    end)
+    begin
+      client = Twitter::REST::Client.new do |config|
+        config.consumer_key = twitter_config['key']
+        config.consumer_secret = twitter_config['secret']
+      end
+
+      JSON.generate(client.search(twitter_config['search'], rpp: 10, result_type: 'recent').take(10).map do |tweet|
+        {
+            profile_image: tweet.user.profile_image_url.to_s,
+            username: tweet.user.username,
+            text: tweet.text
+        }
+      end)
+    rescue
+      "[]"
+    end
   end
 end

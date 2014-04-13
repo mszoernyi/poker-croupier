@@ -10,6 +10,7 @@
         $(document).ready(function() {
             $('.leader-boards').hide();
             $('.leader-boards').first().show();
+            $('.container').show();
 
             $('.game-container').click(function(event){
                 $(event.target).find('.leader-boards').toggle();
@@ -24,7 +25,7 @@
     </script>
 </head>
 <body>
-<div class="container">
+<div class="container" style='display:none'>
     {{#games}}
         <div class="panel panel-body game-container">
             <div class="controls"><a href='/game?game_log={{{ game_path }}}'>Show</a></div>

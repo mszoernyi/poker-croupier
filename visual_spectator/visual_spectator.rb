@@ -52,7 +52,7 @@ class Tournament < MustacheBase
   end
 
   def games
-    @data.map do |game|
+    @data.slice(0..20).map do |game|
       game_winners = game_winners(game)
       game_winners.each do |player|
         player['log_file'] = strip_extension(player['log_file'])

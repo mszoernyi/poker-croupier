@@ -51,6 +51,7 @@ There is also a ranking service running during the game, that the players are we
 
 Currently supported languages:
 - [C++](https://github.com/lean-poker/poker-player-cpp)
+- [Go] (https://github.com/ziegfried/poker-player-go) (Under review)
 - [Haskell](https://github.com/lean-poker/poker-player-haskell)
 - [Java](http://github.com/lean-poker/poker-player-java)
 - [JavaScript](http://github.com/lean-poker/poker-player-js)

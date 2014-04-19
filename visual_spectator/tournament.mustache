@@ -16,11 +16,11 @@
                 $(event.target).find('.leader-boards').toggle();
             });
 
-            if(window.location.hash){
+            {{#auto_play}}
                 setTimeout(function(){
                     window.location.reload();
                 }, 2000);
-            }
+            {{/auto_play}}
         });
     </script>
 </head>

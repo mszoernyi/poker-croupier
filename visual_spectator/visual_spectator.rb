@@ -16,7 +16,7 @@ get "/game" do
 end
 
 get "/tournament" do
-  Tournament.new(request[:tournament_log]).render
+  Tournament.new(request[:tournament_log], request[:auto_play]).render
 end
 
 get "/log" do
@@ -57,15 +57,19 @@ end
 
 class Tournament < MustacheBase
   attr_reader :log
+  attr_reader :auto_play
 
-  def initialize(log)
+  def initialize(log,auto_play)
     @log = log
+    @auto_play = auto_play
     @data = JSON.parse('[' + File.readlines("#{BASE_DIR}#{log}.json").join(',') + ']').reverse
   end
 
   def games
     result = []
-    @data.slice(0..20).each_with_index do |game, index|
+    data = auto_play ? @data.slice(0..20) : @data
+
+    data.each_with_index do |game, index|
       game_winners = game_winners(game)
       calculate_trends(game_winners, index)
 

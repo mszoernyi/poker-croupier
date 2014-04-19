@@ -21,7 +21,16 @@ end
 
 get "/log" do
   content_type :text
-  File.read("#{BASE_DIR}#{request[:player_log]}.log")
+  File.read("#{BASE_DIR}#{request[:log]}.log")
+end
+
+get "/json" do
+  content_type :text
+  if request[:log].include? "tournament_"
+    '[' + File.readlines("#{BASE_DIR}#{request[:log]}.json").join(',') + ']'
+  else
+    File.read("#{BASE_DIR}#{request[:log]}.json")
+  end
 end
 
 BASE_DIR = File.dirname(__FILE__)+"/../"
@@ -47,7 +56,10 @@ class List < MustacheBase
 end
 
 class Tournament < MustacheBase
+  attr_reader :log
+
   def initialize(log)
+    @log = log
     @data = JSON.parse('[' + File.readlines("#{BASE_DIR}#{log}.json").join(',') + ']').reverse
   end
 
@@ -77,7 +89,7 @@ class Tournament < MustacheBase
       earlier_state = earlier_player_states.select { |earlier| earlier['name'] == player['name'] }.first
       player['trend'] = player['relative_points'] - earlier_state['relative_points']
       player['trend_direction'] = player['trend'] > 0 ? 'up' : 'down'
-      player['trend_direction'] = '' if player['trend'] == 0
+      player['trend_direction'] = '' if player['trend'].abs < 8
     end
   end
 

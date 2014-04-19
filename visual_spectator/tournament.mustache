@@ -25,10 +25,15 @@
     </script>
 </head>
 <body>
+
 <div class="container" style='display:none'>
     {{#games}}
         <div class="panel panel-body game-container">
-            <div class="controls"><a href='/game?game_log={{{ game_path }}}'>Show</a></div>
+            <div class="controls">
+                <a href='/game?game_log={{{ game_path }}}'>Show</a> -
+                <a href='/log?log={{{ game_path }}}'>Log</a> -
+                <a href='/json?log={{{ game_path }}}'>JSON</a>
+            </div>
             <b>Winner:</b> {{{game_first}}},
             <b>Second:</b> {{{game_second}}},
             <b>Current leader:</b> {{{tournament_leader}}}
@@ -40,7 +45,7 @@
                         <b>Game winners</b></div>
                     {{# game_places }}
                         <div class="panel">
-                            {{{place}}}. <a href='/log?player_log={{{log_file}}}'>{{{name}}}</a> <p class="version">{{{version}}}<br/>{{{commit}}}</p></div>
+                            {{{place}}}. <a href='/log?log={{{log_file}}}'>{{{name}}}</a> <p class="version">{{{version}}}<br/>{{{commit}}}</p></div>
                     {{/ game_places}}
                 </div>
                 <div class="board">
@@ -53,6 +58,10 @@
             </div>
         </div>
     {{/games}}
+</div>
+
+<div class="container footer>
+    <a href='json?log={{{log}}}'>[JSON]</a>
 </div>
 </body>
 </html>

@@ -45,4 +45,13 @@
 
 .leader-points {
     float:right;
+    color:dimgray;
+}
+
+.leader-points.up {
+    color:green;
+}
+
+.leader-points.down {
+    color:red;
 }

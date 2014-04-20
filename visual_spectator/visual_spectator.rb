@@ -19,6 +19,10 @@ get "/tournament" do
   Tournament.new(request[:tournament_log], request[:auto_play]).render
 end
 
+get "/tournament_chart" do
+  TournamentChart.new(request[:tournament_log], request[:auto_play]).render
+end
+
 get "/log" do
   content_type :text
   File.read("#{BASE_DIR}#{request[:log]}.log")
@@ -55,8 +59,9 @@ class List < MustacheBase
   end
 end
 
-class Tournament < MustacheBase
+class TournamentBase < MustacheBase
   attr_reader :log
+  attr_reader :data
   attr_reader :auto_play
 
   def initialize(log,auto_play)
@@ -65,25 +70,10 @@ class Tournament < MustacheBase
     @data = JSON.parse('[' + File.readlines("#{BASE_DIR}#{log}.json").join(',') + ']').reverse
   end
 
-  def games
-    result = []
-    data = auto_play ? @data.slice(0..20) : @data
-
-    data.each_with_index do |game, index|
-      game_winners = game_winners(game)
-      calculate_trends(game_winners, index)
-
-      result << {
-          game_path: strip_extension(game['game_json']),
-          time: game['time'],
-          game_first: game_winners.sort_by { |player| player['place'] }[0]['name'],
-          game_second: game_winners.sort_by { |player| player['place'] }[1]['name'],
-          game_places: game_winners.sort_by { |player| player['place'] },
-          tournament_leader: game_winners.sort_by { |player| player['points'] }[-1]['name'],
-          tournament_leader_board: game_winners.sort_by { |player| -player['points'] }
-      }
-    end
-    result
+  def load_players(index)
+    players = game_winners(@data[index])
+    calculate_trends(players, index)
+    players
   end
 
   def calculate_trends(game_winners, index)
@@ -112,6 +102,48 @@ class Tournament < MustacheBase
     end
 
     game_winners
+  end
+end
+
+class TournamentChart < TournamentBase
+  def chart_data
+    player_names = load_players(0).map { |player| player['name'] }
+    header = ['Time'] + player_names
+
+    result = []
+    data.each_with_index do |game, index|
+      players = load_players(index)
+      round = [game['time']]
+      player_names.each do |name|
+        round << players.select { |player| player['name'] == name }.first['relative_points']
+      end
+      result << round
+    end
+    result << header
+
+    JSON.generate result.reverse
+  end
+end
+
+class Tournament < TournamentBase
+  def games
+    result = []
+    displayed_data = auto_play ? data.slice(0..20) : data
+
+    displayed_data.each_with_index do |game, index|
+      players = load_players(index)
+
+      result << {
+          game_path: strip_extension(game['game_json']),
+          time: game['time'],
+          game_first: players.sort_by { |player| player['place'] }[0]['name'],
+          game_second: players.sort_by { |player| player['place'] }[1]['name'],
+          game_places: players.sort_by { |player| player['place'] },
+          tournament_leader: players.sort_by { |player| player['points'] }[-1]['name'],
+          tournament_leader_board: players.sort_by { |player| -player['points'] }
+      }
+    end
+    result
   end
 end
 

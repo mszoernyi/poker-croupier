@@ -5,9 +5,18 @@ poker-croupier
 
 Robot poker croupier for lean poker tournaments, an event much like a code retreat, but with a slightly different format and purpose.
 
+Twitter: https://twitter.com/LeanPoker
+
+Facebook: https://www.facebook.com/leanpoker
+
 You can read about the first event here: 
 - http://c0de-x.com/how-playing-poker-can-teach-you-lean-and-continuous-delivery/
 - https://athos.blogs.balabit.com/2014/02/lean-poker-code-retreat/
+
+###NEXT EVENT: 
+- Date: April 26., 2014
+- Location: Morgan Stanley, Budapest
+- Registration: http://www.meetup.com/Coderetreat-Budapest/events/177482352/
 
 ## The purpose
 

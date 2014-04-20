@@ -8,12 +8,19 @@
             var data = google.visualization.arrayToDataTable({{{chart_data}}});
 
             var options = {
-                title: 'Relative performance'
+                title: 'Relative performance',
+                legend: { position: 'bottom' }
             };
 
             var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
             chart.draw(data, options);
         }
+
+        {{#auto_play}}
+            setTimeout(function(){
+                window.location.reload();
+            }, 10000);
+        {{/auto_play}}
     </script>
 </head>
 <body>

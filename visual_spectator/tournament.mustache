@@ -19,7 +19,7 @@
             {{#auto_play}}
                 setTimeout(function(){
                     window.location.reload();
-                }, 2000);
+                }, 10000);
             {{/auto_play}}
         });
     </script>
@@ -63,6 +63,7 @@
 <div class="container footer">
     <a href='json?log={{{log}}}'>[JSON]</a>
     <a href='tournament_chart?tournament_log={{{log}}}'>[Chart]</a>
+    <a href='tournament_chart?tournament_log={{{log}}}&auto_play=1'>[Chart Auto refresh]</a>
 </div>
 </body>
 </html>

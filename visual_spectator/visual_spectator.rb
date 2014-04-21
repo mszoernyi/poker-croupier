@@ -171,8 +171,10 @@ end
 
 class Game < MustacheBase
   attr_reader :game_json
+  attr_reader :log
 
   def initialize(log)
+    @log = log
     @game_json = File.read("#{BASE_DIR}#{log}.json")
   end
 

@@ -225,3 +225,8 @@ html[xmlns] .clearfix {
     margin:20px;
     color:#66757f;
 }
+
+.footer {
+    width:100%;
+    text-align:center;
+}

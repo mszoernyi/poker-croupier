@@ -41,7 +41,7 @@ BASE_DIR = File.dirname(__FILE__)+"/../"
 LOG_DIR = File.dirname(__FILE__)+"/../log/"
 PREVIOUS_EVENTS_DIR = File.dirname(__FILE__)+"/../previous_events/"
 
-def strip_extension(file)
+def strip_path_and_extension(file)
   File.dirname(file).split('/')[-1] + "/" + File.basename(file, ".*")
 end
 
@@ -51,11 +51,11 @@ end
 
 class List < MustacheBase
   def log_files
-    Dir.glob("#{LOG_DIR}tournament_*.json").sort.map { |file| {:file => strip_extension(file)} }
+    Dir.glob("#{LOG_DIR}tournament_*.json").sort.map { |file| {:file => strip_path_and_extension(file)} }
   end
 
   def previous_events
-    Dir.glob("#{PREVIOUS_EVENTS_DIR}*/tournament_*.json").sort.map { |file| {:file => strip_extension(file)} }
+    Dir.glob("#{PREVIOUS_EVENTS_DIR}*/tournament_*.json").sort.map { |file| {:file => strip_path_and_extension(file)} }
   end
 end
 
@@ -93,7 +93,7 @@ class TournamentBase < MustacheBase
       game_winners << { 'name' => name }.merge(data)
     end
     game_winners.each do |player|
-      player['log_file'] = strip_extension(player['log_file'])
+      player['log_file'] = strip_path_and_extension(player['log_file'])
     end
 
     average_points = game_winners.inject(0) { |sum, player| sum + player['points'] } / game_winners.length
@@ -137,6 +137,10 @@ class TournamentChart < TournamentBase
     JSON.generate result.reverse
   end
 
+  def log_files
+    JSON.generate(data.map { |game| strip_path_and_extension game['game_log'] }.reverse)
+  end
+
   def deploy_columns
     result = []
     nof_players = load_players(0).length
@@ -156,7 +160,7 @@ class Tournament < TournamentBase
       players = load_players(index)
 
       result << {
-          game_path: strip_extension(game['game_json']),
+          game_path: strip_path_and_extension(game['game_json']),
           time: game['time'],
           game_first: players.sort_by { |player| player['place'] }[0]['name'],
           game_second: players.sort_by { |player| player['place'] }[1]['name'],

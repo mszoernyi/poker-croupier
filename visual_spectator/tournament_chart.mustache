@@ -2,6 +2,8 @@
 <head>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
+        var logs = {{{log_files}}};
+
         google.load("visualization", "1", {packages:["corechart"]});
         google.setOnLoadCallback(drawChart);
         function drawChart() {
@@ -26,6 +28,13 @@
 
             var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
             chart.draw(data, options);
+
+            google.visualization.events.addListener(chart, 'select', function() {
+                var selectedItem = chart.getSelection()[0];
+                if (selectedItem) {
+                    location.href = "/game?game_log="+logs[selectedItem.row];
+                }
+            });
         }
 
         {{#auto_play}}
@@ -33,6 +42,8 @@
                 window.location.reload();
             }, 10000);
         {{/auto_play}}
+
+
     </script>
 </head>
 <body>

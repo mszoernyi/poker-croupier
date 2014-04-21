@@ -205,10 +205,10 @@ class Game < MustacheBase
   def chart_data
     data = JSON.parse(@game_json)#.
     header = ['Round'] + data[0]['game_state']['players'].map { |player| player['name'] }
-    rounds = data.
-        each_with_index.
-        select { |record, index| not record.key? 'type' }.
-        map { |round, index| [index] + round['game_state']['players'].map { |player| player['stack'] } }
+    rounds = data
+        .each_with_index
+        .select { |record, index| not record.key? 'type' }
+        .map { |round, index| [index] + round['game_state']['players'].map { |player| player['stack'] } }
     JSON.generate([header] + rounds)
   end
 end

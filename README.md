@@ -9,10 +9,6 @@ Twitter: https://twitter.com/LeanPoker
 
 Facebook: https://www.facebook.com/leanpoker
 
-You can read about the first event here: 
-- http://c0de-x.com/how-playing-poker-can-teach-you-lean-and-continuous-delivery/
-- https://athos.blogs.balabit.com/2014/02/lean-poker-code-retreat/
-
 ###NEXT EVENT: 
 - Date: April 26., 2014
 - Location: Morgan Stanley, Budapest
@@ -29,6 +25,16 @@ Since only a few lean poker tournaments have been organized yet the format has n
 The robots are continously playing sit'n'go tournaments during the whole day. Between tournaments the croupier will automatically deploy the latest commit from the master branch for each team. 
 
 The teams have 60 minute sessions while they are allowed to code. After each session there is a break, during which the last game that was played by the robots is shown on a projector. This is the part, where the teams can root for their robots. After the break there is a quick retrospective stand up meeting that looks back on the previous session.
+
+### Videos
+
+- Budapest, 2014. March: https://www.youtube.com/watch?v=ZMvhzj85ISM
+- Vienna, 2014. April: https://www.youtube.com/watch?v=TDtk3Fh2A-A
+
+### Blogs
+
+- http://c0de-x.com/how-playing-poker-can-teach-you-lean-and-continuous-delivery/
+- https://athos.blogs.balabit.com/2014/02/lean-poker-code-retreat/
 
 ## The rules
 

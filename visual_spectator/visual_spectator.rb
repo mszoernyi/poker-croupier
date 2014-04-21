@@ -123,7 +123,7 @@ class TournamentChart < TournamentBase
         this_player = players.select { |player| player['name'] == name }.first
         previous_player = previous_players.select { |player| player['name'] == name }.first
 
-        if this_player['commit'] != previous_player['commit'] || index + 1 == data.length
+        if this_player['commit'] != previous_player['commit']
           round << this_player['relative_points']
         else
           round << nil

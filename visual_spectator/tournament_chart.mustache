@@ -8,8 +8,19 @@
             var data = google.visualization.arrayToDataTable({{{chart_data}}});
 
             var options = {
-                title: 'Relative performance',
-                legend: { position: 'bottom' }
+                title: '',
+                legend: { position: 'bottom' },
+                'chartArea': {'width': '90%', 'height': '75%'},
+                series: {
+                    {{#deploy_columns}}
+                    {{{col}}}: {
+                        pointSize: 4,
+                        lineWidth: 0,
+                        visibleInLegend: false,
+                        color: '#333333'
+                    },
+                    {{/deploy_columns}}
+                }
             };
 
             var chart = new google.visualization.LineChart(document.getElementById('chart_div'));

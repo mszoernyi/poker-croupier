@@ -10,10 +10,26 @@
     <script src="js/lib/jquery/jquery-2.0.3.js"></script>
     <script src="js/lib/underscore-1.5.1.js"></script>
     <script src="js/lib/mustache.js"></script>
-    <script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
         window.pokerEvents = {{{ game_json }}};
         window.tweets = {{{ tweets }}};
         window.banners = ['twitter_banner.png', 'leanpoker_banner.png'];
+
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable({{{chart_data}}});
+
+            var options = {
+                title: '',
+                legend: { position: 'bottom' },
+                isStacked: true
+            };
+
+            var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
     </script>
     <script src="js/lib/main.js"></script>
 </head>
@@ -55,6 +71,8 @@
     <div class="alert alert-info clearfix message-container">
         <h4 id="message"></h4>
     </div>
+
+    <div id="chart_div"></div>
 </div>
 
 

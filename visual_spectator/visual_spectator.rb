@@ -170,12 +170,10 @@ class Tournament < TournamentBase
 end
 
 class Game < MustacheBase
-  def initialize(log)
-    @log_file = log
-  end
+  attr_reader :game_json
 
-  def game_json
-    File.read("#{BASE_DIR}#{@log_file}.json")
+  def initialize(log)
+    @game_json = File.read("#{BASE_DIR}#{log}.json")
   end
 
   def tweets
@@ -200,5 +198,12 @@ class Game < MustacheBase
     rescue
       "[]"
     end
+  end
+
+  def chart_data
+    data = JSON.parse(@game_json).select { |record| not record.key? 'type' }
+    header = ['Round'] + data[0]['game_state']['players'].map { |player| player['name'] }
+    rounds = data.each_with_index.map { |round, index| [index] + round['game_state']['players'].map { |player| player['stack'] } }
+    JSON.generate([header] + rounds)
   end
 end

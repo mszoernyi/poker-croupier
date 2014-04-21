@@ -15,21 +15,9 @@
         window.pokerEvents = {{{ game_json }}};
         window.tweets = {{{ tweets }}};
         window.banners = ['twitter_banner.png', 'leanpoker_banner.png'];
+        window.chartData = {{{chart_data}}};
 
         google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawChart);
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable({{{chart_data}}});
-
-            var options = {
-                title: '',
-                legend: { position: 'bottom' },
-                isStacked: true
-            };
-
-            var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-            chart.draw(data, options);
-        }
     </script>
     <script src="js/lib/main.js"></script>
 </head>

@@ -99,9 +99,10 @@ $(document).ready(function() {
         }
     }
 
+    var currentIndex = 0;
+
     $.ajax('template/player.mustache').done(function(data) {
         player_template = data;
-        var currentIndex = 0;
 
         render(currentIndex);
 
@@ -202,4 +203,30 @@ $(document).ready(function() {
             renderBanner();
         });
     })();
+
+    (function setUpChart() {
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable(window.chartData);
+
+            var options = {
+                title: '',
+                legend: { position: 'bottom' },
+                isStacked: true,
+                hAxis: { 'textPosition': 'none'}
+
+            };
+
+            var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+            google.visualization.events.addListener(chart, 'select', function() {
+                var selectedItem = chart.getSelection()[0];
+                if (selectedItem) {
+                    currentIndex = data.getValue(selectedItem.row, 0);
+                    render(currentIndex);
+                }
+            });
+        }
+    })();
+
 });

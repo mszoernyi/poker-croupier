@@ -23,22 +23,31 @@ class Croupier::Tournament::Controller
   def start_tournament
     reset_players_to_git_master
 
-    sit_and_go_controller = Croupier::SitAndGo::Controller.new
+    start_players
 
-    start_players(sit_and_go_controller)
+    20.times do |_|
+      sit_and_go_controller = Croupier::SitAndGo::Controller.new
+      register_players(sit_and_go_controller)
 
-    wait_for_players_to_start(sit_and_go_controller)
+      wait_for_players_to_start(sit_and_go_controller)
 
-    ranking = sit_and_go_controller.start_sit_and_go
+      ranking = sit_and_go_controller.start_sit_and_go
 
-    persist_ranking_and_points(ranking)
+      persist_ranking_and_points(ranking)
+    end
 
     stop_players
     wait_for_all_processes_to_stop
   end
 
-
   private
+
+  def register_players(sit_and_go_controller)
+    @players.each do |player|
+      config = YAML.load_file("#{player[:directory]}/config.yml")
+      sit_and_go_controller.register_rest_player player[:name], config["url"]
+    end
+  end
 
   def persist_ranking_and_points(ranking)
     tournament_round = Croupier::Tournament::Persister.load_last_from(@tournament_logfile)
@@ -86,11 +95,9 @@ class Croupier::Tournament::Controller
     end
   end
 
-  def start_players(sit_and_go_controller)
+  def start_players
     @players.each do |player|
-      config = YAML.load_file("#{player[:directory]}/config.yml")
       @processes << Process.spawn("bash #{player[:directory]}/start.sh 2>&1 | tee #{player_log(player)}")
-      sit_and_go_controller.register_rest_player player[:name], config["url"]
     end
   end
 

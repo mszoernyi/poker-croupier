@@ -62,8 +62,7 @@
 
 <div class="container footer">
     <a href='json?log={{{log}}}'>[JSON]</a>
-    <a href='tournament_chart?tournament_log={{{log}}}'>[Chart]</a>
-    <a href='tournament_chart?tournament_log={{{log}}}&auto_play=1'>[Chart Auto refresh]</a>
+    <a href='tournament_chart?tournament_log={{{log}}}{{#auto_play}}&auto_play=1{{/auto_play}}'>[Chart]</a>
 </div>
 </body>
 </html>

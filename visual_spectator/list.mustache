@@ -10,7 +10,12 @@
             <h2>New log files</h2>
             {{# log_files }}
             <h3><a href="/tournament?tournament_log={{ file }}">{{ file }}</a>
-                <a href="/tournament?tournament_log={{ file }}&auto_play=1">Auto play</a></h3>
+                <small>
+                    <a href="/tournament?tournament_log={{ file }}&auto_play=1">[Auto refresh]</a>
+                    <a href="/tournament_chart?tournament_log={{ file }}">[Chart]</a>
+                    <a href="/tournament_chart?tournament_log={{ file }}&auto_play=1">[Chart auto refresh]</a>
+                </small>
+            </h3>
             {{/log_files}}
             <h2>Previous events</h2>
             {{# previous_events }}

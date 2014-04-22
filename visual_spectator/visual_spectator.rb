@@ -53,10 +53,6 @@ class List < MustacheBase
   def log_files
     Dir.glob("#{LOG_DIR}tournament_*.json").sort.map { |file| {:file => strip_path_and_extension(file)} }
   end
-
-  def previous_events
-    Dir.glob("#{PREVIOUS_EVENTS_DIR}*/tournament_*.json").sort.map { |file| {:file => strip_path_and_extension(file)} }
-  end
 end
 
 class TournamentBase < MustacheBase

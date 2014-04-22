@@ -48,7 +48,8 @@ $(document).ready(function() {
                 player.hole_cards[1] || { suit: '', rank: '' }
             ],
             status: status(),
-            status_style: status_style()
+            status_style: status_style(),
+            log: window.logFile + '_player_' + player.name.replace(/[^A-Za-z0-9]/g, "_").toLowerCase()
         })).attr('id', 'player'+player.id));
     }
 

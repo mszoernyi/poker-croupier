@@ -46,7 +46,7 @@ def strip_path_and_extension(file)
 end
 
 class MustacheBase < Mustache
-  self.template_path = File.dirname(__FILE__)
+  self.template_path = File.dirname(__FILE__) + "/template"
 end
 
 class List < MustacheBase

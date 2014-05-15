@@ -9,6 +9,7 @@ class TournamentBase < MustacheBase
     @log = log
     @auto_play = auto_play
     @data = JSON.parse('[' + File.readlines("#{BASE_DIR}#{log}.json").join(',') + ']').reverse
+    @tournament = VisualSpectator::Tournament.new(@data)
   end
 
   def load_players(index)

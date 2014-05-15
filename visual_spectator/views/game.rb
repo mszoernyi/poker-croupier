@@ -10,7 +10,7 @@ class Game < MustacheBase
   end
 
   def tweets
-    config_file = File.dirname(__FILE__) + '/twitter_api.yml'
+    config_file = File.dirname(__FILE__) + '/../twitter_api.yml'
     return "[]" unless FileTest.exist? config_file
 
     twitter_config = YAML.load(File.open(config_file).read)

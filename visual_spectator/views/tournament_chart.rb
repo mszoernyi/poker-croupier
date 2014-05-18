@@ -1,4 +1,5 @@
 require_relative 'tournament_base'
+require_relative '../lib/functions'
 
 class TournamentChart < TournamentBase
   def chart_data

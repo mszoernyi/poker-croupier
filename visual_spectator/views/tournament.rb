@@ -1,21 +1,23 @@
 require_relative 'tournament_base'
+require_relative '../lib/functions'
 
 class Tournament < TournamentBase
   def games
     result = []
-    displayed_data = auto_play ? data.slice(0..20) : data
+    displayed_data = auto_play ? tournament.games.reverse.slice(0..20) : tournament.games.reverse
 
-    displayed_data.each_with_index do |game, index|
-      players = load_players(index)
+    displayed_data.each do |game|
+      winners = game.players.sort_by { |player| player.place }
+      leaders = game.players.sort_by { |player| -player.points }
 
       result << {
-          game_path: strip_path_and_extension(game['game_json']),
-          time: game['time'],
-          game_first: players.sort_by { |player| player['place'] }[0]['name'],
-          game_second: players.sort_by { |player| player['place'] }[1]['name'],
-          game_places: players.sort_by { |player| player['place'] },
-          tournament_leader: players.sort_by { |player| player['points'] }[-1]['name'],
-          tournament_leader_board: players.sort_by { |player| -player['points'] }
+          game_path: strip_path_and_extension(game.json),
+          time: game.time,
+          game_first: winners.first.name,
+          game_second: winners[1].name,
+          game_places: winners,
+          tournament_leader: leaders.first.name,
+          tournament_leader_board: leaders.reverse
       }
     end
     result

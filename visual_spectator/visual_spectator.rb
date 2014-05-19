@@ -5,4 +5,5 @@ module VisualSpectator
   autoload :Game, 'lib/game'
   autoload :Player, 'lib/player'
   autoload :Tournament, 'lib/tournament'
+  autoload :Twitter, 'lib/twitter'
 end

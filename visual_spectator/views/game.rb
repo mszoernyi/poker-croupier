@@ -18,7 +18,7 @@ class Game < MustacheBase
     header = ['Round'] + data[0]['game_state']['players'].map { |player| player['name'] }
     rounds = data
     .each_with_index
-    .select { |record, index| not record.key? 'type' }
+    .select { |record, _| not record.key? 'type' }
     .map { |round, index| [index] + round['game_state']['players'].map { |player| player['stack'] } }
     JSON.generate([header] + rounds)
   end

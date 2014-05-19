@@ -7,7 +7,7 @@ class TournamentChart < TournamentBase
   end
 
   def log_files
-    JSON.generate(data.map { |game| strip_path_and_extension game['game_log'] }.reverse)
+    JSON.generate(tournament.games.map { |game| strip_path_and_extension game.log })
   end
 
   def deploy_columns

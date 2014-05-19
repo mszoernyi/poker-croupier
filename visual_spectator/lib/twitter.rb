@@ -14,6 +14,8 @@ class VisualSpectator::Twitter
     end
   end
 
+  private
+
   def search_result
     client.search(twitter_config['search'], rpp: 10, result_type: 'recent')
   end

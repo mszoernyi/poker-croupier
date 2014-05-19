@@ -1,7 +1,7 @@
 class VisualSpectator::Game
   attr_reader :json, :log, :time, :players
 
-  def initialize(game, trend_reference)
+  def initialize(game, tournament, index)
     @json = game['game_json']
     @log = game['game_log']
     @time = game['time']
@@ -9,7 +9,8 @@ class VisualSpectator::Game
       player['name'] = player_name
       VisualSpectator::Player.new(player, self)
     end
-    @trend_reference = trend_reference.nil? ? self : trend_reference
+    @tournament = tournament
+    @index = index
   end
 
   def average_points
@@ -17,7 +18,11 @@ class VisualSpectator::Game
   end
 
   def trend_reference
-    @trend_reference
+    @tournament.games[[0, @index - 20].max]
+  end
+
+  def previous
+    @tournament.games[[0, @index - 1].max]
   end
 
   def player(name)

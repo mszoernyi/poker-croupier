@@ -3,36 +3,7 @@ require_relative '../lib/functions'
 
 class TournamentChart < TournamentBase
   def chart_data
-    header = ['Time'] + player_names + player_names
-
-    result = []
-    result << header
-    tournament.games.each_with_index do |game, index|
-      round = [game.time]
-      player_names.each do |name|
-        round << game.player(name).relative_points
-      end
-
-      previous_game = tournament.games[[index - 1, 0].max] #load_players([data.length - 1, index + 1].min)
-      player_names.each do |name|
-        this_player = game.player(name)
-        previous_player = previous_game.player(name)
-
-        if this_player.commit != previous_player.commit || index == 0
-          round << this_player.relative_points
-        else
-          round << nil
-        end
-
-      end
-      result << round
-    end
-
-    JSON.generate result
-  end
-
-  def player_names
-    tournament.players.map { |player| player.name }
+    JSON.generate [header] + chart_data_for_games
   end
 
   def log_files
@@ -43,5 +14,46 @@ class TournamentChart < TournamentBase
     tournament.players.each_index.map do |index|
       { 'col' => @tournament.players.length + index }
     end
+  end
+
+  private
+
+  def chart_data_for_games
+    tournament.games.map { |game| chart_data_for(game) }
+  end
+
+  def chart_data_for(game)
+    [game.time] + performance_curves_for(game) + deploy_markers(game)
+  end
+
+  def deploy_markers(game)
+    player_names.map do |name|
+      this_player = game.player(name)
+      previous_player = game.previous.player(name)
+
+      if this_player.commit != previous_player.commit
+        this_player.relative_points
+      else
+        nil
+      end
+    end
+  end
+
+  def performance_curves_for(game)
+    player_names.map do |name|
+      game.player(name).relative_points
+    end
+  end
+
+  def header
+    ['Time'] + player_names + player_names
+  end
+
+  def previous_game(index)
+    tournament.games[[index - 1, 0].max]
+  end
+
+  def player_names
+    tournament.players.map { |player| player.name }
   end
 end

@@ -14,7 +14,7 @@ class Game < MustacheBase
   end
 
   def chart_data
-    data = JSON.parse(@game_json)#.
+    data = JSON.parse(@game_json)
     header = ['Round'] + data[0]['game_state']['players'].map { |player| player['name'] }
     rounds = data
     .each_with_index

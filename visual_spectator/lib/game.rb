@@ -1,4 +1,3 @@
-
 class VisualSpectator::Game
   attr_reader :json, :log, :time, :players
 
@@ -19,5 +18,9 @@ class VisualSpectator::Game
 
   def trend_reference
     @trend_reference
+  end
+
+  def player(name)
+    @players.find{ |player| player.name == name }
   end
 end

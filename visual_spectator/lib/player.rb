@@ -18,8 +18,17 @@ class VisualSpectator::Player
   end
 
   def trend_direction
-    trend = relative_points - @game.trend_reference.players.find{ |player| player.name == @name }.relative_points
     return '' if trend.abs < 8
     trend > 0 ? 'up' : 'down'
+  end
+
+  def trend
+    relative_points - trend_reference_player.relative_points
+  end
+
+  private
+
+  def trend_reference_player
+    @game.trend_reference.player(@name)
   end
 end

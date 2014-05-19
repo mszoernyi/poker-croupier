@@ -3,24 +3,23 @@ require_relative '../lib/functions'
 
 class TournamentChart < TournamentBase
   def chart_data
-    player_names = load_players(0).map { |player| player['name'] }
     header = ['Time'] + player_names + player_names
 
     result = []
-    data.each_with_index do |game, index|
-      players = load_players(index)
-      round = [game['time']]
+    result << header
+    tournament.games.each_with_index do |game, index|
+      round = [game.time]
       player_names.each do |name|
-        round << players.select { |player| player['name'] == name }.first['relative_points']
+        round << game.player(name).relative_points
       end
 
-      previous_players = load_players([data.length - 1, index + 1].min)
+      previous_game = tournament.games[[index - 1, 0].max] #load_players([data.length - 1, index + 1].min)
       player_names.each do |name|
-        this_player = players.select { |player| player['name'] == name }.first
-        previous_player = previous_players.select { |player| player['name'] == name }.first
+        this_player = game.player(name)
+        previous_player = previous_game.player(name)
 
-        if this_player['commit'] != previous_player['commit'] || index + 1 == data.length
-          round << this_player['relative_points']
+        if this_player.commit != previous_player.commit || index == 0
+          round << this_player.relative_points
         else
           round << nil
         end
@@ -28,9 +27,12 @@ class TournamentChart < TournamentBase
       end
       result << round
     end
-    result << header
 
-    JSON.generate result.reverse
+    JSON.generate result
+  end
+
+  def player_names
+    tournament.players.map { |player| player.name }
   end
 
   def log_files
@@ -38,11 +40,8 @@ class TournamentChart < TournamentBase
   end
 
   def deploy_columns
-    result = []
-    nof_players = load_players(0).length
-    nof_players.times do |index|
-      result << { 'col' => nof_players + index }
+    tournament.players.each_index.map do |index|
+      { 'col' => @tournament.players.length + index }
     end
-    result
   end
 end

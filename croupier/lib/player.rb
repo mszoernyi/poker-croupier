@@ -53,6 +53,15 @@ class Croupier::Player
     bet = @forced_bet || @strategy.bet_request(game_state)
     @forced_bet = nil
     bet
+  rescue Croupier::PlayerUnreachable => _
+    ban_player
+    0
+  end
+
+  def ban_player
+    @total_bet = 0
+    @stack = 0
+    @active = false
   end
 
   def hole_card card

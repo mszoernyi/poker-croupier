@@ -11,7 +11,7 @@ tournament do
   #register_git_player "Jim Java", "#{PLAYERS_ROOT}/poker-player-java"
   #register_git_player "Javier Scrivo", "#{PLAYERS_ROOT}/poker-player-js"
   #register_git_player "Perl Jim", "#{PLAYERS_ROOT}/poker-player-perl"
-  #register_git_player "PHilip Pots", "#{PLAYERS_ROOT}/poker-player-php"
+  register_git_player "PHilip Pots", "#{PLAYERS_ROOT}/poker-player-php"
   register_git_player "Peter Python", "#{PLAYERS_ROOT}/poker-player-python"
   register_git_player "Rudy Ruby", "#{PLAYERS_ROOT}/poker-player-ruby"
 end

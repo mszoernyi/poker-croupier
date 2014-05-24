@@ -11,6 +11,7 @@ module Croupier
   autoload :LogHandler, 'lib/log_handler'
   autoload :Tournament, 'lib/tournament'
   autoload :Player, 'lib/player'
+  autoload :PlayerUnreachable, 'lib/player_unreachable'
   autoload :RandomPlayer, 'lib/random_player'
   autoload :RestPlayer, 'lib/rest_player'
   autoload :SitAndGo, 'lib/sit_and_go'

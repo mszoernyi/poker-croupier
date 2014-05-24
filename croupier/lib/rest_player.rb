@@ -17,7 +17,7 @@ class Croupier::RestPlayer
   def bet_request(game_state)
     send_request action: 'bet_request', game_state: game_state.to_json  do |error, result|
       if error
-        return 0
+        raise Croupier::PlayerUnreachable.new
       end
 
       result.to_i

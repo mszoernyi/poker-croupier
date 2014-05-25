@@ -13,22 +13,24 @@ class VisualSpectator::Player
     @game = game
   end
 
-  def self.relative_points
+  def relative_points
     @points - @game.average_points
   end
 
-  def self.trend_direction
+  def trend_direction
     return '' if trend.abs < 8
     trend > 0 ? 'up' : 'down'
   end
 
-  def self.trend
-    relative_points - trend_reference_player.relative_points
+  def trend
+    relative_points - trend_reference_player_points
   end
 
   private
 
-  def self.trend_reference_player
-    @game.trend_reference.player(@name)
+  def trend_reference_player_points
+    trend_reference_player = @game.trend_reference.player(@name)
+    return 0 if trend_reference_player == nil
+    trend_reference_player.relative_points
   end
 end

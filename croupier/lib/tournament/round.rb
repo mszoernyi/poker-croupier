@@ -14,11 +14,9 @@ class Croupier::Tournament::Round
   end
 
   def mark_active(players)
-
-    active_player_names = players.map { |p1| p1[:name]}
-    data['ranking'].map do |player|
-     player_name = player.first
-     player[1]['active'] = active_player_names.include? player_name
+    active_player_names = players.map { |player| player[:name]}
+    data['ranking'].map do |player_name, player|
+     player['active'] = active_player_names.include? player_name
     end
   end
 

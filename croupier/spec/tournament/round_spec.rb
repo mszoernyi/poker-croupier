@@ -22,7 +22,7 @@ describe Croupier::Tournament::Round do
   it "should add each players with their places and points" do
     subject.update_with [player1, player2]
 
-    expect(subject.data['ranking']).to eq({ 'player1'=>{'points'=>5, 'place'=>1, 'version'=>'version1'}, 'player2'=>{'points'=>3, 'place'=>2, 'version'=>'version2'}})
+    expect(subject.data['ranking']).to eq({ 'player1'=>{'points'=>5, 'active' => false, 'place'=>1, 'version'=>'version1'}, 'player2'=>{'points'=>3, 'active' => false, 'place'=>2, 'version'=>'version2'}})
   end
 
   it "should add points to previous points" do

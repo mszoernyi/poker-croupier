@@ -35,9 +35,9 @@ class TournamentChart < TournamentBase
       this_player = game.player(name)
       previous_player = game.previous.player(name)
       if previous_player.nil? || this_player.nil? || this_player.commit != previous_player.commit
-        nil
-      else
         this_player.relative_points
+      else
+        nil
       end
     end
   end

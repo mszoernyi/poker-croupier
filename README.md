@@ -118,3 +118,9 @@ During a gameplay the croupier collects all game related data and serialize it i
     bundle exec ruby visual_spectator/app.rb -p 2000
 
 [Bon appetite](http://localhost:2000).
+
+### Previous events
+
+If you wish to watch games from previous events, you can download the logs from [the previous events page on leanpoker.org](http://leanpoker.org/previous_events/). Just unpack the archive, and copy it's contents into your log directory. 
+
+The visual spectator is not entirelly backward compatible, so you may have issues watching some of the first few games. You can either revert to an earlier version of poker-croupier, or try to migrate the files. If you do migrate them, then please send the migrated files to [DeVill](https://github.com/devill) so that the archive can be updated.

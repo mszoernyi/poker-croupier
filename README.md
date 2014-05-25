@@ -109,7 +109,7 @@ At this point we do not yet have rake targets or integration tests that can help
 
 If you wish to hold a poker tournament than there is another script - `croupier/script/start_tournament.rb` - that you can modify and run. It let's you specify the log file, and the hosts and ports for each player. 
 
-In order to start the ranking service use `ruby ranking_service/ranking_service.rb`.
+In order to start the ranking service use `ruby ranking_service/ranking_service.rb`. (Note, that the ranking service is automatically started by the croupier when a tournament is started.)
 
 ## Watching the results
 

@@ -19,7 +19,7 @@ class TournamentChart < TournamentBase
   private
 
   def chart_data_for_games
-    tournament.games.map { |game| chart_data_for(game) }
+    [ [tournament.games.first.time] + (2*tournament.players.length).times.map {|_| 0} ] + tournament.games.map { |game| chart_data_for(game) }
   end
 
   def chart_data_for(game)
@@ -29,7 +29,12 @@ class TournamentChart < TournamentBase
   def deploy_markers(game)
     player_names.map do |name|
       this_player = game.player(name)
-      this_player == nil ? 0 : this_player.relative_points
+      previous_player = game.previous.player(name)
+      if previous_player.nil? || this_player.commit != previous_player.commit
+        this_player.relative_points
+      else
+        nil
+      end
     end
   end
 

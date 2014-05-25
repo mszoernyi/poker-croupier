@@ -19,7 +19,11 @@ class TournamentChart < TournamentBase
   private
 
   def chart_data_for_games
-    [ [tournament.games.first.time] + (2*tournament.players.length).times.map {|_| 0} ] + tournament.games.map { |game| chart_data_for(game) }
+    chart_data_for_game_zero + tournament.games.map { |game| chart_data_for(game) }
+  end
+
+  def chart_data_for_game_zero
+    [[tournament.games.first.time] + (2*tournament.players.length).times.map { |_| 0 }]
   end
 
   def chart_data_for(game)

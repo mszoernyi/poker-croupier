@@ -9,7 +9,7 @@ class VisualSpectator::Game
       player['name'] = player_name
       VisualSpectator::Player.new(player, self)
     end
-    @active_players = game['ranking'].select { | player_name, player | player['active'] }.map do |player_name, player|
+    @active_players = game['ranking'].select { | _, player | player['active'] }.map do |player_name, player|
       player['name'] = player_name
       VisualSpectator::Player.new(player, self)
     end

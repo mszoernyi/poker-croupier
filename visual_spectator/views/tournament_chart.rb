@@ -29,19 +29,14 @@ class TournamentChart < TournamentBase
   def deploy_markers(game)
     player_names.map do |name|
       this_player = game.player(name)
-      previous_player = game.previous.player(name)
-
-      if this_player.commit != previous_player.commit
-        this_player.relative_points
-      else
-        nil
-      end
+      this_player == nil ? 0 : this_player.relative_points
     end
   end
 
   def performance_curves_for(game)
     player_names.map do |name|
-      game.player(name).relative_points
+      player = game.player(name)
+      player == nil ? 0 : player.relative_points
     end
   end
 

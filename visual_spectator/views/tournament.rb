@@ -4,7 +4,7 @@ require_relative '../lib/functions'
 class Tournament < TournamentBase
   def games
     displayed_data.map do |game|
-      winners = game.players.sort_by { |player| player.place }
+      winners = game.active_players.sort_by { |player| player.place }
       leaders = game.players.sort_by { |player| -player.points }
 
       {

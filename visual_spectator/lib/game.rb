@@ -1,11 +1,15 @@
 class VisualSpectator::Game
-  attr_reader :json, :log, :time, :players
+  attr_reader :json, :log, :time, :players, :active_players
 
   def initialize(game, tournament, index)
     @json = game['game_json']
     @log = game['game_log']
     @time = game['time']
     @players = game['ranking'].map do |player_name, player|
+      player['name'] = player_name
+      VisualSpectator::Player.new(player, self)
+    end
+    @active_players = game['ranking'].select { | player_name, player | player['active'] }.map do |player_name, player|
       player['name'] = player_name
       VisualSpectator::Player.new(player, self)
     end

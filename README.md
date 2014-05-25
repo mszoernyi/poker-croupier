@@ -113,6 +113,6 @@ If you wish to hold a poker tournament than there is another script - `croupier/
 
 During a gameplay the croupier collects all game related data and serialize it into the `log/` directory. You can replay any of them with the visual spectator. Just start it:
 
-    bundle exec ruby visual_spectator/visual_spectator.rb -p 2000
+    bundle exec ruby visual_spectator/app.rb -p 2000
 
 [Bon appetite](http://localhost:2000).

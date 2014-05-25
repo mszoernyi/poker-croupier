@@ -13,6 +13,15 @@ class Croupier::Tournament::Round
     award_points(ranking)
   end
 
+  def mark_active(players)
+
+    active_player_names = players.map { |p1| p1[:name]}
+    data['ranking'].map do |player|
+     player_name = player.first
+     player[1]['active'] = active_player_names.include? player_name
+    end
+  end
+
   private
 
   def refresh_players(ranking)
@@ -34,7 +43,7 @@ class Croupier::Tournament::Round
 
   def ensure_player(player)
     unless data['ranking'].has_key? player.name
-      data['ranking'][player.name] = {'points' => 0}
+      data['ranking'][player.name] = {'points' => 0, 'active' => false}
     end
   end
 

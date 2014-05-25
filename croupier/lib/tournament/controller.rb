@@ -44,6 +44,7 @@ class Croupier::Tournament::Controller
     tournament_round = Croupier::Tournament::Persister.load_last_from(@tournament_logfile)
 
     tournament_round.update_with ranking
+    tournament_round.mark_active @players
 
     @players.each do |player|
       tournament_round.data['ranking'][player[:name]]['log_file'] = player_log player

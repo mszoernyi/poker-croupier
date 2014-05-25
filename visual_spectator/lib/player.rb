@@ -23,12 +23,14 @@ class VisualSpectator::Player
   end
 
   def trend
-    relative_points - trend_reference_player.relative_points
+    relative_points - trend_reference_player_points
   end
 
   private
 
-  def trend_reference_player
-    @game.trend_reference.player(@name)
+  def trend_reference_player_points
+    trend_reference_player = @game.trend_reference.player(@name)
+    return 0 if trend_reference_player == nil
+    trend_reference_player.relative_points
   end
 end

@@ -1,7 +1,7 @@
 require_relative 'functions'
 
 class VisualSpectator::Player
-  attr_reader :name, :points, :place, :version, :commit, :log
+  attr_reader :name, :points, :place, :version, :commit, :log, :active
 
   def initialize(player, game)
     @name = player['name']
@@ -9,6 +9,7 @@ class VisualSpectator::Player
     @place = player['place']
     @version = player['version']
     @commit = player['commit']
+    @active = (not player.has_key? 'active') || player['active']
     @log = strip_path_and_extension(player['log_file'])
     @game = game
   end

@@ -3,6 +3,7 @@ require "poker_ranking"
 require "json"
 
 set :port, 2048
+set :bind, '0.0.0.0'
 
 post "/" do
   cards = JSON.parse(request[:cards])

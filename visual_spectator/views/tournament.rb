@@ -14,7 +14,7 @@ class Tournament < TournamentBase
           game_second: winners[1].name,
           game_places: winners,
           tournament_leader: leaders.first.name,
-          tournament_leader_board: leaders.reverse
+          tournament_leader_board: leaders
       }
     end
   end

@@ -15,4 +15,6 @@ tournament do
   register_git_player "PHilip Pots", "#{PLAYERS_ROOT}/poker-player-php" # 8000
   register_git_player "Peter Python", "#{PLAYERS_ROOT}/poker-player-python" # 9000
   register_git_player "Rudy Ruby", "#{PLAYERS_ROOT}/poker-player-ruby" # 8090
+
+  #register_rest_player "REST", "http://localhost:8090/"
 end

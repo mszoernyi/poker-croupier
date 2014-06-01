@@ -17,7 +17,11 @@ class Croupier::Tournament::Controller
   end
 
   def register_git_player(name, directory)
-    @players << { name: name, directory: directory }
+    @players << { type: :git, name: name, directory: directory }
+  end
+
+  def register_rest_player(name, url)
+    @players << { type: :rest, name: name, url: url }
   end
 
   def start_tournament
@@ -40,15 +44,28 @@ class Croupier::Tournament::Controller
 
   private
 
+  def git_players
+    @players.select { |player| player[:type] == :git }
+  end
+
+  def rest_players
+    @players.select { |player| player[:type] == :rest }
+  end
+
   def persist_ranking_and_points(ranking)
     tournament_round = Croupier::Tournament::Persister.load_last_from(@tournament_logfile)
 
     tournament_round.update_with ranking
     tournament_round.mark_active @players
 
-    @players.each do |player|
+    git_players.each do |player|
       tournament_round.data['ranking'][player[:name]]['log_file'] = player_log player
       tournament_round.data['ranking'][player[:name]]['commit'] = player[:commit]
+    end
+
+    rest_players.each do |player|
+      tournament_round.data['ranking'][player[:name]]['log_file'] = ''
+      tournament_round.data['ranking'][player[:name]]['commit'] = 'unsupported for rest players'
     end
 
     tournament_round.data['time'] = Time.new.strftime "%H:%M"
@@ -67,7 +84,7 @@ class Croupier::Tournament::Controller
   end
 
   def reset_players_to_git_master
-    @players.each do |player|
+    git_players.each do |player|
       Croupier::logger.info "Reseting #{player[:name]} to origin/master"
       `cd #{player[:directory]} && git fetch origin && git reset --hard origin/master && git clean -d -f`
       player[:commit], _, _ = Open3.capture3("cd #{player[:directory]} && git rev-parse HEAD")
@@ -82,16 +99,20 @@ class Croupier::Tournament::Controller
   end
 
   def stop_players
-    @players.each do |player|
+    git_players.each do |player|
       @processes << Process.spawn("bash #{player[:directory]}/stop.sh")
     end
   end
 
   def start_players(sit_and_go_controller)
     @players.each do |player|
-      config = YAML.load_file("#{player[:directory]}/config.yml")
-      @processes << Process.spawn("bash #{player[:directory]}/start.sh 2>&1 | tee #{player_log(player)}")
-      sit_and_go_controller.register_rest_player player[:name], config["url"]
+      if player[:type] == :git
+        config = YAML.load_file("#{player[:directory]}/config.yml")
+        @processes << Process.spawn("bash #{player[:directory]}/start.sh 2>&1 | tee #{player_log(player)}")
+        sit_and_go_controller.register_rest_player player[:name], config["url"]
+      elsif
+        sit_and_go_controller.register_rest_player player[:name], player[:url]
+      end
     end
   end
 

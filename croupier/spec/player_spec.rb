@@ -10,22 +10,22 @@ describe Croupier::Player do
   describe "#bet_request" do
 
     it "should delegate calls to the player strategy" do
-      strategy.should_receive(:bet_request).with(game_state).and_return(30)
+      expect(strategy).to(receive(:bet_request).with(game_state).and_return(30))
 
-      player.bet_request(game_state).should == 30
+      expect(player.bet_request(game_state)).to eq(30)
     end
 
     it "should respond with forced bet after receiving #force_bet" do
       player.force_bet 20
-      player.bet_request(game_state).should == 20
+      expect(player.bet_request(game_state)).to eq(20)
     end
 
     it "should delegate bet_request after forced bet has been posted" do
       player.force_bet 20
-      strategy.should_receive(:bet_request).with(game_state).and_return(30)
+      expect(strategy).to(receive(:bet_request).with(game_state).and_return(30))
 
-      player.bet_request(game_state).should == 20
-      player.bet_request(game_state).should == 30
+      expect(player.bet_request(game_state)).to eq(20)
+      expect(player.bet_request(game_state)).to eq(30)
     end
   end
 
@@ -37,7 +37,7 @@ describe Croupier::Player do
       player.hole_card card1
       player.hole_card card2
 
-      player.hole_cards.should == [card1, card2]
+      expect(player.hole_cards).to eq([card1, card2])
     end
   end
 
@@ -49,10 +49,10 @@ describe Croupier::Player do
 
       player.initialize_round
 
-      player.active?.should be_true
-      player.allin?.should be_false
-      player.total_bet.should == 0
-      player.hole_cards.should == []
+      expect(player.active?).to be_truthy
+      expect(player.allin?).to be_falsey
+      expect(player.total_bet).to eq(0)
+      expect(player.hole_cards).to eq([])
     end
 
     it "should not reactivate player if it has no chips left" do
@@ -61,7 +61,7 @@ describe Croupier::Player do
 
       player.initialize_round
 
-      player.active?.should be_false
+      expect(player.active?).to be_falsey
     end
 
     it "should deactivate player if it has no chips left" do
@@ -69,14 +69,14 @@ describe Croupier::Player do
 
       player.initialize_round
 
-      player.active?.should be_false
+      expect(player.active?).to be_falsey
     end
   end
 
   describe "#out?" do
     context "when the player has stack" do
       it "should return false" do
-        player.out?.should == false
+        expect(player.out?).to be_falsey
       end
     end
 
@@ -84,7 +84,7 @@ describe Croupier::Player do
       it "should return false" do
         player.stack = 0
         player.total_bet = 1000
-        player.out?.should == false
+        expect(player.out?).to be_falsey
       end
     end
 
@@ -92,14 +92,14 @@ describe Croupier::Player do
       it "should return true" do
         player.stack = 0
         player.total_bet = 0
-        player.out?.should == true
+        expect(player.out?).to be_truthy
       end
     end
   end
 
   describe "#data" do
     let(:strategy) {
-      SpecHelper::DummyClass.new.tap { |strategy| strategy.stub(:name).and_return("Joe") }
+      SpecHelper::DummyClass.new.tap { |strategy| allow(strategy).to receive(:name).and_return("Joe") }
     }
     let(:subject) {
       Croupier::Player.new(strategy)
@@ -107,7 +107,7 @@ describe Croupier::Player do
 
     context "when a new player is created" do
       it "should return it's state" do
-        Croupier::Player.new(strategy).data.should == {name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: [], version: nil}
+        expect(Croupier::Player.new(strategy).data).to eq({name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: [], version: nil})
       end
     end
 
@@ -115,7 +115,7 @@ describe Croupier::Player do
       it "should also return the cards" do
         hole_card = PokerRanking::Card::by_name('King of Diamonds')
         subject.hole_card(hole_card)
-        subject.data.should == {name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: [hole_card.data], version: nil}
+        expect(subject.data).to eq({name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: [hole_card.data], version: nil})
       end
     end
 
@@ -123,7 +123,7 @@ describe Croupier::Player do
       it "should set status to 'folded'" do
         player = Croupier::Player.new(strategy)
         player.fold
-        player.data.should == {name: "Joe", stack: 1000, status: "folded", bet: 0, hole_cards: [], version: nil}
+        expect(player.data).to eq({name: "Joe", stack: 1000, status: "folded", bet: 0, hole_cards: [], version: nil})
       end
     end
 
@@ -131,7 +131,7 @@ describe Croupier::Player do
       it "should set status to 'out'" do
         player = Croupier::Player.new(strategy)
         player.stack = 0
-        player.data.should == {name: "Joe", stack: 0, status: "out", bet: 0, hole_cards: [], version: nil}
+        expect(player.data).to eq({name: "Joe", stack: 0, status: "out", bet: 0, hole_cards: [], version: nil})
       end
     end
   end

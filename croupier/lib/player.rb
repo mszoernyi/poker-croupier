@@ -1,3 +1,5 @@
+require 'poker_ranking'
+
 class Croupier::Player
   delegate_all :strategy
 

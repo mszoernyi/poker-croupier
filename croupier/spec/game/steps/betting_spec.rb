@@ -17,9 +17,9 @@ describe Croupier::Game::Steps::Betting::Step do
   def should_try_bet(player, requested_amount, actual_amount, type, expected_stack = nil)
     expected_stack = player.stack - actual_amount if expected_stack.nil?
     @mocked_pot += actual_amount
-    player.should_receive(:bet_request).and_return(requested_amount)
+    expect(player).to receive(:bet_request).and_return(requested_amount)
     index = @game_state.players.index(player)
-    @game_state.should_receive(:log_state).with(type: 'bet', on_turn: index, message: "#{player.name} made a bet of #{actual_amount} (#{type}) and is left with #{expected_stack} chips. The pot now contains #{@mocked_pot} chips.")
+    expect(@game_state).to receive(:log_state).with(type: 'bet', on_turn: index, message: "#{player.name} made a bet of #{actual_amount} (#{type}) and is left with #{expected_stack} chips. The pot now contains #{@mocked_pot} chips.")
   end
 
   def run()
@@ -34,7 +34,7 @@ describe Croupier::Game::Steps::Betting::Step do
     end
 
     it "should reset last aggressor" do
-      @game_state.should_receive(:reset_last_aggressor)
+      expect(@game_state).to receive(:reset_last_aggressor)
       should_bet(@player_on_button, 0, :check)
       should_bet(@first_player, 0, :check)
       run
@@ -44,15 +44,15 @@ describe Croupier::Game::Steps::Betting::Step do
       should_bet(@player_on_button, 0, :check)
       should_bet(@first_player, 0, :check)
       run
-      @player_on_button.active?.should == true
+      expect(@player_on_button.active?).to be_truthy
     end
 
     it "should transfer a non zero bet to the pot" do
       should_bet @first_player, 20, :raise
       should_bet @player_on_button, 0, :fold
       run
-      @game_state.pot.should == 20
-      @first_player.stack.should == 980
+      expect(@game_state.pot).to eq(20)
+      expect(@first_player.stack).to eq(980)
     end
 
     it "should skip betting if one of the two players has already folded" do
@@ -75,9 +75,9 @@ describe Croupier::Game::Steps::Betting::Step do
       should_bet @first_player, 20, :raise
       should_bet @player_on_button, 20, :call
       run
-      @game_state.pot.should == 40
-      @player_on_button.stack.should == 980
-      @first_player.stack.should == 980
+      expect(@game_state.pot).to eq(40)
+      expect(@player_on_button.stack).to eq(980)
+      expect(@first_player.stack).to eq(980)
     end
 
     it "should ask the first player again if the second raises" do
@@ -85,31 +85,31 @@ describe Croupier::Game::Steps::Betting::Step do
       should_bet @player_on_button, 40, :raise
       should_bet @first_player, 20, :call, 960
       run
-      @game_state.pot.should == 80
-      @player_on_button.stack.should == 960
-      @first_player.stack.should == 960
+      expect(@game_state.pot).to eq(80)
+      expect(@player_on_button.stack).to eq(960)
+      expect(@first_player.stack).to eq(960)
     end
 
     it "should interpret a zero bet after a raise as a fold" do
       should_bet @first_player, 20, :raise
       should_bet @player_on_button, 0, :fold
       run
-      @game_state.pot.should == 20
+      expect(@game_state.pot).to eq(20)
     end
 
     it "should mark a folded player inactive" do
       should_bet @first_player, 20, :raise
       should_bet @player_on_button, 0, :fold
       run
-      @player_on_button.active?.should == false
+      expect(@player_on_button.active?).to be_falsey
     end
 
     it "should keep track of the total_bet for each player" do
       should_bet @first_player, 20, :raise
       should_bet @player_on_button, 0, :fold
       run
-      @first_player.total_bet.should == 20
-      @player_on_button.total_bet.should == 0
+      expect(@first_player.total_bet).to eq(20)
+      expect(@player_on_button.total_bet).to eq(0)
     end
 
     it "should interpret a bet smaller then necessary to call as a fold" do
@@ -118,9 +118,9 @@ describe Croupier::Game::Steps::Betting::Step do
 
       run
 
-      @game_state.pot.should == 20
-      @player_on_button.stack.should == 1000
-      @player_on_button.total_bet.should == 0
+      expect(@game_state.pot).to eq(20)
+      expect(@player_on_button.stack).to eq(1000)
+      expect(@player_on_button.total_bet).to eq(0)
     end
 
     it "should interpret a bet smaller than the big blind as a check when no other bet has been place before" do
@@ -136,9 +136,9 @@ describe Croupier::Game::Steps::Betting::Step do
 
       run
 
-      @game_state.pot.should == 40
-      @player_on_button.stack.should == 980
-      @player_on_button.total_bet.should == 20
+      expect(@game_state.pot).to eq(40)
+      expect(@player_on_button.stack).to eq(980)
+      expect(@player_on_button.total_bet).to eq(20)
     end
 
     it "should increase the minimum raise to the current raise if it is larger then the current minimum raise" do
@@ -147,9 +147,9 @@ describe Croupier::Game::Steps::Betting::Step do
 
       run
 
-      @game_state.pot.should == 120
-      @player_on_button.stack.should == 940
-      @player_on_button.total_bet.should == 60
+      expect(@game_state.pot).to eq(120)
+      expect(@player_on_button.stack).to eq(940)
+      expect(@player_on_button.total_bet).to eq(60)
     end
 
     it "should increase the minimum raise to the current raise by allin if it is larger then the current minimum raise" do
@@ -159,9 +159,9 @@ describe Croupier::Game::Steps::Betting::Step do
 
       run
 
-      @game_state.pot.should == 120
-      @player_on_button.stack.should == 940
-      @player_on_button.total_bet.should == 60
+      expect(@game_state.pot).to eq(120)
+      expect(@player_on_button.stack).to eq(940)
+      expect(@player_on_button.total_bet).to eq(60)
     end
 
     it "should skip inactive players" do
@@ -200,10 +200,10 @@ describe Croupier::Game::Steps::Betting::Step do
 
         run
 
-        @player_on_button.stack.should == 0
-        @player_on_button.total_bet.should == 20
+        expect(@player_on_button.stack).to eq(0)
+        expect(@player_on_button.total_bet).to eq(20)
 
-        @game_state.pot.should == 120
+        expect(@game_state.pot).to eq(120)
       end
 
       it "should treat larger bet as an all in" do
@@ -211,10 +211,10 @@ describe Croupier::Game::Steps::Betting::Step do
 
         run
 
-        @player_on_button.stack.should == 0
-        @player_on_button.total_bet.should == 20
+        expect(@player_on_button.stack).to eq(0)
+        expect(@player_on_button.total_bet).to eq(20)
 
-        @game_state.pot.should == 120
+        expect(@game_state.pot).to eq(120)
 
       end
     end
@@ -225,8 +225,8 @@ describe Croupier::Game::Steps::Betting::Step do
       @game_state.next_round!
       first_player, player_on_button = @player_on_button, @first_player
 
-      first_player.should_receive(:bet_request).ordered.and_return(0)
-      player_on_button.should_receive(:bet_request).ordered.and_return(0)
+      expect(first_player).to receive(:bet_request).ordered.and_return(0)
+      expect(player_on_button).to receive(:bet_request).ordered.and_return(0)
 
       run
     end

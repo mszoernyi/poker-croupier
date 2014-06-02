@@ -5,14 +5,14 @@ describe Croupier::SitAndGo::Ranking do
   let(:ranking) { Croupier::SitAndGo::Ranking.new(state) }
 
   it "should return empty array" do
-    ranking.get.should == []
+    expect(ranking.get).to eq([])
   end
 
   it "should return the player that has been eliminated" do
     state.players[1].stack = 0
 
     ranking.eliminate
-    ranking.get.should == [state.players[1]]
+    expect(ranking.get).to eq([state.players[1]])
   end
 
   it "should only add each player once" do
@@ -20,7 +20,7 @@ describe Croupier::SitAndGo::Ranking do
 
     ranking.eliminate
     ranking.eliminate
-    ranking.get.should == [state.players[1]]
+    expect(ranking.get).to eq([state.players[1]])
   end
 
   it "should return all players eliminated" do
@@ -28,7 +28,7 @@ describe Croupier::SitAndGo::Ranking do
     state.players[1].stack = 0
 
     ranking.eliminate
-    ranking.get.should == [state.players[0], state.players[1]]
+    expect(ranking.get).to eq([state.players[0], state.players[1]])
   end
 
   it "should return players in order of elimination" do
@@ -37,7 +37,7 @@ describe Croupier::SitAndGo::Ranking do
     state.players[0].stack = 0
     ranking.eliminate
 
-    ranking.get.should == [state.players[1], state.players[0]]
+    expect(ranking.get).to eq([state.players[1], state.players[0]])
   end
 
   it "should return the winner at the end" do
@@ -46,6 +46,6 @@ describe Croupier::SitAndGo::Ranking do
 
     ranking.eliminate
     ranking.add_winner
-    ranking.get.should == [state.players[0], state.players[1], state.players[2]]
+    expect(ranking.get).to eq([state.players[0], state.players[1], state.players[2]])
   end
 end

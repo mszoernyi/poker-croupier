@@ -8,7 +8,7 @@ describe Croupier::Game::Steps::Betting::State do
 
   describe "#data" do
     it "should return the game state augmented with the betting state variables" do
-      betting_state.data.should == {
+      expect(betting_state.data).to eq({
           players: [
               {
                   name: "FakePlayer",
@@ -37,7 +37,7 @@ describe Croupier::Game::Steps::Betting::State do
           pot: 0,
           minimum_raise: 20,
           in_action: 1
-      }
+      })
     end
 
   end

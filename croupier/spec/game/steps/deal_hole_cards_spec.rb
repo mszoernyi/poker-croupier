@@ -7,18 +7,18 @@ describe Croupier::Game::Steps::DealHoleCards do
 
   before :each do
     deck = double("Deck")
-    deck.stub(:next_card!).and_return(*cards)
+    allow(deck).to receive(:next_card!).and_return(*cards)
 
-    game_state.should_receive(:log_state).exactly(5).times
+    expect(game_state).to receive(:log_state).exactly(5).times
 
-    Croupier::Deck.stub(:new).and_return(deck)
+    allow(Croupier::Deck).to receive(:new).and_return(deck)
   end
 
   it "should deal two cards to all of the players" do
-    game_state.players[1].should_receive(:hole_card).once.with(cards[0])
-    game_state.players[0].should_receive(:hole_card).once.with(cards[1])
-    game_state.players[1].should_receive(:hole_card).once.with(cards[2])
-    game_state.players[0].should_receive(:hole_card).once.with(cards[3])
+    expect(game_state.players[1]).to receive(:hole_card).once.with(cards[0])
+    expect(game_state.players[0]).to receive(:hole_card).once.with(cards[1])
+    expect(game_state.players[1]).to receive(:hole_card).once.with(cards[2])
+    expect(game_state.players[0]).to receive(:hole_card).once.with(cards[3])
 
     Croupier::Game::Steps::DealHoleCards.new(game_state).run
   end
@@ -26,10 +26,10 @@ describe Croupier::Game::Steps::DealHoleCards do
   it "should still start with the first player after the button has moved" do
     game_state.next_round!
 
-    game_state.players[0].should_receive(:hole_card).once.with(cards[0])
-    game_state.players[1].should_receive(:hole_card).once.with(cards[1])
-    game_state.players[0].should_receive(:hole_card).once.with(cards[2])
-    game_state.players[1].should_receive(:hole_card).once.with(cards[3])
+    expect(game_state.players[0]).to receive(:hole_card).once.with(cards[0])
+    expect(game_state.players[1]).to receive(:hole_card).once.with(cards[1])
+    expect(game_state.players[0]).to receive(:hole_card).once.with(cards[2])
+    expect(game_state.players[1]).to receive(:hole_card).once.with(cards[3])
 
     Croupier::Game::Steps::DealHoleCards.new(game_state).run
   end
@@ -39,10 +39,10 @@ describe Croupier::Game::Steps::DealHoleCards do
 
     game_state.players[1].stack = 0
 
-    game_state.players[2].should_receive(:hole_card).once.with(cards[0])
-    game_state.players[0].should_receive(:hole_card).once.with(cards[1])
-    game_state.players[2].should_receive(:hole_card).once.with(cards[2])
-    game_state.players[0].should_receive(:hole_card).once.with(cards[3])
+    expect(game_state.players[2]).to receive(:hole_card).once.with(cards[0])
+    expect(game_state.players[0]).to receive(:hole_card).once.with(cards[1])
+    expect(game_state.players[2]).to receive(:hole_card).once.with(cards[2])
+    expect(game_state.players[0]).to receive(:hole_card).once.with(cards[3])
 
     Croupier::Game::Steps::DealHoleCards.new(game_state).run
   end

@@ -10,7 +10,7 @@ describe Croupier::SitAndGo::State do
       game_state.register_player(first_player)
       game_state.register_player(second_player)
 
-      game_state.players.should == [first_player, second_player]
+      expect(game_state.players).to eq([first_player, second_player])
     end
   end
 
@@ -19,7 +19,7 @@ describe Croupier::SitAndGo::State do
       game_state = SpecHelper::MakeTournamentState.with players: [fake_player, fake_player]
       game_state.players[0].stack = 0
 
-      game_state.number_of_active_players_in_tournament.should == 1
+      expect(game_state.number_of_active_players_in_tournament).to eq(1)
     end
   end
 
@@ -28,7 +28,7 @@ describe Croupier::SitAndGo::State do
       game_state = SpecHelper::MakeTournamentState.with players: [fake_player, fake_player]
       game_state.players[0].stack = 0
 
-      game_state.players_eliminated.should == [game_state.players[0]]
+      expect(game_state.players_eliminated).to eq([game_state.players[0]])
     end
 
     it "should return the current first player first" do
@@ -36,7 +36,7 @@ describe Croupier::SitAndGo::State do
       game_state.players[0].stack = 0
       game_state.players[1].stack = 0
 
-      game_state.players_eliminated.should == [game_state.players[0], game_state.players[1]]
+      expect(game_state.players_eliminated).to eq([game_state.players[0], game_state.players[1]])
     end
   end
 
@@ -45,7 +45,7 @@ describe Croupier::SitAndGo::State do
       game_state = SpecHelper::MakeTournamentState.with players: [fake_player, fake_player]
       game_state.players[0].stack = 0
 
-      game_state.active_players.should == [game_state.players[1]]
+      expect(game_state.active_players).to eq([game_state.players[1]])
     end
   end
 
@@ -56,7 +56,7 @@ describe Croupier::SitAndGo::State do
       game_state = Croupier::SitAndGo::State.new
       game_state.set_logger(logger)
 
-      game_state.logger.should == logger
+      expect(game_state.logger).to eq(logger)
     end
   end
 
@@ -73,13 +73,13 @@ describe Croupier::SitAndGo::State do
 
       8.times do |_|
         game_state.next_round!
-        game_state.small_blind.should == small_blind_at_start
-        game_state.big_blind.should == big_blind_at_start
+        expect(game_state.small_blind).to eq(small_blind_at_start)
+        expect(game_state.big_blind).to eq(big_blind_at_start)
       end
 
       game_state.next_round!
-      game_state.small_blind.should == small_blind_at_start * 2
-      game_state.big_blind.should == big_blind_at_start * 2
+      expect(game_state.small_blind).to eq(small_blind_at_start * 2)
+      expect(game_state.big_blind).to eq(big_blind_at_start * 2)
 
     end
 
@@ -91,13 +91,13 @@ describe Croupier::SitAndGo::State do
       game_state.players[0].stack = 0
       8.times { |_| game_state.next_round! }
 
-      game_state.small_blind.should == small_blind_at_start * 2
-      game_state.big_blind.should == big_blind_at_start * 2
+      expect(game_state.small_blind).to eq(small_blind_at_start * 2)
+      expect(game_state.big_blind).to eq(big_blind_at_start * 2)
     end
 
     it "should reactivate folded players with non zero stacks" do
-      game_state.players[0].should_receive(:initialize_round)
-      game_state.players[2].should_receive(:initialize_round)
+      expect(game_state.players[0]).to receive(:initialize_round)
+      expect(game_state.players[2]).to receive(:initialize_round)
 
       game_state.next_round!
     end
@@ -105,7 +105,7 @@ describe Croupier::SitAndGo::State do
     it "should skip in-active players when moving the dealer button" do
       game_state.players[1].stack = 0
       game_state.next_round!
-      game_state.dealer.should == game_state.players[2]
+      expect(game_state.dealer).to eq(game_state.players[2])
 
     end
   end
@@ -123,14 +123,14 @@ describe Croupier::SitAndGo::State do
       @game_state.first_player == @game_state.players[1]
 
       @game_state.next_round!
-      @game_state.first_player.should == @game_state.players[2]
+      expect(@game_state.first_player).to eq(@game_state.players[2])
 
       @game_state.next_round!
       @game_state.next_round!
-      @game_state.first_player.should == @game_state.players[4]
+      expect(@game_state.first_player).to eq(@game_state.players[4])
 
       @game_state.next_round!
-      @game_state.first_player.should == @game_state.players[0]
+      expect(@game_state.first_player).to eq(@game_state.players[0])
     end
 
     it "should calculate the second player" do
@@ -139,18 +139,17 @@ describe Croupier::SitAndGo::State do
       @game_state.next_round!
       @game_state.next_round!
       @game_state.next_round!
-      @game_state.second_player.should == @game_state.players[0]
+      expect(@game_state.second_player).to eq(@game_state.players[0])
 
       @game_state.next_round!
-      @game_state.second_player.should == @game_state.players[1]
+      expect(@game_state.second_player).to eq(@game_state.players[1])
     end
 
     it "should skip inactive players" do
       @game_state.players[1].stack = 0
       @game_state.players[3].stack = 0
 
-      @game_state.first_player.should == @game_state.players[2]
-      #@game_state.second_player.should == @game_state.players[2]
+      expect(@game_state.first_player).to eq(@game_state.players[2])
     end
   end
 
@@ -168,7 +167,7 @@ describe Croupier::SitAndGo::State do
           players << player
         end
 
-        players.should == @game_state.players
+        expect(players).to eq(@game_state.players)
       end
     end
 
@@ -179,7 +178,7 @@ describe Croupier::SitAndGo::State do
           players << player
         end
 
-        players.should == @game_state.players
+        expect(players).to eq(@game_state.players)
       end
 
       it "should yield each player, starting with the first_player" do
@@ -188,7 +187,7 @@ describe Croupier::SitAndGo::State do
           players << player
         end
 
-        players.should == [@game_state.players[1], @game_state.players[0]]
+        expect(players).to eq([@game_state.players[1], @game_state.players[0]])
       end
     end
   end
@@ -196,21 +195,21 @@ describe Croupier::SitAndGo::State do
   describe "#data" do
     context "when a new tournament is created" do
       it "should return the tournament state" do
-        subject.data.should == {players: [], small_blind: 10, orbits: 0, dealer: 0}
+        expect(subject.data).to eq({players: [], small_blind: 10, orbits: 0, dealer: 0})
       end
     end
 
     context "when a player is added" do
       it "should add the players data to the result" do
         strategy = SpecHelper::DummyClass.new
-        strategy.stub(:name).and_return("Joe")
+        allow(strategy).to receive(:name).and_return("Joe")
         subject.register_player Croupier::Player.new(strategy)
-        subject.data.should == {
+        expect(subject.data).to eq({
             players: [{id: 0, name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: [], version: nil}],
             small_blind: 10, 
             orbits: 0, 
             dealer: 0
-        }
+        })
       end
     end
   end

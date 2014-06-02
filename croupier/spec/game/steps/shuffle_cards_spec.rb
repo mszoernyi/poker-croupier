@@ -5,8 +5,8 @@ describe Croupier::Game::Steps::ShuffleCards do
     game_state = double("Game state")
     deck = double("Deck")
 
-    game_state.stub(:deck).and_return(deck)
-    deck.should_receive(:shuffle)
+    allow(game_state).to receive(:deck).and_return(deck)
+    expect(deck).to receive(:shuffle)
 
     Croupier::Game::Steps::ShuffleCards.new(game_state).run
   end

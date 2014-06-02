@@ -6,8 +6,8 @@ describe Croupier::Tournament::Round do
   let(:player2) { fake_player('player2') }
 
   before :each do
-    player1.stub(:version).and_return('version1')
-    player2.stub(:version).and_return('version2')
+    allow(player1).to receive(:version).and_return('version1')
+    allow(player2).to receive(:version).and_return('version2')
 
     Croupier::log_file = 'some/log/file'
   end

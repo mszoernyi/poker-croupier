@@ -11,9 +11,9 @@ describe Croupier::Game::Steps::DealFlop do
     @cards = ['6 of Diamonds', 'Jack of Hearts', 'Ace of Spades', 'King of Clubs'].map { |name| PokerRanking::Card::by_name name }
 
     @deck = double("Deck")
-    @deck.stub(:next_card!).and_return(*@cards)
+    allow(@deck).to receive(:next_card!).and_return(*@cards)
 
-    Croupier::Deck.stub(:new).and_return(@deck)
+    allow(Croupier::Deck).to receive(:new).and_return(@deck)
 
     tournament_state = SpecHelper::MakeTournamentState.with(
           players: [fake_player, fake_player],
@@ -25,6 +25,6 @@ describe Croupier::Game::Steps::DealFlop do
   it "should deal three community cards" do
     run
 
-    @game_state.community_cards.should == @cards[0..2]
+    expect(@game_state.community_cards).to eq(@cards[0..2])
   end
 end

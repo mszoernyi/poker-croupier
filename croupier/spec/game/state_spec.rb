@@ -6,12 +6,12 @@ describe Croupier::Game::State do
     it "should transfer the amount requested from the player to the pot" do
       api_player = SpecHelper::DummyClass.new
       game_state = Croupier::Game::State.new(SpecHelper::MakeTournamentState.with players: [Croupier::Player.new(api_player)])
-      api_player.stub(:name).and_return("Joe")
+      allow(api_player).to receive(:name).and_return("Joe")
 
       game_state.transfer_bet game_state.players.first, 40, :raise
 
-      game_state.players.first.stack.should == 960
-      game_state.pot.should == 40
+      expect(game_state.players.first.stack).to eq(960)
+      expect(game_state.pot).to eq(40)
     end
   end
 
@@ -19,33 +19,33 @@ describe Croupier::Game::State do
     let(:game_state) { game_state = Croupier::Game::State.new(SpecHelper::MakeTournamentState.with(players: [fake_player('a'), fake_player('b'), fake_player('c')])) }
 
     it "should return the first_player if there was no aggression" do
-      game_state.last_aggressor.should == game_state.first_player
+      expect(game_state.last_aggressor).to eq(game_state.first_player)
     end
 
     it "should return the second player if it raises" do
       game_state.transfer_bet game_state.second_player, 100, :raise
 
-      game_state.last_aggressor.should == game_state.second_player
+      expect(game_state.last_aggressor).to eq(game_state.second_player)
     end
 
     it "should return the dealer if it raises" do
       game_state.transfer_bet game_state.dealer, 100, :raise
 
-      game_state.last_aggressor.should == game_state.dealer
+      expect(game_state.last_aggressor).to eq(game_state.dealer)
     end
 
     it "should return the first_player if the second_player just calls" do
       game_state.transfer_bet game_state.first_player, 100, :raise
       game_state.transfer_bet game_state.second_player, 100, :call
 
-      game_state.last_aggressor.should == game_state.first_player
+      expect(game_state.last_aggressor).to eq(game_state.first_player)
     end
 
     context "after an aggression when #reset_last_aggressor is called" do
       it "should return the first_player again" do
         game_state.transfer_bet game_state.second_player, 100, :raise
         game_state.reset_last_aggressor
-        game_state.last_aggressor.should == game_state.first_player
+        expect(game_state.last_aggressor).to eq(game_state.first_player)
       end
     end
   end
@@ -54,12 +54,12 @@ describe Croupier::Game::State do
     context "when there is a single player" do
 
       let(:strategy) {
-        SpecHelper::DummyClass.new.tap { |strategy| strategy.stub(:name).and_return("Joe") }
+        SpecHelper::DummyClass.new.tap { |strategy| allow(strategy).to receive(:name).and_return("Joe") }
       }
       let(:game_state) { Croupier::Game::State.new(SpecHelper::MakeTournamentState.with players: [Croupier::Player.new(strategy)]) }
 
       it "should return the tournament state with game state added" do
-        game_state.data.should == {
+        expect(game_state.data).to eq({
             players: [{ id: 0, name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: [], version: nil}],
             small_blind: 10,
             orbits: 0,
@@ -67,13 +67,13 @@ describe Croupier::Game::State do
             community_cards: [],
             current_buy_in: 0,
             pot: 0
-        }
+        })
       end
 
       it "should also include the community cards" do
         community_card = PokerRanking::Card::by_name('Queen of Spades')
         game_state.community_cards << community_card
-        game_state.data.should == {
+        expect(game_state.data).to eq({
             players: [{ id: 0, name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: [], version: nil}],
             small_blind: 10,
             orbits: 0,
@@ -81,7 +81,7 @@ describe Croupier::Game::State do
             community_cards: [community_card.data],
             current_buy_in: 0,
             pot: 0
-        }
+        })
 
       end
     end

@@ -66,8 +66,8 @@ describe Croupier::Game::Steps::Showdown do
       end
 
       def expect_winner_to_be_announced(winner, amount = 0)
-        showdown_step.stub(:show_hand)
-        game_state.should_receive(:log_state).with(type: 'winner_announcement', message: "#{winner.name} won #{amount}")
+        allow(showdown_step).to receive(:show_hand)
+        expect(game_state).to receive(:log_state).with(type: 'winner_announcement', message: "#{winner.name} won #{amount}")
       end
     end
 
@@ -89,7 +89,7 @@ describe Croupier::Game::Steps::Showdown do
         game_state.first_player.fold
 
         logger_mock = double
-        showdown_step.stub(:log_winner)
+        allow(showdown_step).to receive(:log_winner)
 
         game_state.set_logger logger_mock
 
@@ -99,8 +99,8 @@ describe Croupier::Game::Steps::Showdown do
       def expect_hand_to_be_announced_for(player)
         hand = PokerRanking::Hand.new [*player.hole_cards, *game_state.community_cards]
 
-        showdown_step.stub(:log_winner)
-        game_state.should_receive(:log_state).with(type: 'showdown', message: "#{player.name} showed #{hand.cards_used.map{|card| card}.join(',')} making a #{hand.name}")
+        allow(showdown_step).to receive(:log_winner)
+        expect(game_state).to receive(:log_state).with(type: 'showdown', message: "#{player.name} showed #{hand.cards_used.map{|card| card}.join(',')} making a #{hand.name}")
       end
     end
 
@@ -115,9 +115,9 @@ describe Croupier::Game::Steps::Showdown do
 
         showdown_step.run
 
-        game_state.players.first.stack.should == 1100
-        game_state.players.last.stack.should == 900
-        game_state.pot.should == 0
+        expect(game_state.players.first.stack).to eq(1100)
+        expect(game_state.players.last.stack).to eq(900)
+        expect(game_state.pot).to eq(0)
       end
 
       it "should split the pot when the winner is not unique" do
@@ -129,9 +129,9 @@ describe Croupier::Game::Steps::Showdown do
 
         showdown_step.run
 
-        game_state.players.first.stack.should == 1000
-        game_state.players.last.stack.should == 1000
-        game_state.pot.should == 0
+        expect(game_state.players.first.stack).to eq(1000)
+        expect(game_state.players.last.stack).to eq(1000)
+        expect(game_state.pot).to eq(0)
       end
 
       it "should give the remainder to the first few players when the pot is not divisible by number of players" do
@@ -143,9 +143,9 @@ describe Croupier::Game::Steps::Showdown do
 
         showdown_step.run
 
-        game_state.players.first.stack.should == 1000
-        game_state.players.last.stack.should == 1000
-        game_state.pot.should == 0
+        expect(game_state.players.first.stack).to eq(1000)
+        expect(game_state.players.last.stack).to eq(1000)
+        expect(game_state.pot).to eq(0)
       end
     end
   end
@@ -179,9 +179,9 @@ describe Croupier::Game::Steps::Showdown do
 
         showdown_step.run
 
-        game_state.players[1].stack.should == 100
-        game_state.players[0].stack.should == 950
-        game_state.players[2].stack.should == 1000
+        expect(game_state.players[1].stack).to eq(100)
+        expect(game_state.players[0].stack).to eq(950)
+        expect(game_state.players[2].stack).to eq(1000)
       end
 
       it "should only reward the smaller side_pot first when two all-in players tie" do
@@ -198,9 +198,9 @@ describe Croupier::Game::Steps::Showdown do
 
         showdown_step.run
 
-        game_state.players[0].stack.should == 850
-        game_state.players[1].stack.should == 275
-        game_state.players[2].stack.should == 75
+        expect(game_state.players[0].stack).to eq(850)
+        expect(game_state.players[1].stack).to eq(275)
+        expect(game_state.players[2].stack).to eq(75)
       end
     end
 
@@ -210,9 +210,9 @@ describe Croupier::Game::Steps::Showdown do
         game_state.players[1].fold
         game_state.players[2].fold
 
-        game_state.players[2].should_receive(:showdown) do |game_state|
-          game_state[:players][0][:amount_won].should == 100
-          game_state[:players][1].should_not have_key(:hole_cards)
+        expect(game_state.players[2]).to receive(:showdown) do |game_state|
+          expect(game_state[:players][0][:amount_won]).to eq(100)
+          expect(game_state[:players][1]).not_to have_key(:hole_cards)
         end
 
         showdown_step.run
@@ -228,8 +228,8 @@ describe Croupier::Game::Steps::Showdown do
         set_hole_cards_for(1, '4 of Hearts', 'Jack of Diamonds')
         set_hole_cards_for(2, '4 of Clubs', 'Jack of Hearts')
 
-        game_state.players[0].should_receive(:showdown) do |game_state|
-          game_state[:players][1][:hole_cards].length.should == 2
+        expect(game_state.players[0]).to receive(:showdown) do |game_state|
+          expect(game_state[:players][1][:hole_cards].length).to eq(2)
         end
 
         showdown_step.run

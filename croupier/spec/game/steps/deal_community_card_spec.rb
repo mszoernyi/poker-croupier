@@ -10,9 +10,9 @@ describe Croupier::Game::Steps::DealCommunityCard do
     @cards = ['6 of Diamonds', 'Jack of Hearts'].map { |name| PokerRanking::Card::by_name name }
 
     @deck = double("Deck")
-    @deck.stub(:next_card!).and_return(*@cards)
+    allow(@deck).to receive(:next_card!).and_return(*@cards)
 
-    Croupier::Deck.stub(:new).and_return(@deck)
+    allow(Croupier::Deck).to receive(:new).and_return(@deck)
 
     tournament_state = SpecHelper::MakeTournamentState.with(
         players: [fake_player, fake_player],
@@ -24,11 +24,11 @@ describe Croupier::Game::Steps::DealCommunityCard do
   it "should store the card dealt in game_state for later use" do
     run
 
-    @game_state.community_cards.should == [@cards.first]
+    expect(@game_state.community_cards).to eq([@cards.first])
   end
 
   it "should log the game state" do
-    @game_state.should_receive(:log_state).with(type: 'card_deal', message: "community card #{@cards.first}")
+    expect(@game_state).to receive(:log_state).with(type: 'card_deal', message: "community card #{@cards.first}")
 
     run
   end
@@ -38,7 +38,7 @@ describe Croupier::Game::Steps::DealCommunityCard do
 
     run
 
-    @game_state.community_cards.should == []
+    expect(@game_state.community_cards).to eq([])
   end
 
 end

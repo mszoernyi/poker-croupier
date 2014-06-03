@@ -1,8 +1,12 @@
+require 'securerandom'
+
 class Croupier::SitAndGo::State
   attr_reader :players
   attr_reader :logger
+  attr_reader :uuid
 
   def initialize
+    @uuid = SecureRandom.uuid
     @players = []
     @logger = Croupier::LogHandler::NilLogger.new
     @small_blind = 10
@@ -92,7 +96,8 @@ class Croupier::SitAndGo::State
       players: @players.each_with_index.map { |player, index| player.data.merge({ id: index }) },
       small_blind: @small_blind,
       orbits: @orbits,
-      dealer: @dealers_position
+      dealer: @dealers_position,
+      uuid: @uuid
     }
   end
 

@@ -1,4 +1,5 @@
 require_relative '../../../spec_helper'
+require 'securerandom'
 
 describe Croupier::Game::Steps::Betting::State do
   let(:game_state) { Croupier::Game::State.new (SpecHelper::MakeTournamentState::with({players: [fake_player, fake_player]})) }
@@ -36,7 +37,8 @@ describe Croupier::Game::Steps::Betting::State do
           current_buy_in: 0,
           pot: 0,
           minimum_raise: 20,
-          in_action: 1
+          in_action: 1,
+          uuid: game_state.uuid
       })
     end
 

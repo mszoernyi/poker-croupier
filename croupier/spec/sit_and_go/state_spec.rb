@@ -114,7 +114,7 @@ describe Croupier::SitAndGo::State do
     before :each do
       @game_state = Croupier::SitAndGo::State.new
 
-      5.times do |c|
+      5.times do |_|
         @game_state.register_player fake_player
       end
     end

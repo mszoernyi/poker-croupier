@@ -1,5 +1,4 @@
 require_relative '../spec_helper'
-require 'securerandom'
 
 describe Croupier::Game::State do
 
@@ -67,8 +66,7 @@ describe Croupier::Game::State do
             dealer: 0,
             community_cards: [],
             current_buy_in: 0,
-            pot: 0,
-            uuid: game_state.uuid
+            pot: 0
         })
       end
 
@@ -82,8 +80,7 @@ describe Croupier::Game::State do
             dealer: 0,
             community_cards: [community_card.data],
             current_buy_in: 0,
-            pot: 0,
-            uuid: game_state.uuid
+            pot: 0
         })
 
       end

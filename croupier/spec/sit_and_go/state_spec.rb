@@ -1,5 +1,4 @@
 require_relative '../spec_helper'
-require 'securerandom'
 
 describe Croupier::SitAndGo::State do
   describe "#register_player" do
@@ -193,30 +192,10 @@ describe Croupier::SitAndGo::State do
     end
   end
 
-  describe "#uuid" do
-    it "should return the uuid of the sit n go" do
-      uuid = "df8653cb-80c0-423e-a030-b880459b3bf7"
-      allow(SecureRandom).to receive(:uuid).and_return(uuid)
-
-      expect(Croupier::SitAndGo::State.new.uuid).to eq(uuid)
-    end
-
-    it "should return the same value repeatedly" do
-      state = Croupier::SitAndGo::State.new
-      expect(state.uuid).to eq(state.uuid)
-    end
-  end
-
   describe "#data" do
-    let(:uuid) { "df8653cb-80c0-423e-a030-b880459b3bf7" }
-
-    before :each do
-      allow(SecureRandom).to receive(:uuid).and_return(uuid)
-    end
-
     context "when a new tournament is created" do
       it "should return the tournament state" do
-        expect(subject.data).to eq({players: [], small_blind: 10, orbits: 0, dealer: 0, uuid: uuid })
+        expect(subject.data).to eq({players: [], small_blind: 10, orbits: 0, dealer: 0})
       end
     end
 
@@ -229,8 +208,7 @@ describe Croupier::SitAndGo::State do
             players: [{id: 0, name: "Joe", stack: 1000, status: "active", bet: 0, hole_cards: [], version: nil}],
             small_blind: 10, 
             orbits: 0, 
-            dealer: 0,
-            uuid: uuid
+            dealer: 0
         })
       end
     end

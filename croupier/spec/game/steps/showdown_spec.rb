@@ -91,7 +91,7 @@ describe Croupier::Game::Steps::Showdown do
         logger_mock = double
         allow(showdown_step).to receive(:log_winner)
 
-        game_state.set_logger logger_mock
+        game_state.logger = logger_mock
 
         showdown_step.run
       end

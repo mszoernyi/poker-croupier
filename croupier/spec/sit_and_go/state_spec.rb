@@ -49,12 +49,12 @@ describe Croupier::SitAndGo::State do
     end
   end
 
-  describe "#set_logger" do
+  describe "#logger=" do
     it "should replace the default logger" do
       logger = double("Logger")
 
       game_state = Croupier::SitAndGo::State.new
-      game_state.set_logger(logger)
+      game_state.logger = logger
 
       expect(game_state.logger).to eq(logger)
     end

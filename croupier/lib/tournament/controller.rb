@@ -28,6 +28,7 @@ class Croupier::Tournament::Controller
     reset_players_to_git_master
 
     sit_and_go_controller = Croupier::SitAndGo::Controller.new
+    sit_and_go_controller.logger = Croupier::LogHandler::Json.new("#{Croupier::log_file}.json")
 
     start_players(sit_and_go_controller)
 

@@ -8,6 +8,7 @@ require_relative '../croupier'
 def sit_and_go(log_file, &block)
   Croupier::log_file = log_file
   controller = Croupier::SitAndGo::Controller.new
+  controller.logger = Croupier::LogHandler::Json.new("#{Croupier::log_file}.json")
 
   controller.instance_eval &block
 

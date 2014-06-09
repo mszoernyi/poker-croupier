@@ -2,7 +2,10 @@
 class Croupier::SitAndGo::Controller
   def initialize
     @croupier = Croupier::SitAndGo::Runner.new
-    @croupier.set_logger Croupier::LogHandler::Json.new("#{Croupier::log_file}.json")
+  end
+
+  def logger=(logger)
+    @croupier.logger= logger
   end
 
   def register_in_process_player(name, strategy)

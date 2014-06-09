@@ -27,7 +27,7 @@ class Croupier::SitAndGo::State
     @players << player
   end
 
-  def set_logger(logger)
+  def logger=(logger)
     @logger = logger
   end
 

@@ -3,7 +3,7 @@ require_relative '../spec_helper'
 describe Croupier::SitAndGo::Runner do
   before :each do
     @tournament_state = Croupier::SitAndGo::State.new
-    @tournament_state.set_logger SpecHelper::DummyClass.new
+    @tournament_state.logger = SpecHelper::DummyClass.new
     allow(Croupier::SitAndGo::State).to receive(:new).and_return(@tournament_state)
 
     @runner = Croupier::SitAndGo::Runner.new

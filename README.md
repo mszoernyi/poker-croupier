@@ -70,6 +70,7 @@ Currently supported languages:
 - [PHP](http://github.com/lean-poker/poker-player-php)
 - [Python](https://github.com/lean-poker/poker-player-python)
 - [Ruby](http://github.com/lean-poker/poker-player-ruby)
+- [Scala](https://github.com/klausbayrhammer/poker-player-scala) (Under review)
 
 ### How to create a folding player
 

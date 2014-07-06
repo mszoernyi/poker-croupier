@@ -61,7 +61,7 @@ There is also a ranking service running during the game, that the players are we
 
 Currently supported languages:
 - [C++](https://github.com/lean-poker/poker-player-cpp)
-- [Go] (https://github.com/ziegfried/poker-player-go) (Under review)
+- [Go](https://github.com/ziegfried/poker-player-go) (Under review)
 - [Groovy](https://github.com/kzsolti/poker-player-groovy)
 - [Haskell](https://github.com/lean-poker/poker-player-haskell)
 - [Java](http://github.com/lean-poker/poker-player-java)
@@ -71,6 +71,8 @@ Currently supported languages:
 - [Python](https://github.com/lean-poker/poker-player-python)
 - [Ruby](http://github.com/lean-poker/poker-player-ruby)
 - [Scala](https://github.com/klausbayrhammer/poker-player-scala) (Under review)
+
+Note on C#: [Peitor](https://github.com/peitor) has a [player implementation in C#](https://github.com/peitor/poker-player-csharp), but I could not get it to run under Linux, which is the operating system Lean Poker runs on. If anyone can get it to run with the mono compiler, I'll be happy to add it. Until then I suggest that C sharpers try using other languages. It serves to widen your skill set anyway. 
 
 ### How to create a folding player
 

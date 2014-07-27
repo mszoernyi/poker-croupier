@@ -12,7 +12,10 @@ def sit_and_go(log_file, &block)
 
   controller.instance_eval &block
 
-  controller.start_sit_and_go.each_with_index do |player, index|
+  ranking = controller.start_sit_and_go
+
+  controller.logger.flush
+  ranking.each_with_index do |player, index|
     Croupier.logger.info "Place #{index+1}: #{player.name}"
   end
 end

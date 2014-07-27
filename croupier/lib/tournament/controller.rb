@@ -35,6 +35,7 @@ class Croupier::Tournament::Controller
     wait_for_players_to_start(sit_and_go_controller)
 
     ranking = sit_and_go_controller.start_sit_and_go
+    sit_and_go_controller.logger.flush
 
     persist_ranking_and_points(ranking)
 

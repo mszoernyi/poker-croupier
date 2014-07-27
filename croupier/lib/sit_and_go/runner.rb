@@ -12,6 +12,10 @@ class Croupier::SitAndGo::Runner
     @tournament_state.logger= logger
   end
 
+  def logger
+    @tournament_state.logger
+  end
+
   def start_sit_and_go
     @tournament_state.select_dealer_randomly
     ranking = Croupier::SitAndGo::Ranking.new(@tournament_state)
@@ -21,7 +25,6 @@ class Croupier::SitAndGo::Runner
       @tournament_state.next_round!
     end
     ranking.add_winner
-    @tournament_state.flush_log
     ranking
   end
 

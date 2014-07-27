@@ -8,6 +8,10 @@ class Croupier::SitAndGo::Controller
     @croupier.logger= logger
   end
 
+  def logger
+    @croupier.logger
+  end
+
   def register_in_process_player(name, strategy)
     player = Croupier::Player.new(strategy.new name)
     @croupier.register_player player

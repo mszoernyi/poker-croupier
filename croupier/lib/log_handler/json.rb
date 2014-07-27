@@ -2,6 +2,8 @@ require 'json'
 
 class Croupier::LogHandler::Json
 
+  attr_reader :history
+
   def initialize(file)
     @history = []
     @file = file
@@ -9,12 +11,12 @@ class Croupier::LogHandler::Json
 
   def flush
     File.open(@file, 'w') do |file|
-      file.puts "[" + @history.join(",\n") + "]"
+      file.puts JSON.generate history
     end
   end
 
   def log_state(data)
     Croupier::logger.info data[:message] unless data[:message].nil?
-    @history << JSON.generate(data)
+    @history << JSON.parse(JSON.generate(data))
   end
 end

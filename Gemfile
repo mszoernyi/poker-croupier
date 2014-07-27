@@ -10,6 +10,7 @@ gem 'sinatra'
 gem 'mustache'
 gem 'poker-ranking'
 gem 'delegate-all'
+gem 'rerun'
 gem 'twitter'
 
 gem "codeclimate-test-reporter", group: :test, require: nil

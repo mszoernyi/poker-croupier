@@ -20,3 +20,11 @@ namespace :test do
   end
 
 end
+
+task :rerun_sinatra do
+  system 'rerun --pattern="**/*.{rb,js,css,scss,sass,erb,html,haml,ru,mustache}" -- rackup -p 1635'
+end
+
+task :rerun_sidekiq do
+  system 'rerun --pattern="**/*.{rb,js,css,scss,sass,erb,html,haml,ru,mustache}" -- bundle exec sidekiq -c 1 -r ./croupier/app.rb'
+end

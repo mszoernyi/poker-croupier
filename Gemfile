@@ -11,6 +11,7 @@ gem 'mustache'
 gem 'poker-ranking'
 gem 'delegate-all'
 gem 'rerun'
+gem 'sidekiq'
 gem 'twitter'
 
 gem "codeclimate-test-reporter", group: :test, require: nil

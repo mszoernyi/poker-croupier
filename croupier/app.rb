@@ -1,20 +1,14 @@
 require 'sinatra'
 require 'json'
+
+require 'sidekiq/web'
+
 require_relative 'croupier'
+require_relative 'workers/run_game_worker'
 
-post '/game/start' do
-  response_url = params[:response_url]
-
-  players = params[:players]
-
-  controller = Croupier::SitAndGo::Controller.new
-  controller.logger = Croupier::LogHandler::Json.new("#{Croupier::log_file}.json")
-
-  players.each do |player|
-    controller.register_rest_player player['name'], player['url']
-  end
-
-  ranking = controller.start_sit_and_go
+post '/game' do
+  RunGameWorker.perform_async params[:players],  params[:response_url]
+  JSON.generate success: true
 end
 
 get '/check' do

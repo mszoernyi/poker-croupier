@@ -9,8 +9,7 @@ class Croupier::RestPlayer
 
   def initialize(name, url)
     @name = name
-    uri = URI(url)
-    @host, @port, @path = uri.host, uri.port, uri.path
+    @url = url
     @version = nil
   end
 
@@ -51,39 +50,19 @@ class Croupier::RestPlayer
   private
 
   def send_request(message, &block)
-    begin
-      try_request(message, &block)
-    rescue Exception => e
-      Croupier::logger.error e.message
-      Croupier::logger.error "Player #{name} is unreachable"
-      yield true, nil if block_given?
+    Croupier::HttpRequestLight.post(@url, message) do |error, response|
+      if error
+        if response[:code] == 0
+          Croupier::logger.error "Player #{name} is unreachable: '#{response[:message]}'"
+          yield true, nil if block_given?
+        else
+          Croupier::logger.error "Player #{name} responded with #{response[:message]} (#{response[:code]})"
+          yield true, nil if block_given?
+        end
+      else
+        Croupier::logger.info "Player #{name} responded with #{response[:message]} (#{response[:code]})"
+        yield false, response[:message] if block_given?
+      end
     end
-  end
-
-  def try_request(message)
-    response = build_http_connection.start do |http|
-      http.request(build_request(message))
-    end
-
-    unless response.code.to_i == 200
-      Croupier::logger.error "Player #{name} responded with #{response.body} (#{response.code})"
-      yield true, nil if block_given?
-    else
-      Croupier::logger.info "Player #{name} responded with #{response.body} (#{response.code})"
-      yield false, response.body if block_given?
-    end
-  end
-
-  def build_request(message)
-    req = Net::HTTP::Post.new(@path)
-    req.set_form(message)
-    req
-  end
-
-  def build_http_connection
-    http_connection = Net::HTTP.new(@host, @port)
-    http_connection.open_timeout = 0.5
-    http_connection.read_timeout = 0.5
-    http_connection
   end
 end

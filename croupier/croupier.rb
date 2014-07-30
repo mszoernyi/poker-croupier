@@ -8,6 +8,7 @@ module Croupier
 
   autoload :Deck, 'lib/deck'
   autoload :Game, 'lib/game'
+  autoload :HttpRequestLight, 'lib/http_request_light'
   autoload :LogHandler, 'lib/log_handler'
   autoload :Tournament, 'lib/tournament'
   autoload :Player, 'lib/player'

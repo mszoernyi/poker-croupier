@@ -49,7 +49,7 @@ class Croupier::RestPlayer
 
   private
 
-  def send_request(message, &block)
+  def send_request(message)
     Croupier::HttpRequestLight.post(@url, message) do |error, response|
       if error
         if response[:code] == 0

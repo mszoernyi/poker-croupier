@@ -28,8 +28,6 @@ class RunGameWorker
       if error
         return false
       end
-
-      puts response
     end
 
     true

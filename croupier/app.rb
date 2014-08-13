@@ -7,7 +7,6 @@ require_relative 'croupier'
 require_relative 'workers/run_game_worker'
 
 set :bind, '0.0.0.0'
-set :port, 73545
 
 post '/game' do
   RunGameWorker.perform_async params[:teams],  params[:response_url]

@@ -26,5 +26,5 @@ task :rerun_sinatra do
 end
 
 task :rerun_sidekiq do
-  system 'rerun --pattern="**/*.{rb,js,css,scss,sass,erb,html,haml,ru,mustache}" -- bundle exec sidekiq -c 1 -r ./croupier/app.rb'
+  system 'rerun --pattern="**/*.{rb,js,css,scss,sass,erb,html,haml,ru,mustache}" -- bundle exec sidekiq -r ./croupier/app.rb'
 end

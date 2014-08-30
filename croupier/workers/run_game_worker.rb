@@ -26,7 +26,7 @@ class RunGameWorker
 
     Croupier::HttpRequestLight.post response_url, result do |error, response|
       if error
-        raise Exception.new('Failed to deliver response to: '+ response_url + " " + response[:message])
+        raise Exception.new('Failed to deliver response to: '+ response_url)
       end
     end
 

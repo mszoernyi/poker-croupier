@@ -38,8 +38,8 @@ class Croupier::HttpRequestLight
 
   def build_http_connection
     http_connection = Net::HTTP.new(@host, @port)
-    http_connection.open_timeout = 0.5
-    http_connection.read_timeout = 0.5
+    http_connection.open_timeout = 2
+    http_connection.read_timeout = 2
     http_connection
   end
 end

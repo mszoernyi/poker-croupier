@@ -32,4 +32,4 @@ foreach my $player (@$players) {
 }
 
 chdir $work_dir;
-system('bundle exec rake croupier/scripts/start_tournament.rb');
+system('bundle exec ruby croupier/scripts/start_tournament.rb');

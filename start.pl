@@ -17,6 +17,7 @@ my $work_dir = getcwd();
 my $players = [
     'roa',
     'elmac',
+    'welle',
 ];
 
 if ($init) {

@@ -18,6 +18,8 @@ my $players = [
     'roa',
     'elmac',
     'welle',
+    'andrew',
+    'borkborkbork',
 ];
 
 if ($init) {

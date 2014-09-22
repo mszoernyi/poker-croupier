@@ -19,7 +19,7 @@ tournament do
   register_git_player "andrew", "#{PLAYERS_ROOT}/andrew" # 8090
   register_git_player "borkborkbork", "#{PLAYERS_ROOT}/borkborkbork" # 8090
   register_git_player "patrhec", "#{PLAYERS_ROOT}/patrhec" # 8090
-  register_git_player "GNC", "#{PLAYERS_ROOT}/GNC" # 8090
+  register_git_player "CNG", "#{PLAYERS_ROOT}/GNC" # 8090
 
   #register_rest_player "REST", "http://localhost:8090/"
 end

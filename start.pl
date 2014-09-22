@@ -21,6 +21,7 @@ my $players = [
     'andrew',
     'borkborkbork',
     'patrhec',
+    'GNC',
 ];
 
 if ($init) {
